@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [master, main, claude/publish-github-pages-7HLgg]
+    branches: [master, main, claude/switchstack-7HLgg]
 
 permissions:
   contents: read
