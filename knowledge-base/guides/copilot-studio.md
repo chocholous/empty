@@ -25,7 +25,38 @@ Copilot Studio může automaticky routovat mezi topics pomocí AI:
 - AI vybírá relevantní topic podle user query
 - Kombinace s Generative Answers pro fallback
 
+## M365 Copilot Extensibility
+
+### Způsoby rozšíření M365 Copilot
+
+| Přístup | Popis | Nástroj |
+|---------|-------|---------|
+| **Declarative agents** | Custom instructions + knowledge + actions na M365 orchestrátoru | JSON manifest + Copilot Studio / Teams Toolkit |
+| **API plugins** | REST API integrace přes OpenAPI | OpenAPI spec + manifest |
+| **MCP plugins** | MCP servery jako tool providers | MCP protocol |
+| **Copilot connectors** | Indexace externích dat do Microsoft Graph | Graph connector SDK |
+| **Office JS plugins** (preview) | Read/write Office dokument z Copilota | Office JavaScript Library |
+
+### Declarative Agents (production-ready)
+- Customizace M365 Copilot s vlastními instrukcemi, knowledge a actions
+- Běží na stejném orchestrátoru jako M365 Copilot
+- Max 5 always-injected plugins, pak semantic matching
+- Schema v1.5 přidává meeting search
+
+### Key 2025+ novinky
+- **M365 Copilot Tuning** - low-code model tuning s firemními daty
+- **Multi-agent orchestration** - agenti z M365, Azure AI a Fabric spolupracují
+- **Microsoft Agent Factory** - build + deploy s jedním metered plánem
+- **Computer use** v Copilot Studio agentech
+- **Federated connectors** (preview) - real-time retrieval přes MCP bez indexování
+
 ## Power Platform Connectors
+
+1,400+ systémů. Typy:
+- **Power Platform connectors** - Real-time API calls (read/write)
+- **Copilot connectors** (dříve Graph connectors) - Indexace do M365 Graph (40+ GA)
+- **Custom connectors** - Vlastní REST/SOAP API
+- **Federated connectors** (preview) - Real-time retrieval přes MCP
 
 ### Standard (zdarma s licencí)
 | Connector | Skills |

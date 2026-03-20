@@ -54,33 +54,44 @@ cp -r Agent-Skills/skills/ .github/skills/
 - Data in Azure Cosmos DB
 ```
 
-### GitHub Copilot Extensions
+### GitHub Copilot Extensions (DEPRECATED → MCP)
 
-#### Co jsou Extensions
-- Rozšíření Copilot Chat o externí služby
-- Fungují ve VS Code, Visual Studio, GitHub.com
-- Private extensions pro organizace
+> **Pozor:** Copilot Extensions (GitHub App-based) byly **deprecated v listopadu 2025** a nahrazeny MCP.
+> Nové integrace stavějte jako MCP servery - fungují v Copilot, Claude Code i Cursor.
 
-#### Oficiální Azure Extensions
+#### Co je nahradilo
+- **MCP servery** - build once, use everywhere
+- **GitHub MCP Registry** - kurátovaný adresář MCP serverů
+- **Awesome Copilot plugins** - community ekosystém
+
+#### Oficiální Azure Extensions (stále funkční)
 - **GitHub Copilot for Azure** - Přímá integrace Azure služeb
   - Resource management, deployment, monitoring
   - [microsoft/GitHub-Copilot-for-Azure](https://github.com/microsoft/GitHub-Copilot-for-Azure)
 
-#### Stavba vlastní Extension
-```javascript
-// Použití copilot-extensions SDK
-import { createServer } from "@copilot-extensions/preview-sdk";
+### Multi-Agent v VS Code (od v1.109, Jan 2026)
 
-const server = createServer({
-  handler: async (request) => {
-    // Process Copilot chat request
-    // Call your Azure/M365 APIs
-    // Return response
-  }
-});
+Claude, Codex a Copilot fungují společně ve VS Code:
+
+#### Third-party agents
+- Claude běží jako agent přímo v Copilot Chat
+- Aktivace: `github.copilot.chat.claudeAgent.enabled`
+- Vyžaduje Copilot Pro+ nebo Enterprise
+- Billing přes GitHub (žádný separátní Anthropic subscription)
+- Unified **Agent Sessions** view
+
+#### Agent HQ (GitHub Issues)
+- Přiřaďte issue @Copilot, @Claude, nebo @Codex
+- Agenti submitují draft PRs k review
+- Mention agenty v PR komentářích pro follow-up
+- Porovnávejte výstupy více agentů na stejném issue
+
+#### Doporučení pro kombinaci
 ```
-
-Docs: [gh.io/builder-docs](https://gh.io/builder-docs)
+Copilot → inline completions, quick chat, @workspace
+Claude  → complex reasoning, multi-file refactors, architecture
+Codex   → autonomous coding tasks, background PR generation
+```
 
 ### Agents.md (z microsoft/skills)
 
