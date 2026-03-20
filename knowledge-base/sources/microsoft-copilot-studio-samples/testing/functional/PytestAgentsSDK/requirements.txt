@@ -1,0 +1,22 @@
+# Copilot SDK (client)
+git+https://github.com/microsoft/Agents-for-python.git@main#subdirectory=libraries/microsoft-agents-copilotstudio-client
+
+
+# Activity SDK
+git+https://github.com/microsoft/Agents-for-python.git@main#subdirectory=libraries/microsoft-agents-activity
+
+# Test dependencies
+pytest
+python-dotenv
+pytest-html
+
+# MSAL
+msal
+msal-extensions
+
+# HTML handling
+py
+
+# DeepEval
+deepeval
+
