@@ -157,8 +157,58 @@
       "stars": "8000+",
       "description": "Tool use patterns, MCP examples, Claude agent SDK, skills/commands definice, .claude directory structure.",
       "relevance": ["claude-code", "claude-desktop", "terminal"]
+    },
+    {
+      "id": "anthropic-skills",
+      "name": "Anthropic Skills (Open Standard)",
+      "repo": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills",
+      "category": "anthropic",
+      "quality": "HIGH",
+      "description": "Oficiální SKILL.md open standard repozitář. Referenční implementace přijatá Copilot, Codex CLI, Cursor, SK.",
+      "relevance": ["claude-code", "github-copilot", "cursor", "terminal"]
+    },
+    {
+      "id": "openai-skills",
+      "name": "OpenAI Skills",
+      "repo": "openai/skills",
+      "url": "https://github.com/openai/skills",
+      "category": "openai",
+      "quality": "HIGH",
+      "description": "OpenAI oficiální skills repository pro Codex CLI. SKILL.md standard.",
+      "relevance": ["terminal"]
+    },
+    {
+      "id": "skills-for-copilot-studio",
+      "name": "Skills for Copilot Studio",
+      "repo": "microsoft/skills-for-copilot-studio",
+      "url": "https://github.com/microsoft/skills-for-copilot-studio",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "SKILL.md plugin pro authoring Copilot Studio agents z terminálu. 20x faster development. manage/author/test/troubleshoot commands.",
+      "relevance": ["claude-code", "github-copilot", "copilot-studio", "terminal"]
+    },
+    {
+      "id": "softeria-ms365",
+      "name": "Softeria MS-365 MCP Server",
+      "repo": "Softeria/ms-365-mcp-server",
+      "url": "https://github.com/Softeria/ms-365-mcp-server",
+      "category": "community",
+      "quality": "HIGH",
+      "description": "Community MCP server pro M365 přes Graph API. Personal + org mode, Teams/Chats. npm: @softeria/ms-365-mcp-server.",
+      "relevance": ["claude-desktop", "claude-code", "cursor"]
+    },
+    {
+      "id": "power-platform-connectors",
+      "name": "Power Platform Connectors",
+      "repo": "microsoft/PowerPlatformConnectors",
+      "url": "https://github.com/microsoft/PowerPlatformConnectors",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Open source certified + independent publisher connectors pro Power Platform a Copilot Studio. 1,400+ systémů.",
+      "relevance": ["copilot-studio"]
     }
   ],
   "lastUpdated": "2026-03-20",
-  "totalHighQuality": 15
+  "totalHighQuality": 21
 }

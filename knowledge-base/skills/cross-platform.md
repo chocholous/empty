@@ -1,130 +1,202 @@
 # Cross-Platform Skills & Patterns
 
+## SKILL.md - Otevřený Standard (Key Takeaway)
+
+**SKILL.md je otevřený standard** vytvořený Anthropic (late 2025), přijatý napříč platformami:
+
+| Platforma | Podpora | Od kdy |
+|-----------|---------|--------|
+| **Claude Code** | Creator | 2025 |
+| **GitHub Copilot** | CLI + VS Code | Dec 2025 |
+| **OpenAI Codex CLI** | Adopted | Dec 2025 |
+| **Cursor IDE** | Adopted | Jan 2026 (v2.4) |
+| **Semantic Kernel** | Python SDK | 2026 |
+| **Copilot Studio** | Bridge via plugin | 2026 |
+
+Jeden skill napsaný jednou funguje ve všech SKILL.md-kompatibilních agentech.
+
+### SKILL.md formát
+```yaml
+---
+name: my-skill-name           # lowercase, hyphens only (required)
+description: Does X when Y    # third person (required)
+allowed-tools: Bash(gh *), Read, Grep  # optional - omezení nástrojů
+context: fork                  # optional - izolovaný subagent
+disable-model-invocation: true # optional - jen user může zavolat
+user-invocable: false          # optional - jen AI může zavolat
+---
+# Skill Instructions (Markdown)
+
+## What this skill does
+[Popis pro AI agenta]
+
+## Steps
+1. Do X
+2. Do Y
+3. Return Z
+```
+
+### Adresářová struktura
+```
+my-skill/
+├── SKILL.md          # Povinný - definice skill
+├── scripts/          # Volitelný - spustitelné skripty
+├── references/       # Volitelný - docs načtené do kontextu
+└── assets/           # Volitelný - šablony, binárky
+```
+
+### Progressive Disclosure
+Všechny platformy používají 3-úrovňový loading:
+1. **Discovery** (~100 tokenů) - jméno + popis, injektováno do system promptu
+2. **Instructions** (<5k tokenů) - plný obsah SKILL.md při aktivaci
+3. **Resources** - reference soubory, skripty, na vyžádání
+
+Budget: 2% context window (default 16,000 chars, konfigurovatelné přes `SLASH_COMMAND_TOOL_CHAR_BUDGET`).
+
 ## Skills definice podle platformy
 
-### Jak platformy definují "skills"
-
-| Platforma | Formát | Umístění | Discovery |
-|-----------|--------|----------|-----------|
-| Claude Code | SKILL.md (markdown) | .claude/skills/ | Automaticky při spuštění |
-| GitHub Copilot | .md + agents.md | .github/copilot/ | VS Code settings `chat.agent.skills` |
-| Cursor | .cursorrules + .cursor/rules/ | Root projektu | Automaticky |
-| Copilot Studio | Topics + Actions (GUI) | Power Platform | Přes Studio UI |
-| Semantic Kernel | @kernel_function (Python/C#) | Plugin třídy | Registrace v kernelu |
-| OpenAI | JSON Schema (function calling) | API request | Přes tools parameter |
-| MCP | Tools + Resources + Prompts | MCP server | Protocol discovery |
-
-### Společná anatomie skill
-
-Každá platforma má svůj formát, ale sdílejí společné elementy:
-
-```
-SKILL = {
-  name: string           # Identifikátor
-  description: string    # Co skill dělá (pro LLM)
-  inputs: Schema         # Parametry (JSON Schema / Zod / annotations)
-  instructions: string   # Jak skill použít (prompt / kód)
-  tools: string[]        # Jaké nástroje skill potřebuje
-}
-```
-
-## Pattern: Progressive Disclosure (Microsoft Agent Skills)
-
-Microsoft zavádí 3-úrovňový loading pro efektivní skills:
-
-1. **Discovery** - Krátký popis (pár řádků), stačí k rozhodnutí zda skill použít
-2. **Instructions** - Detailní instrukce jak skill provést
-3. **Resources** - Plné reference, API docs, příklady
-
-Tento pattern šetří tokeny a kontext window.
-
-## Instalace skills podle platformy
-
 ### Claude Code
-```bash
-# Skills se dávají do .claude/skills/
-mkdir -p .claude/skills/azure-devops/
-cat > .claude/skills/azure-devops/SKILL.md << 'EOF'
----
-name: azure-devops
-description: Manage Azure DevOps work items, repos, and pipelines
-tools: Bash
----
-# Azure DevOps Skill
-Use `az devops` CLI commands to interact with Azure DevOps.
-## Work Items
-- `az boards work-item create --type "Task" --title "..."`
-- `az boards work-item show --id N`
-## Repos
-- `az repos list`
-- `az repos pr create --title "..." --source-branch "..."`
-EOF
-```
+- **Formát:** SKILL.md (open standard creator)
+- **Personal:** `~/.claude/skills/`
+- **Project:** `.claude/skills/`
+- **Built-in skills:** `/simplify`, `/review`, `/batch`, `/loop`, `/debug`, `/claude-api`
+- **Slash commands** merged do skills systému od v2.1.3
+- **Zdroje:** [anthropics/skills](https://github.com/anthropics/skills), [skillsmp.com](https://skillsmp.com) (500k+ skills)
 
-### GitHub Copilot (VS Code)
-```bash
-# Skills from MicrosoftDocs/Agent-Skills
-mkdir -p .github/skills/
-# Zkopírovat skills z https://github.com/MicrosoftDocs/Agent-Skills
-# Aktivovat v VS Code: Settings → chat.agent.skills → Enable
-```
+### GitHub Copilot
+- **Formát:** SKILL.md (adopted standard)
+- **Project:** `.github/skills/` (čte i `.claude/skills/`)
+- **Personal:** `~/.copilot/skills/`
+- **Built-in:** `@workspace`, `@terminal`, `@vscode`, `/fix`, `/tests`, `/new`, `/explain`
+- **VS Code:** Agent Skills od v1.108 (`chat.useAgentSkills`)
+- **Agent Plugins (preview):** Bundles s skills + agents + hooks + MCP
+- **Zdroje:** [github/awesome-copilot](https://github.com/github/awesome-copilot)
 
-### Cursor
-```bash
-# Rules/skills přes .cursor/rules/
-mkdir -p .cursor/rules/
-cat > .cursor/rules/azure.mdc << 'EOF'
----
-description: Azure development patterns
-globs: ["**/azure/**", "**/infra/**"]
----
-# Azure Rules
-- Use Azure CLI (`az`) for resource management
-- Follow Azure naming conventions: {resource}-{env}-{region}-{instance}
-- Always use managed identity over connection strings
-EOF
-```
+### OpenAI Codex CLI
+- **Formát:** SKILL.md (adopted standard)
+- **Personal:** `~/.codex/skills/`
+- **Project:** `.codex/skills/`
+- **Config:** `agents/openai.yaml` pro UI metadata, invocation policy
+- **Install:** `$skill-installer` pro kurátované skills
+- **GPT Actions:** OpenAPI schema pro REST API (ChatGPT Custom GPTs)
+
+### Cursor IDE
+- **3-vrstvý systém:**
+  - **Rules** (.mdc) - Shape behavior, vždy/auto/on-demand/manual
+  - **Skills** (SKILL.md od v2.4) - Domain-specific capabilities
+  - **Commands** (.cursor/commands/*.md) - Saved prompt shortcuts
+- **Filozofie:** "Rules guide. Skills do. Commands trigger."
+- **Zdroje:** [dotcursorrules.com](https://dotcursorrules.com), [awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules)
 
 ### Copilot Studio
+- **Formát:** YAML (.mcs.yaml) - proprietární
+- **Struktura:**
+  ```
+  agent-folder/
+  ├── agent.mcs.yaml        # Hlavní definice
+  ├── settings.mcs.yml      # Konfigurace
+  ├── topics/               # Konverzační topics
+  ├── actions/              # Connector akce
+  ├── workflows/            # Agent tools
+  ├── trigger/              # Event triggers
+  └── knowledge/files/      # Knowledge sources
+  ```
+- **Vizuální authoring** + VS Code extension
+- **Generative actions** - AI dynamicky vybírá plugins
+- **Component Collections (GA)** - reusable balíčky across agents
+- **Bridge:** [skills-for-copilot-studio](https://github.com/microsoft/skills-for-copilot-studio) - SKILL.md plugin pro authoring z terminálu (20x faster)
+
+### Semantic Kernel
+- **Formát:** @kernel_function dekorátor (Python/C#) + OpenAPI + MCP
+- **Terminologie:** "Skills" přejmenováno na "Plugins"
+- **3 způsoby importu:** Native code, OpenAPI spec, MCP Server
+- **Best practice:** snake_case pro function names (LLM training bias)
+- **SKILL.md support:** Python SDK podporuje open standard
+
+## Srovnávací matice
+
+| Feature | Claude Code | Copilot | Codex CLI | Cursor | Copilot Studio | SK |
+|---------|-------------|---------|-----------|--------|----------------|-----|
+| **SKILL.md** | Creator | Adopted | Adopted | Adopted | Bridge | Partial |
+| **Personal store** | ~/.claude/ | ~/.copilot/ | ~/.codex/ | ~/.cursor/ | N/A | N/A |
+| **Project store** | .claude/skills/ | .github/skills/ | .codex/skills/ | .cursor/ | agent-folder/ | code |
+| **Visual authoring** | Ne | Ne | Ne | Ne | Ano (canvas) | Ne |
+| **Script bundling** | Ano | Ano | Ano | Ano | Ano (workflows) | Ano |
+| **M365 skills** | MCP servers | Extensions + MCP | GPT Actions | Rules + MCP | 1,400+ connectors | Plugins |
+| **Slash commands** | Merged w/ skills | Built-in | Built-in | Separate | N/A | N/A |
+| **Cross-platform** | CLI, SDK, web | CLI, VS Code, GH | CLI, IDE, web | IDE only | Web, VS Code, Teams | .NET, Py, Java |
+
+## Instalace skills napříč platformami
+
+### Jeden skill, všechny platformy
+```bash
+# Vytvořit skill
+mkdir -p my-skill && cat > my-skill/SKILL.md << 'EOF'
+---
+name: azure-resource-checker
+description: Checks Azure resource health and costs for the current subscription
+allowed-tools: Bash
+---
+# Azure Resource Health Check
+
+1. Run `az resource list -g $RESOURCE_GROUP --output table`
+2. Check health: `az monitor metrics list --resource $ID`
+3. Check costs: `az consumption usage list --top 10`
+4. Summarize findings with recommendations
+EOF
+
+# Deploy do Claude Code
+cp -r my-skill ~/.claude/skills/
+
+# Deploy do GitHub Copilot
+cp -r my-skill .github/skills/
+
+# Deploy do Codex CLI
+cp -r my-skill ~/.codex/skills/
+
+# V Cursoru - skill se načte z .claude/skills/ automaticky
 ```
-# V Copilot Studio UI:
-1. Topics → New Topic → popis scenáře
-2. Actions → Add connector action → vybrat Power Platform connector
-3. Generative AI → Enable orchestration
-```
 
-## Cross-Platform Skills Matrix pro M365/Azure
+## Best Practices
 
-| Operace | Claude Code | Copilot | Cursor | Copilot Studio |
-|---------|-------------|---------|--------|----------------|
-| Azure resources | az CLI skill | @azure agent | MCP/rules | Power Platform |
-| SharePoint files | MCP server | Graph API skill | MCP server | SP connector |
-| Outlook email | MCP M365 tools | Copilot agent | MCP server | Outlook connector |
-| Azure DevOps | az devops CLI / MCP | @azure-devops | MCP server | ADO connector |
-| Teams messages | Graph API | Built-in | MCP server | Teams connector |
-| SQL queries | Bash + sqlcmd | DB extensions | MCP server | SQL connector |
+### 1. Používejte progressive disclosure
+Nedávejte vše do SKILL.md - použijte `references/` pro velké docs.
 
-## Best Practices napříč platformami
-
-### 1. Popisujte CO, ne JAK
-```
+### 2. Popisujte CO, ne JAK
+```yaml
 # Dobře:
-description: "Find and summarize recent emails about project X"
-
+description: Finds and analyzes Azure cost anomalies across resource groups
 # Špatně:
-description: "Call Graph API endpoint /me/messages with filter..."
+description: Runs az consumption usage list and parses JSON output
 ```
 
-### 2. Minimalizujte tools
-Dávejte skills jen nástroje, které opravdu potřebují.
+### 3. Jeden skill = jedna odpovědnost
+Malé, fokusované skills > velké monolity.
 
-### 3. Vždy testujte s reálným LLM
-Skills jsou interpretované modelem - mohou se chovat jinak než čekáte.
+### 4. Testujte s reálným LLM
+Skills jsou interpretované modelem - behavior se může lišit.
 
-### 4. Security first
-- Nikdy nehardcodujte credentials
-- Používejte managed identity kde to jde
-- Validujte vstupy na hranici systému
+### 5. Security
+- `disable-model-invocation: true` pro destruktivní operace (deploy, delete)
+- `allowed-tools` pro omezení nástrojů
+- `context: fork` pro izolaci
 
-### 5. Kompozice > monolity
-Malé, fokusované skills které lze skládat jsou lepší než velké all-in-one.
+### 6. Naming
+- Gerund form: `generating-tests`, `checking-azure-health`
+- Lowercase + hyphens only
+- Third person descriptions
+
+## Klíčové zdroje skills
+
+| Zdroj | URL | Skills |
+|-------|-----|--------|
+| Skills Marketplace | [skillsmp.com](https://skillsmp.com) | 500k+ |
+| Antigravity Awesome Skills | [github](https://github.com/sickn33/antigravity-awesome-skills) | 1,273+ |
+| Awesome Claude Skills | [github](https://github.com/travisvn/awesome-claude-skills) | Community |
+| Awesome Copilot | [github](https://github.com/github/awesome-copilot) | 208+ |
+| Microsoft Skills | [github](https://github.com/microsoft/skills) | Official |
+| MicrosoftDocs Agent Skills | [github](https://github.com/MicrosoftDocs/Agent-Skills) | Azure-focused |
+| .NET Skills | [github](https://github.com/dotnet/skills) | .NET-focused |
+| Anthropic Skills | [github](https://github.com/anthropics/skills) | Official |
+| OpenAI Skills | [github](https://github.com/openai/skills) | Official |
+| Skills for Copilot Studio | [github](https://github.com/microsoft/skills-for-copilot-studio) | Bridge |

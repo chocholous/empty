@@ -81,7 +81,15 @@ cat knowledge-base/graph/knowledge-graph.json | jq '.nodes[] | select(.tags | co
 ### OpenAI
 - [openai/openai-cookbook](https://github.com/openai/openai-cookbook) - Function calling, GPT Actions, Agents SDK (60k stars)
 
+### Skills (open standard)
+- [anthropics/skills](https://github.com/anthropics/skills) - SKILL.md open standard (creator)
+- [openai/skills](https://github.com/openai/skills) - OpenAI Codex CLI skills
+- [microsoft/skills-for-copilot-studio](https://github.com/microsoft/skills-for-copilot-studio) - SKILL.md → Copilot Studio bridge (20x faster)
+- [microsoft/PowerPlatformConnectors](https://github.com/microsoft/PowerPlatformConnectors) - 1,400+ connectors (open source)
+- [Softeria/ms-365-mcp-server](https://github.com/Softeria/ms-365-mcp-server) - M365 MCP přes Graph API
+
 ### Community
 - [sickn33/antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills) - 1273+ skills, multi-platform (25k stars)
+- [skillsmp.com](https://skillsmp.com) - Skills Marketplace (500k+ skills)
 
 Aktualizace: `./knowledge-base/tools/update-sources.sh`

@@ -260,6 +260,21 @@
     {"from": "azure-openai", "to": "azure-ai-search", "relation": "integrates_with"},
     {"from": "power-platform", "to": "m365-graph", "relation": "wraps"}
   ],
+  "standards": [
+    {
+      "id": "skill-md-standard",
+      "name": "SKILL.md Open Standard",
+      "creator": "anthropic",
+      "created": "2025-Q4",
+      "adopters": ["claude-code", "github-copilot", "codex-cli", "cursor", "semantic-kernel"],
+      "bridge": {"copilot-studio": "microsoft/skills-for-copilot-studio"},
+      "marketplaces": [
+        {"name": "Skills Marketplace", "url": "https://skillsmp.com", "count": "500k+"},
+        {"name": "Antigravity Awesome Skills", "url": "https://github.com/sickn33/antigravity-awesome-skills", "count": "1273+"},
+        {"name": "Awesome Copilot", "url": "https://github.com/github/awesome-copilot", "count": "208+"}
+      ]
+    }
+  ],
   "queries": {
     "platforms_supporting_mcp": "nodes[type=platform && tags contains 'mcp']",
     "m365_skills": "nodes[tags contains 'm365']",
