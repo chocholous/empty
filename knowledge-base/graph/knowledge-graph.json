@@ -1,0 +1,270 @@
+{
+  "version": "1.0",
+  "description": "Knowledge graph propojující AI nástroje, skills, platformy a M365/Azure služby",
+  "lastUpdated": "2026-03-20",
+  "nodes": [
+    {
+      "id": "claude-code",
+      "type": "platform",
+      "name": "Claude Code",
+      "tags": ["anthropic", "terminal", "vscode", "mcp"],
+      "skills_format": "SKILL.md",
+      "config_dir": ".claude/",
+      "guide": "guides/claude-code.md"
+    },
+    {
+      "id": "claude-desktop",
+      "type": "platform",
+      "name": "Claude Desktop",
+      "tags": ["anthropic", "desktop", "mcp"],
+      "config_file": "claude_desktop_config.json",
+      "guide": "guides/claude-desktop.md"
+    },
+    {
+      "id": "github-copilot",
+      "type": "platform",
+      "name": "GitHub Copilot",
+      "tags": ["microsoft", "github", "vscode", "mcp"],
+      "skills_format": "agents.md + .github/skills/",
+      "config_dir": ".github/",
+      "guide": "guides/github-copilot.md"
+    },
+    {
+      "id": "copilot-studio",
+      "type": "platform",
+      "name": "Copilot Studio",
+      "tags": ["microsoft", "low-code", "power-platform", "m365"],
+      "skills_format": "Topics + Actions",
+      "guide": "guides/copilot-studio.md"
+    },
+    {
+      "id": "cursor",
+      "type": "platform",
+      "name": "Cursor IDE",
+      "tags": ["cursor", "vscode-fork", "mcp"],
+      "skills_format": ".cursor/rules/ (.mdc)",
+      "config_dir": ".cursor/",
+      "guide": "guides/cursor.md"
+    },
+    {
+      "id": "terminal",
+      "type": "platform",
+      "name": "Terminal",
+      "tags": ["cli", "scripting", "ci-cd"],
+      "guide": "guides/terminal.md"
+    },
+    {
+      "id": "mcp",
+      "type": "protocol",
+      "name": "Model Context Protocol",
+      "tags": ["protocol", "tools", "resources", "prompts"],
+      "primitives": ["tools", "resources", "prompts"],
+      "transports": ["stdio", "streamable-http", "sse"]
+    },
+    {
+      "id": "semantic-kernel",
+      "type": "framework",
+      "name": "Semantic Kernel",
+      "tags": ["microsoft", "framework", "plugins", "agents", "m365"],
+      "languages": ["python", "dotnet", "java"],
+      "doc": "skills/semantic-kernel.md"
+    },
+    {
+      "id": "mcp-memory",
+      "type": "mcp-server",
+      "name": "Memory Server",
+      "tags": ["knowledge-graph", "persistence", "entities", "relations"],
+      "package": "@modelcontextprotocol/server-memory"
+    },
+    {
+      "id": "mcp-filesystem",
+      "type": "mcp-server",
+      "name": "Filesystem Server",
+      "tags": ["files", "search", "read", "write"],
+      "package": "@modelcontextprotocol/server-filesystem"
+    },
+    {
+      "id": "mcp-git",
+      "type": "mcp-server",
+      "name": "Git Server",
+      "tags": ["git", "vcs", "diff", "commit"],
+      "package": "mcp-server-git"
+    },
+    {
+      "id": "mcp-fetch",
+      "type": "mcp-server",
+      "name": "Fetch Server",
+      "tags": ["web", "http", "scraping", "markdown"],
+      "package": "mcp-server-fetch"
+    },
+    {
+      "id": "mcp-sequential-thinking",
+      "type": "mcp-server",
+      "name": "Sequential Thinking Server",
+      "tags": ["reasoning", "planning", "problem-solving"],
+      "package": "@modelcontextprotocol/server-sequential-thinking"
+    },
+    {
+      "id": "microsoft-mcp-catalog",
+      "type": "mcp-server",
+      "name": "Microsoft MCP Catalog",
+      "tags": ["microsoft", "azure", "m365", "official"],
+      "repo": "microsoft/mcp",
+      "stars": 2800,
+      "services": ["azure-40+", "m365-calendar", "m365-mail", "m365-search", "m365-people", "aks", "foundry", "clarity"]
+    },
+    {
+      "id": "azure-devops-mcp",
+      "type": "mcp-server",
+      "name": "Azure DevOps MCP",
+      "tags": ["azure", "devops", "work-items", "repos", "pipelines"],
+      "repo": "microsoft/azure-devops-mcp",
+      "stars": 1400
+    },
+    {
+      "id": "ms-docs-mcp",
+      "type": "mcp-server",
+      "name": "Microsoft Learn MCP",
+      "tags": ["microsoft", "documentation", "learn"],
+      "repo": "MicrosoftDocs/mcp"
+    },
+    {
+      "id": "microsoft-skills",
+      "type": "skills-repo",
+      "name": "Microsoft Skills",
+      "tags": ["microsoft", "skills", "agents", "azure"],
+      "repo": "microsoft/skills",
+      "website": "https://microsoft.github.io/skills/"
+    },
+    {
+      "id": "agent-skills",
+      "type": "skills-repo",
+      "name": "Microsoft Agent Skills (Docs)",
+      "tags": ["microsoft", "vscode", "copilot", "azure"],
+      "repo": "MicrosoftDocs/Agent-Skills",
+      "levels": ["discovery", "instructions", "resources"]
+    },
+    {
+      "id": "awesome-copilot",
+      "type": "skills-repo",
+      "name": "Awesome GitHub Copilot",
+      "tags": ["github", "copilot", "community", "plugins"],
+      "repo": "github/awesome-copilot",
+      "counts": {"agents": 175, "skills": 208, "instructions": 176, "plugins": 48}
+    },
+    {
+      "id": "awesome-skills",
+      "type": "skills-repo",
+      "name": "Antigravity Awesome Skills",
+      "tags": ["community", "multi-platform", "claude", "cursor", "copilot"],
+      "repo": "sickn33/antigravity-awesome-skills",
+      "stars": 25000,
+      "skills_count": 1273
+    },
+    {
+      "id": "dotnet-skills",
+      "type": "skills-repo",
+      "name": ".NET Agent Skills",
+      "tags": ["microsoft", "dotnet", "official"],
+      "repo": "dotnet/skills"
+    },
+    {
+      "id": "openai-cookbook",
+      "type": "reference",
+      "name": "OpenAI Cookbook",
+      "tags": ["openai", "function-calling", "gpt-actions", "agents-sdk"],
+      "repo": "openai/openai-cookbook"
+    },
+    {
+      "id": "anthropic-cookbook",
+      "type": "reference",
+      "name": "Anthropic Cookbook",
+      "tags": ["anthropic", "tool-use", "mcp", "claude"],
+      "repo": "anthropics/anthropic-cookbook"
+    },
+    {
+      "id": "m365-graph",
+      "type": "service",
+      "name": "Microsoft Graph API",
+      "tags": ["microsoft", "m365", "api", "unified"],
+      "operations": ["users", "mail", "calendar", "files", "teams", "planner", "todo", "onenote", "security", "search"]
+    },
+    {
+      "id": "power-platform",
+      "type": "service",
+      "name": "Power Platform Connectors",
+      "tags": ["microsoft", "low-code", "connectors", "1000+"],
+      "key_connectors": ["sharepoint", "outlook", "teams", "onedrive", "azure-devops", "dynamics365", "graph"]
+    },
+    {
+      "id": "azure-ai-search",
+      "type": "service",
+      "name": "Azure AI Search",
+      "tags": ["azure", "search", "rag", "vector", "cognitive-skills"]
+    },
+    {
+      "id": "azure-openai",
+      "type": "service",
+      "name": "Azure OpenAI",
+      "tags": ["azure", "openai", "function-calling", "embeddings"]
+    }
+  ],
+  "edges": [
+    {"from": "claude-code", "to": "mcp", "relation": "uses_protocol"},
+    {"from": "claude-desktop", "to": "mcp", "relation": "uses_protocol"},
+    {"from": "cursor", "to": "mcp", "relation": "uses_protocol"},
+    {"from": "github-copilot", "to": "mcp", "relation": "uses_protocol"},
+
+    {"from": "claude-code", "to": "mcp-memory", "relation": "can_use"},
+    {"from": "claude-code", "to": "mcp-filesystem", "relation": "can_use"},
+    {"from": "claude-code", "to": "mcp-git", "relation": "can_use"},
+    {"from": "claude-code", "to": "microsoft-mcp-catalog", "relation": "can_use"},
+    {"from": "claude-code", "to": "azure-devops-mcp", "relation": "can_use"},
+    {"from": "claude-code", "to": "ms-docs-mcp", "relation": "can_use"},
+
+    {"from": "claude-desktop", "to": "mcp-memory", "relation": "can_use"},
+    {"from": "claude-desktop", "to": "mcp-filesystem", "relation": "can_use"},
+    {"from": "claude-desktop", "to": "microsoft-mcp-catalog", "relation": "can_use"},
+    {"from": "claude-desktop", "to": "ms-docs-mcp", "relation": "can_use"},
+
+    {"from": "cursor", "to": "mcp-memory", "relation": "can_use"},
+    {"from": "cursor", "to": "microsoft-mcp-catalog", "relation": "can_use"},
+    {"from": "cursor", "to": "azure-devops-mcp", "relation": "can_use"},
+
+    {"from": "github-copilot", "to": "agent-skills", "relation": "installs_skills_from"},
+    {"from": "github-copilot", "to": "awesome-copilot", "relation": "installs_skills_from"},
+    {"from": "github-copilot", "to": "microsoft-skills", "relation": "installs_skills_from"},
+
+    {"from": "copilot-studio", "to": "power-platform", "relation": "uses_connectors"},
+    {"from": "copilot-studio", "to": "m365-graph", "relation": "accesses_via"},
+    {"from": "copilot-studio", "to": "semantic-kernel", "relation": "can_use_via_agent"},
+
+    {"from": "semantic-kernel", "to": "mcp", "relation": "integrates_with"},
+    {"from": "semantic-kernel", "to": "m365-graph", "relation": "has_plugins_for"},
+    {"from": "semantic-kernel", "to": "azure-ai-search", "relation": "has_connector"},
+    {"from": "semantic-kernel", "to": "azure-openai", "relation": "has_connector"},
+
+    {"from": "microsoft-mcp-catalog", "to": "m365-graph", "relation": "wraps"},
+    {"from": "microsoft-mcp-catalog", "to": "azure-ai-search", "relation": "provides_access_to"},
+    {"from": "azure-devops-mcp", "to": "m365-graph", "relation": "uses"},
+
+    {"from": "awesome-skills", "to": "claude-code", "relation": "provides_skills_for"},
+    {"from": "awesome-skills", "to": "cursor", "relation": "provides_skills_for"},
+    {"from": "awesome-skills", "to": "github-copilot", "relation": "provides_skills_for"},
+
+    {"from": "openai-cookbook", "to": "azure-openai", "relation": "documents"},
+    {"from": "openai-cookbook", "to": "mcp", "relation": "has_guide_for"},
+    {"from": "anthropic-cookbook", "to": "claude-code", "relation": "documents"},
+    {"from": "anthropic-cookbook", "to": "mcp", "relation": "has_guide_for"},
+
+    {"from": "azure-openai", "to": "azure-ai-search", "relation": "integrates_with"},
+    {"from": "power-platform", "to": "m365-graph", "relation": "wraps"}
+  ],
+  "queries": {
+    "platforms_supporting_mcp": "nodes[type=platform && tags contains 'mcp']",
+    "m365_skills": "nodes[tags contains 'm365']",
+    "azure_services": "nodes[tags contains 'azure']",
+    "high_quality_repos": "nodes[type=skills-repo || type=mcp-server] where stars > 500",
+    "skills_for_platform": "edges[relation=can_use || relation=installs_skills_from] from {platform_id}"
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "sources": [
+    {
+      "id": "microsoft-mcp",
+      "name": "Microsoft MCP Catalog",
+      "repo": "microsoft/mcp",
+      "url": "https://github.com/microsoft/mcp",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "stars": "2800+",
+      "description": "Oficiální katalog Microsoft MCP serverů: Azure (40+ services), M365 (Calendar, Mail, Search, People, Admin), AKS, Foundry, Clarity, Azure DevOps",
+      "relevance": ["claude-desktop", "claude-code", "cursor", "copilot-studio", "terminal"]
+    },
+    {
+      "id": "microsoft-skills",
+      "name": "Microsoft Skills",
+      "repo": "microsoft/skills",
+      "url": "https://github.com/microsoft/skills",
+      "website": "https://microsoft.github.io/skills/",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Oficiální skills, MCP servery, Custom Agents, Agents.md pro coding agents. Pokrývá AI Projects SDK, AI Search, M365 Agents SDK, Cosmos DB. Python, .NET, Java, TypeScript.",
+      "relevance": ["claude-code", "github-copilot", "cursor", "terminal"]
+    },
+    {
+      "id": "microsoftdocs-agent-skills",
+      "name": "Microsoft Agent Skills (Docs)",
+      "repo": "MicrosoftDocs/Agent-Skills",
+      "url": "https://github.com/MicrosoftDocs/Agent-Skills",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Kurátované agent skills pro VS Code - Azure services, AI engineers, data engineers, infra. Progressive disclosure: Discovery → Instructions → Resources.",
+      "relevance": ["github-copilot", "claude-code", "cursor"]
+    },
+    {
+      "id": "microsoftdocs-mcp",
+      "name": "Microsoft Learn MCP Server",
+      "repo": "MicrosoftDocs/mcp",
+      "url": "https://github.com/MicrosoftDocs/mcp",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "MCP server pro přímý přístup k oficiální MS dokumentaci. Bez API klíčů, one-click install. Pouze 1st-party MS docs.",
+      "relevance": ["claude-desktop", "claude-code", "cursor"]
+    },
+    {
+      "id": "azure-devops-mcp",
+      "name": "Azure DevOps MCP Server",
+      "repo": "microsoft/azure-devops-mcp",
+      "url": "https://github.com/microsoft/azure-devops-mcp",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "stars": "1400+",
+      "description": "MCP server pro Azure DevOps - projects, repos, work items, builds, wikis, pipelines. Tenká abstrakce nad REST APIs.",
+      "relevance": ["claude-code", "cursor", "terminal"]
+    },
+    {
+      "id": "semantic-kernel",
+      "name": "Semantic Kernel",
+      "repo": "microsoft/semantic-kernel",
+      "url": "https://github.com/microsoft/semantic-kernel",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "stars": "22000+",
+      "description": "Microsoft AI orchestration framework. M365 plugins (Email, Calendar, Drive, Tasks, Org), vector stores, MCP integration, multi-agent orchestration.",
+      "relevance": ["copilot-studio", "terminal", "claude-code"]
+    },
+    {
+      "id": "awesome-copilot",
+      "name": "Awesome GitHub Copilot",
+      "repo": "github/awesome-copilot",
+      "url": "https://github.com/github/awesome-copilot",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "175+ agents, 208+ skills, 176+ instructions, 48+ plugins, 7 agentic workflows. Community-driven, domain-specific bundles (Azure, frontend, Python).",
+      "relevance": ["github-copilot"]
+    },
+    {
+      "id": "copilot-extensions",
+      "name": "Copilot Extensions SDK",
+      "repo": "copilot-extensions",
+      "url": "https://github.com/copilot-extensions",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Oficiální toolkit pro building Copilot Extensions: SDK (preview-sdk.js), code samples, debugging tool. Extensions fungují ve VS Code, VS, GitHub.com.",
+      "relevance": ["github-copilot"]
+    },
+    {
+      "id": "copilot-for-azure",
+      "name": "GitHub Copilot for Azure",
+      "repo": "microsoft/GitHub-Copilot-for-Azure",
+      "url": "https://github.com/microsoft/GitHub-Copilot-for-Azure",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Copilot extension pro Azure - přímá integrace Azure služeb do Copilot Chat.",
+      "relevance": ["github-copilot"]
+    },
+    {
+      "id": "dotnet-skills",
+      "name": ".NET Agent Skills",
+      "repo": "dotnet/skills",
+      "url": "https://github.com/dotnet/skills",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Oficiální .NET agent skills od .NET týmu. Lightweight skills s task-specific context a workflows pro .NET development.",
+      "relevance": ["github-copilot", "claude-code", "cursor"]
+    },
+    {
+      "id": "antigravity-awesome-skills",
+      "name": "Antigravity Awesome Skills",
+      "repo": "sickn33/antigravity-awesome-skills",
+      "url": "https://github.com/sickn33/antigravity-awesome-skills",
+      "category": "community",
+      "quality": "HIGH",
+      "stars": "25000+",
+      "description": "1273+ agentic skills pro Claude Code, Cursor, Codex CLI, Gemini CLI. Installer CLI, bundles, workflows. Největší community skills kolekce.",
+      "relevance": ["claude-code", "cursor", "terminal", "github-copilot"]
+    },
+    {
+      "id": "mcp-servers",
+      "name": "MCP Official Servers",
+      "repo": "modelcontextprotocol/servers",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "category": "mcp",
+      "quality": "HIGH",
+      "stars": "10000+",
+      "description": "Oficiální MCP servery: filesystem, git, fetch, memory, time, sequential-thinking.",
+      "relevance": ["claude-desktop", "claude-code", "cursor", "terminal"]
+    },
+    {
+      "id": "mcp-typescript-sdk",
+      "name": "MCP TypeScript SDK",
+      "repo": "modelcontextprotocol/typescript-sdk",
+      "url": "https://github.com/modelcontextprotocol/typescript-sdk",
+      "category": "mcp",
+      "quality": "HIGH",
+      "description": "SDK pro stavbu MCP serverů a klientů v TypeScriptu. Zod v4 schémata, streamable HTTP, stdio, OAuth.",
+      "relevance": ["claude-desktop", "claude-code", "cursor"]
+    },
+    {
+      "id": "openai-cookbook",
+      "name": "OpenAI Cookbook",
+      "repo": "openai/openai-cookbook",
+      "url": "https://github.com/openai/openai-cookbook",
+      "category": "openai",
+      "quality": "HIGH",
+      "stars": "60000+",
+      "description": "Function calling, GPT Actions, Agents SDK, MCP guide, Azure OpenAI patterns. GPT Actions library: SharePoint, Gmail, Jira, Salesforce, BigQuery.",
+      "relevance": ["github-copilot", "copilot-studio", "terminal"]
+    },
+    {
+      "id": "anthropic-cookbook",
+      "name": "Anthropic Cookbook",
+      "repo": "anthropics/anthropic-cookbook",
+      "url": "https://github.com/anthropics/anthropic-cookbook",
+      "category": "anthropic",
+      "quality": "HIGH",
+      "stars": "8000+",
+      "description": "Tool use patterns, MCP examples, Claude agent SDK, skills/commands definice, .claude directory structure.",
+      "relevance": ["claude-code", "claude-desktop", "terminal"]
+    }
+  ],
+  "lastUpdated": "2026-03-20",
+  "totalHighQuality": 15
+}
