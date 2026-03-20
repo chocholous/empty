@@ -1,0 +1,869 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "DataScope Forms",
+    "description": "DataScope Forms is a mobile solution to automate your operation. Collect data offline, manage field teams and share business insights.",
+    "version": "2.0",
+    "contact": {
+      "name": "DataScope Support",
+      "url": "https://help.mydatascope.com",
+      "email": "support@mydatascope.com"
+    }
+  },
+  "host": "www.mydatascope.com",
+  "basePath": "/api/external/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/form_schema/{formId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Get Form schema",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "summary": "Get Form Schema",
+        "description": "Get Form Schema",
+        "operationId": "Get-form-schema",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "formId",
+            "type": "string",
+            "in": "path",
+            "description": "Select Form you want to query",
+	    "x-ms-url-encoding": "single",
+            "required": true,
+            "x-ms-summary": "Select Form"
+          }
+        ],
+        "x-ms-visibility": "internal"
+      }
+    },
+    "/hooks_flow/{formId}": {
+      "x-ms-notification-content": {
+        "schema": {
+          "type": "object",
+          "x-ms-dynamic-schema": {
+            "operationId": "Get-form-schema",
+            "parameters": {
+              "formId": {
+                "parameter": "formId"
+              }
+            },
+            "value-path": "schema"
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "summary": "Forms: New Answer",
+        "description": "Triggers when a new answer is submitted. Only one active Trigger per form.",
+        "operationId": "Form-answer",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "x-ms-notification-url": true,
+                  "x-ms-url-encoding": "single",
+                  "x-ms-visibility": "internal",
+                  "title": ""
+                }
+              },
+              "required": [
+                "subscription_url"
+              ]
+            }
+          },
+          {
+            "name": "formId",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "Select Form",
+            "x-ms-url-encoding": "single",
+            "x-ms-summary": "Select Form",
+            "x-ms-dynamic-values": {
+              "operationId": "Form-list",
+              "value-path": "key",
+              "value-title": "label"
+            }
+          }
+        ]
+      }
+    },
+    "/tasks_forms_flow": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "List forms",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "type"
+                  },
+                  "key": {
+                    "type": "string",
+                    "description": "key"
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "label"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get List of Forms",
+        "description": "Get List of Forms",
+        "operationId": "Form-list",
+        "parameters": [],
+        "x-ms-visibility": "internal"
+      }
+    },
+    "/hooks/power_automate/finding_created": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "operationId": "FindingCreated",
+        "summary": "Findings: New Finding",
+        "description": "Triggers when a finding is created. Only one active Trigger per account.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "finding_created",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    },
+    "/hooks/power_automate/finding_changed_status": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "operationId": "FindingChangedStatus",
+        "summary": "Findings: Changed Status",
+        "description": "Triggers when a finding changes its status. Only one active Connection per account.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "finding_changed_status",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    },
+    "/hooks/power_automate/new_task_assigned": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "operationId": "NewAssignTask",
+        "summary": "Tasks: New Assigned Task",
+        "description": "Triggers when a new task is assigned. Only one active Connection per form.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "new_task_assigned",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "form_id",
+            "in": "query",
+            "type": "string",
+            "description": "form_id",
+            "x-ms-dynamic-values": {
+              "operationId": "Form-list",
+              "value-path": "key",
+              "value-title": "label"
+            },
+            "required": true,
+            "x-ms-summary": "Select Form",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    },
+    "/hooks/power_automate/new_pdf": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "operationId": "NewPDF",
+        "summary": "Forms: New PDF",
+        "description": "Triggers when a new PDF is generated (by email backup or autonotify). Only one active Connection per form.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "new_pdf",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "form_id",
+            "in": "query",
+            "type": "string",
+            "description": "form_id",
+            "x-ms-dynamic-values": {
+              "operationId": "Form-list",
+              "value-path": "key",
+              "value-title": "label"
+            },
+            "required": true,
+            "x-ms-summary": "Select Form",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    },
+    "/hooks/power_automate/change_status": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "operationId": "ChangeStatus",
+        "summary": "Forms: Status Changed",
+        "description": "Triggers when a form answer changes its status/state. Only one active Connection per form.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "change_status",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "form_id",
+            "in": "query",
+            "type": "string",
+            "description": "form_id",
+            "x-ms-dynamic-values": {
+              "operationId": "Form-list",
+              "value-path": "key",
+              "value-title": "label"
+            },
+            "required": true,
+            "x-ms-summary": "Select Form",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    },
+    "/hooks/power_automate/new_signed_pdf": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "operationId": "NewSignedPDF",
+        "summary": "Signatures: New Completed Signature",
+        "description": "Triggers when a PDF is fully signed. Only one active Connection per form.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "new_signed_pdf",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "form_id",
+            "in": "query",
+            "type": "string",
+            "description": "form_id",
+            "x-ms-dynamic-values": {
+              "operationId": "Form-list",
+              "value-path": "key",
+              "value-title": "label"
+            },
+            "required": true,
+            "x-ms-summary": "Select Form",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    },
+    "/hooks/power_automate/new_rejected_pdf": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "NewRejectedPDF",
+        "summary": "Signatures: New Rejected Signature",
+        "description": "Triggers when a new PDF is rejected. Only one active Connection per form.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "new_rejected_pdf",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "form_id",
+            "in": "query",
+            "type": "string",
+            "description": "form_id",
+            "x-ms-dynamic-values": {
+              "operationId": "Form-list",
+              "value-path": "key",
+              "value-title": "label"
+            },
+            "required": true,
+            "x-ms-summary": "Select Form",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    },
+    "/hooks/power_automate/updated_pdf_signatures": {
+      "x-ms-notification-content": {
+        "description": "Nothing special",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "string",
+              "description": "result"
+            }
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "UpdatedPDFSignatures",
+        "summary": "Signatures: Updated Signature",
+        "description": "Triggers when a PDF’s signatures are updated. Only one active Connection per form.",
+        "x-ms-trigger": "single",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "updated_pdf_signatures",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "form_id",
+            "in": "query",
+            "type": "string",
+            "description": "form_id",
+            "x-ms-dynamic-values": {
+              "operationId": "Form-list",
+              "value-path": "key",
+              "value-title": "label"
+            },
+            "required": true,
+            "x-ms-summary": "Select Form",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subscription_url": {
+                  "type": "string",
+                  "description": "subscription_url",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "x-ms-notification-url": true
+                },
+                "version": {
+                  "type": "string",
+                  "description": "version",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "2.0.0"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "platform",
+                  "title": "",
+                  "x-ms-visibility": "internal",
+                  "default": "power_automate"
+                }
+              },
+              "x-ms-visibility": "internal",
+              "required": [
+                "version",
+                "subscription_url",
+                "platform"
+              ]
+            },
+            "x-ms-visibility": "internal"
+          }
+        ]
+      }
+    }
+  },
+  "x-ms-connector-metadata": [
+      {
+          "propertyName": "Website",
+          "propertyValue": "https://mydatascope.com"
+      },
+      {
+          "propertyName": "Privacy policy",
+          "propertyValue": "https://help.mydatascope.com/english/web-platform/datascope-privacy-policy"
+      },
+      {
+          "propertyName": "Categories",
+          "propertyValue": "Productivity;Data"
+      }
+  ],
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "API Key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "security": [
+    {
+      "API Key": []
+    }
+  ],
+  "tags": []
+}

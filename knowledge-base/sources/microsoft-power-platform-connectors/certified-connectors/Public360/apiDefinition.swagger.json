@@ -1,0 +1,527 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "Public 360",
+    "description": "Public 360 is a market leading ECM system in the Nordics. The Public 360 connector enables users to create flows that archive cases, documents and files into Public 360. The Public 360 connector will enable users to archive more and easier! That includes archiving social media posts, Outlook items or OneDrive documents.",
+    "contact": {
+      "name": "360 support",
+      "url": "https://tieto.service-now.com/tsc",
+      "email": "public360.support@tietoevry.com"
+    }
+  },
+  "host": "test-nor.public360online.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/Biz/v2/api/call/SI.Data.RPC/SI.Data.RPC/FileService/CreateFile": {
+      "post": {
+        "summary": "Create File",
+        "description": "This operation creates files in Public 360 using the SIF API. For more information, visit: https://help.360online.com/ReleaseInformation/SIF%20APIs%20-%20Documentation.pdf",
+        "operationId": "CreateFile",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "hosturl",
+            "description": "Host URL to point to the public 360 solution.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Host URL"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "parameter"
+              ],
+              "type": "object",
+              "properties": {
+                "parameter": {
+                  "description": "parameter",
+                  "required": [
+                    "DocumentNumber",
+                    "Format",
+                    "Title",
+                    "Base64Data"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "Title": {
+                      "title": "Title",
+                      "description": "Title for the file.",
+                      "type": "string"
+                    },
+                    "DocumentNumber": {
+                      "title": "Document Number",
+                      "description": "Document Number of the document this file belongs to.",
+                      "type": "string"
+                    },
+                    "Format": {
+                      "title": "Format",
+                      "description": "File type to be passed during the creation of file (e.g. \"txt\" , \"htm\").",
+                      "type": "string"
+                    },
+                    "Base64Data": {
+                      "title": "Data",
+                      "description": "File contents, \"Base64\" encoded.",
+                      "type": "string"
+                    },
+                    "AdditionalFields": {
+                      "title": "Additional Fields",
+                      "description": "Additional Public 360 fields which are not currently included in the parameters of the action.",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Name": {
+                            "title": "Name",
+                            "description": "The name of the field. This name is the name in the 360° meta model (Not always the same as seen in 360° GUI.)",
+                            "type": "string"
+                          },
+                          "Value": {
+                            "title": "Value",
+                            "description": "The value to be set in the field.",
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "example":
+                      [
+                        {
+                          "Name": "ToOrigin",
+                          "Value": "10"
+                        },
+                        {
+                          "Name": "CF_ExtSystem",
+                          "Value": "SIF"
+                        },
+                        {
+                          "Name": "Committed",
+                          "Value": "0"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Recno": {
+                  "format": "int32",
+                  "description": "Recno",
+                  "type": "integer"
+                },
+                "Successful": {
+                  "description": "Successful",
+                  "type": "boolean"
+                },
+                "ErrorMessage": {
+                  "description": "ErrorMessage",
+                  "type": "string"
+                },
+                "ErrorDetails": {
+                  "description": "ErrorDetails",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/Biz/v2/api/call/SI.Data.RPC/SI.Data.RPC/DocumentService/CreateDocument": {
+      "post": {
+        "summary": "Create Document",
+        "description": "This operation is used to create documents in Public 360 using SIF API and supports both registered and unregistered documents. Required fields include Title, Archive, Category, and Status. Registered documents must include a case number. Unregistered documents do not require a case but must include three additional fields: ToOrigin, CF_ExtSystem, and Commited. The archive for unregistered documents must be set to \"Import archive\" (default recno: 7). We recommend using the Default Value Sets feature in Public 360 to preconfigure these values. For more information, visit: https://help.360online.com/ReleaseInformation/SIF%20APIs%20-%20Documentation.pdf",
+        "operationId": "CreateDocument",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "hosturl",
+            "description": "Host URL to point to the public 360 solution.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Host URL"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "parameter"
+              ],
+              "type": "object",
+              "properties": {
+                "parameter": {
+                  "description": "parameter",
+                  "required": [
+                    "Title"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "Title": {
+                      "title": "Title",
+                      "description": "Title for the document.",
+                      "type": "string"
+                    },
+                    "CaseNumber": {
+                      "title": "Case Number",
+                      "description": "Case Number of the case this document belongs to.",
+                      "type": "string",
+                      "x-ms-visibility": "important"
+                    },
+                    "DefaultValueSet": {
+                      "title": "Default Value Set",
+                      "description": "Set of defined values for Document entities which are used to create document with those values as default if not passed",
+                      "type": "string",
+                      "x-ms-visibility": "important"
+                    },
+                    "UnofficialTitle": {
+                      "title": "Unofficial title",
+                      "description": "Unofficial title for the document.",
+                      "x-ms-visibility": "advanced",
+                      "type": "string"
+                    },
+                    "ResponsiblePersonEmail": {
+                      "title": "Responsible Person Email",
+                      "description": "Responsible person for the document.",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "Category": {
+                      "title": "Category",
+                      "description": "Category for the document. F.ex. recno:60005 for Internal memo without follow-up",
+                      "type": "string",
+                      "x-ms-visibility": "advanced",
+                      "example": "recno:60005"
+                    },
+                    "Status": {
+                      "title": "Status",
+                      "description": "Status for the document. F.ex. recno:1 for Reserved or recno:6 for Officially recorded",
+                      "x-ms-visibility": "advanced",
+                      "type": "string"
+					          },
+                    "Archive": {
+                      "title": "Archive",
+                      "description": "The Document archive for this document",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "Notes": {
+                      "title": "Notes",
+                      "description": "Notes for the document.",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "Contacts": {
+                      "description": "Contacts",
+                      "x-ms-visibility": "advanced",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Role": {
+                            "title": "Role",
+                            "description": "The contact’s role for the specific document. Can be code or recno.",
+                            "type": "string"
+                          },
+                          "ReferenceNumber": {
+                            "title": "Reference Number",
+                            "description": "Reference Number is the Personal Id Number for a private person and Enterprise Number for an enterprise.",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "AdditionalFields": {
+                      "description": "Additional Public 360 fields which are not currently included in the parameters of the action.",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Name": {
+                            "title": "Name",
+                            "description": "The name of the field. This name is the name in the 360° meta model (Not always the same as seen in 360° GUI.)",
+                            "type": "string"
+                          },
+                          "Value": {
+                            "title": "Value",
+                            "description": "The value to be set in the field.",
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "x-ms-visibility": "advanced"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Recno": {
+                  "format": "int32",
+                  "description": "Recno",
+                  "type": "integer"
+                },
+                "DocumentNumber": {
+                  "description": "DocumentNumber",
+                  "type": "string"
+                },
+                "Successful": {
+                  "description": "Successful",
+                  "type": "boolean"
+                },
+                "ErrorMessage": {
+                  "description": "ErrorMessage",
+                  "type": "string"
+                },
+                "ErrorDetails": {
+                  "description": "ErrorDetails",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+	"/Biz/v2/api/call/SI.Data.RPC/SI.Data.RPC/CaseService/CreateCase": {
+      "post": {
+        "summary": "Create Case",
+        "description": "This operation is used to create cases in Public 360 using SIF API. Required fields include Title, Case Type, and Responsible Person Email/Id Number or Responsible Enterprise Number. We recommend using the Default Value Sets feature in Public 360 to preconfigure these values for Case, Document, and File. This is especially useful when creating documents automatically from forms or through integration with external systems. For more information, visit: https://help.360online.com/ReleaseInformation/SIF%20APIs%20-%20Documentation.pdf",
+        "operationId": "CreateCase",
+        "consumes": [
+          "*/*"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "hosturl",
+            "description": "Host URL to point to the public 360 solution.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Host URL"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "parameter"
+              ],
+              "type": "object",
+              "properties": {
+                "parameter": {
+                  "description": "parameter",
+                  "required": [
+                    "Title"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "Title": {
+                      "title": "Title",
+                      "description": "Title for the case.",
+                      "type": "string"
+                    },
+                    "DefaultValueSet": {
+                      "title": "Default Value Set",
+                      "description": "Set of defined values for Case entities which are used to create case with those values as default if not passed.",
+                      "type": "string",
+                      "x-ms-visibility": "important"
+                    },
+                    "UnofficialTitle": {
+                      "title": "Unofficial title",
+                      "description": "Unofficial title for the case.",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "CaseType": {
+                      "title": "Case Type",
+                      "description": "Code or recno value, for instance “Case” or “recno:2”. Refers to the Case type code table.",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "ResponsiblePersonEmail": {
+                      "title": "Responsible Person Email",
+                      "description": "Responsible person for the case.",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "ResponsiblePersonIdNumber": {
+                      "title": "Responsible Person Id Number",
+                      "description": "Refers to a valid contact external id. Alternative to Responsible person Email.",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "ResponsibleEnterpriseNumber": {
+                      "title": "Responsible Enterprise Number",
+                      "description": "Looks up enterprise based on external id or reference number. Alternative to Responsible person email and id number.",
+                      "type": "string",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "ProgressPlanId": {
+                      "format": "int32",
+                      "title": "Progress Plan Id",
+                      "description": "Progress Plan Id to connect a case to a progress plan. The Progress Plan Id can be a recno, workunit id or description.",
+                      "type": "integer",
+                      "x-ms-visibility": "advanced"
+                    },
+                    "AdditionalFields": {
+                      "description": "Additional Public 360 fields which are not currently included in the parameters of the action.",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Name": {
+                            "title": "Name",
+                            "description": "The name of the field. This name is the name in the 360° meta model (Not always the same as seen in 360° GUI.)",
+                            "type": "string"
+                          },
+                          "Value": {
+                            "title": "Value",
+                            "description": "The value to be set in the field.",
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "x-ms-visibility": "advanced"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Recno": {
+                  "format": "int32",
+                  "description": "Recno",
+                  "type": "integer"
+                },
+                "CaseNumber": {
+                  "description": "CaseNumber",
+                  "type": "string"
+                },
+                "Successful": {
+                  "description": "Successful",
+                  "type": "boolean"
+                },
+                "ErrorMessage": {
+                  "description": "ErrorMessage",
+                  "type": "string"
+                },
+                "ErrorDetails": {
+                  "description": "ErrorDetails",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    }
+  },
+  "x-ms-connector-metadata": [
+    {
+      "propertyName": "Website",
+      "propertyValue": "https://www.tietoevry.com/"
+    },
+    {
+      "propertyName": "Privacy policy",
+      "propertyValue": "https://www.tietoevry.com/siteassets/files/privacy-notice/privacy-notice-public-360-power-automate-connetor.pdf"
+    },
+    {
+      "propertyName": "Categories",
+      "propertyValue": "Content and Files;Productivity"
+    }
+  ],
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "oauth2_auth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
+      "tokenUrl": "https://login.windows.net/common/oauth2/authorize",
+      "scopes": {
+        "User.Read": "User.Read"
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2_auth": [
+        "User.Read"
+      ]
+    }
+  ],
+  "tags": []
+}
