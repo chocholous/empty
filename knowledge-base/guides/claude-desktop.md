@@ -45,35 +45,69 @@ Desktopová aplikace Anthropic pro Claude. Hlavní výhoda: nativní podpora MCP
 }
 ```
 
+### Anthropic Official M365 Connector (Team/Enterprise)
+
+Pro Team/Enterprise plány nabízí Anthropic **nativní M365 connector**:
+- SharePoint, OneDrive, Outlook, Teams
+- Vyžaduje Entra ID Global Admin + Claude plan Owner
+- OBO (On-Behalf-Of) token exchange s Graph API
+- Žádné cachování obsahu - data se načítají on-demand
+- [Security guide](https://support.claude.com/en/articles/12684923-microsoft-365-connector-security-guide)
+
 ### M365/Azure MCP servery pro Claude Desktop
 
-#### Microsoft MCP Catalog
-Z [microsoft/mcp](https://github.com/microsoft/mcp) - Azure MCP Server 1.0 (GA):
-- 40+ Azure services
-- M365 Tools: Calendar, Mail, Search, People, Admin
-- AKS, Foundry, Clarity
-
+#### Azure MCP Server (oficiální Microsoft, GA)
 ```json
 {
   "mcpServers": {
-    "azure": {
+    "Azure MCP Server": {
       "command": "npx",
-      "args": ["-y", "@microsoft/azure-mcp"],
-      "env": {
-        "AZURE_SUBSCRIPTION_ID": "your-sub-id"
-      }
-    },
-    "azure-devops": {
-      "command": "npx",
-      "args": ["-y", "@microsoft/azure-devops-mcp"],
-      "env": {
-        "AZURE_DEVOPS_ORG": "your-org",
-        "AZURE_DEVOPS_PAT": "your-pat"
-      }
+      "args": ["-y", "@azure/mcp@latest", "server", "start"]
     }
   }
 }
 ```
+40+ Azure services: Storage, Cosmos DB, PostgreSQL, AI Search, Key Vault, AKS...
+
+#### Azure DevOps MCP (oficiální, GA od Oct 2025)
+```json
+{
+  "mcpServers": {
+    "azure-devops": {
+      "command": "npx",
+      "args": ["-y", "@azure-devops/mcp", "YourOrgName"]
+    }
+  }
+}
+```
+Auth: PAT, Azure Identity (DefaultAzureCredential), nebo Azure CLI.
+
+#### Softeria MS-365 MCP Server (community, dobrá kvalita)
+```json
+{
+  "mcpServers": {
+    "ms365": {
+      "command": "npx",
+      "args": ["-y", "@softeria/ms-365-mcp-server"]
+    }
+  }
+}
+```
+Personal i organizational mode, Teams/Chats s `--org-mode` flag.
+
+### Microsoft oficiální MCP portfolio (10 serverů)
+1. Microsoft Learn Docs MCP
+2. Azure MCP Server
+3. Azure DevOps MCP Server
+4. Azure AI Foundry MCP Server
+5. Azure Kubernetes Service MCP Server
+6. Microsoft SQL MCP Server
+7. Microsoft 365 / Copilot Agents MCP Server
+8. Microsoft Teams MCP Server
+9. Microsoft Sentinel MCP Server
+10. Document Conversion MCP Server
+
+Katalog: [github.com/microsoft/mcp](https://github.com/microsoft/mcp)
 
 ## Projekty
 

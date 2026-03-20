@@ -48,10 +48,20 @@ globs: ["**/api/**"]        # API endpoints
 
 ## MCP v Cursoru
 
-### Konfigurace
-Settings → MCP → Add New MCP Server
+Cursor je **jeden z nejkompletnějších MCP klientů** - podporuje všech 5 protocol capabilities (tools, resources, prompts, elicitation, sampling).
 
-Nebo v `.cursor/mcp.json`:
+### Feature timeline
+- **June 2025:** OAuth support (v1.0)
+- **August 2025:** Elicitation - servery mohou žádat user input (v1.5)
+- **September 2025:** Resources support (v1.6)
+
+### Konfigurace
+- **GUI:** Settings → Tools & Integrations → New MCP Server
+- **Project:** `.cursor/mcp.json`
+- **Global:** `~/.cursor/mcp.json`
+
+Transporty: stdio, SSE, Streamable HTTP.
+
 ```json
 {
   "mcpServers": {
@@ -59,16 +69,20 @@ Nebo v `.cursor/mcp.json`:
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-memory"]
     },
-    "filesystem": {
+    "azure": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./"]
+      "args": ["-y", "@azure/mcp@latest", "server", "start"]
     },
     "azure-devops": {
       "command": "npx",
-      "args": ["-y", "@microsoft/azure-devops-mcp"],
+      "args": ["-y", "@azure-devops/mcp", "MyOrgName"]
+    },
+    "ms365": {
+      "command": "npx",
+      "args": ["-y", "@softeria/ms-365-mcp-server"],
       "env": {
-        "AZURE_DEVOPS_ORG": "myorg",
-        "AZURE_DEVOPS_PAT": "${AZURE_DEVOPS_PAT}"
+        "MS365_MCP_CLIENT_ID": "${MS365_MCP_CLIENT_ID}",
+        "MS365_MCP_TENANT_ID": "${MS365_MCP_TENANT_ID}"
       }
     },
     "ms-docs": {
@@ -78,6 +92,11 @@ Nebo v `.cursor/mcp.json`:
   }
 }
 ```
+
+### Praktické limity
+- **Max ~40 aktivních tools** napříč všemi servery - za tím agent degraduje při výběru tool
+- Vždy **pin npm verze** - CVE-2025-6514 byl critical command injection v `mcp-remote`
+- Preferujte `DefaultAzureCredential` nad PATs
 
 ## AI Features
 

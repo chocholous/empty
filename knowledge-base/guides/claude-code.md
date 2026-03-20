@@ -92,7 +92,28 @@ Review the code changes focusing on:
 
 ## MCP konfigurace
 
-### V settings.json
+### Přidání MCP serverů
+```bash
+# CLI přidání
+claude mcp add memory -- npx -y @modelcontextprotocol/server-memory
+claude mcp add azure-devops -- npx -y @azure-devops/mcp YourOrgName
+claude mcp add ms-docs -- npx -y @microsoftdocs/mcp
+
+# Import z Claude Desktop
+claude mcp add-from-claude-desktop
+
+# JSON import
+claude mcp add-json azure '{"command":"npx","args":["-y","@azure/mcp@latest","server","start"]}'
+```
+
+### Scopes
+- **User:** `~/.claude.json` - globální
+- **Project:** `.mcp.json` - pro projekt (commitovat do repo)
+- **Local:** `.claude/settings.local.json` - lokální (gitignored)
+
+Secrets v `.mcp.json`: použijte `${VAR}` syntax → načte z env.
+
+### V settings.json (manuálně)
 ```json
 {
   "mcpServers": {
@@ -101,9 +122,13 @@ Review the code changes focusing on:
       "args": ["-y", "@modelcontextprotocol/server-memory"],
       "env": { "MEMORY_FILE_PATH": ".claude/memory.jsonl" }
     },
+    "azure": {
+      "command": "npx",
+      "args": ["-y", "@azure/mcp@latest", "server", "start"]
+    },
     "azure-devops": {
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/azure-devops-mcp"]
+      "args": ["-y", "@azure-devops/mcp", "YourOrgName"]
     },
     "ms-docs": {
       "command": "npx",
@@ -112,6 +137,13 @@ Review the code changes focusing on:
   }
 }
 ```
+
+### Claude Code jako MCP Server
+Claude Code může sám fungovat jako MCP server:
+```bash
+claude mcp serve
+```
+Jiní klienti (Claude Desktop, Cursor) pak mohou volat Claude Code remotely.
 
 ## Hooks
 
