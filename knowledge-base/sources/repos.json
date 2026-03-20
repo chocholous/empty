@@ -209,6 +209,50 @@
       "relevance": ["copilot-studio"]
     }
   ],
+    {
+      "id": "copilot-studio-samples",
+      "name": "Copilot Studio Samples",
+      "repo": "microsoft/CopilotStudioSamples",
+      "url": "https://github.com/microsoft/CopilotStudioSamples",
+      "category": "microsoft",
+      "quality": "MEDIUM",
+      "stars": "684",
+      "description": "Implementation guides, SharePoint SSO, load testing, indexing samples. Některé samples jsou legacy PVA.",
+      "relevance": ["copilot-studio"]
+    },
+    {
+      "id": "power-cat-kit",
+      "name": "Power-CAT Copilot Studio Kit",
+      "repo": "microsoft/Power-CAT-Copilot-Studio-Kit",
+      "url": "https://github.com/microsoft/Power-CAT-Copilot-Studio-Kit",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "stars": "300+",
+      "description": "Batch testing, compliance hub, component library pre-built komponent. Governance tools.",
+      "relevance": ["copilot-studio"]
+    },
+    {
+      "id": "pnp-copilot-prompts",
+      "name": "PnP Copilot Prompts",
+      "repo": "pnp/copilot-prompts",
+      "url": "https://github.com/pnp/copilot-prompts",
+      "category": "community",
+      "quality": "HIGH",
+      "description": "Prompt samples, agent instructions, SKILL.md files pro GitHub Copilot. Microsoft-supported PnP program.",
+      "relevance": ["github-copilot", "copilot-studio"]
+    },
+    {
+      "id": "azure-search-power-skills",
+      "name": "Azure Search Power Skills",
+      "repo": "Azure-Samples/azure-search-power-skills",
+      "url": "https://github.com/Azure-Samples/azure-search-power-skills",
+      "category": "microsoft",
+      "quality": "MEDIUM",
+      "stars": "300+",
+      "description": "Custom skill templates pro Azure AI Search: text analytics, vision, geo.",
+      "relevance": ["terminal", "claude-code"]
+    }
+  ],
   "lastUpdated": "2026-03-20",
-  "totalHighQuality": 21
+  "totalHighQuality": 23
 }

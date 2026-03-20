@@ -6,11 +6,12 @@ Microsoft 365 a Azure nabízí skills/connectors napříč několika platformami
 
 | Platforma | Mechanismus skills | M365 pokrytí |
 |-----------|-------------------|--------------|
-| Semantic Kernel | @kernel_function plugins | Email, Calendar, Drive, Tasks, Org |
-| Power Platform | Connectors (1000+) | Kompletní M365 + Azure |
-| Copilot Studio | Topics + Actions + Connectors | M365 přes Power Platform |
-| MCP Servers | Tools | Záleží na serveru |
+| Semantic Kernel | @kernel_function plugins + Copilot Agent Plugins | Email, Calendar, Drive, Tasks, Org, full Graph |
+| Power Platform | 1,300+ connectors, 12,000+ actions | Kompletní M365 + Azure |
+| Copilot Studio | Topics + Actions + Generative orchestration | M365 přes Power Platform + Graph |
+| MCP Servers | Tools (10 official Microsoft MCP servers) | Azure 40+, M365, DevOps, Teams, SQL, Sentinel |
 | GPT Actions | OpenAPI schemas | Přes Azure Functions middleware |
+| Copilot Connectors | Synced (indexace) + Federated (real-time MCP) | 100+ pro Azure, Confluence, SF, SNow |
 
 ## Semantic Kernel M365 Plugins (.NET)
 
@@ -56,28 +57,44 @@ var calendarPlugin = new CalendarPlugin(new OutlookCalendarConnector(graphClient
 
 Power Platform má 1000+ connectorů. Klíčové pro M365:
 
-### Standard Connectors (zdarma)
-- **SharePoint** - Lists, documents, sites, permissions
-- **Outlook 365** - Email, calendar, contacts
-- **Microsoft Teams** - Messages, channels, meetings
-- **OneDrive for Business** - Files, folders, sharing
-- **Excel Online** - Tables, worksheets, ranges
-- **Planner** - Tasks, buckets, plans
-- **Microsoft To Do** - Tasks, lists
+**Pozor:** Jediný Premium connector upgraduje licenční požadavek celé aplikace pro všechny uživatele.
+
+### Standard Connectors (zahrnuty v M365 licenci)
+| Connector | Klíčové capabilities | Limity |
+|-----------|---------------------|--------|
+| **SharePoint** | Lists CRUD, document libraries, triggers on changes | 600 actions/min throttle |
+| **Outlook 365** | Send/manage emails, calendar, contacts, meeting scheduling | |
+| **Microsoft Teams** | Post messages, channels, adaptive cards | |
+| **OneDrive Business** | File CRUD, sharing, folder management | |
+| **Excel Online** | Tables, worksheets, ranges, calculations | |
+| **Planner** | Tasks, buckets, plans, assignments | |
+| **Microsoft To Do** | Personal tasks, lists | |
+| **OneNote** | Notebooks, pages, sections | |
+| **Forms** | Create/read forms, responses | |
 
 ### Premium Connectors
-- **Azure DevOps** - Work items, repos, pipelines, builds
-- **Azure Blob Storage** - Blobs, containers
-- **Azure SQL** - Queries, stored procedures
-- **Dynamics 365** - CRM entities, business processes
-- **Azure Key Vault** - Secrets management
-- **Azure AI Services** - Cognitive services (vision, language, speech)
-- **Microsoft Graph** - Univerzální API pro celé M365
+| Connector | Klíčové capabilities |
+|-----------|---------------------|
+| **Azure DevOps** | Work items, builds, releases, repos, pipelines |
+| **Dataverse** | Full entity CRUD, business logic, relationships |
+| **SQL Server** | Direct database integration |
+| **Azure Blob Storage** | Blob CRUD, containers |
+| **Azure SQL** | Queries, stored procedures |
+| **Dynamics 365** | CRM entities, business processes |
+| **Azure Key Vault** | Secrets read |
+| **Azure AI Services** | Cognitive services (vision, language, speech) |
+| **Microsoft Graph** (HTTP) | Univerzální API pro celé M365 |
 
 ### Custom Connectors
 - OpenAPI/Swagger definice pro vlastní API
 - Azure Functions jako middleware
 - Logic Apps jako orchestrace
+- Source code: [microsoft/PowerPlatformConnectors](https://github.com/microsoft/PowerPlatformConnectors)
+
+### Copilot Connectors (dříve Graph Connectors)
+- **Synced:** Indexace externích dat do Microsoft Graph (100+ connectors)
+- **Federated** (preview): Real-time retrieval přes MCP bez indexování
+- Pro: Azure services, Confluence, Salesforce, ServiceNow...
 
 ## Microsoft Graph API jako skill source
 
@@ -97,12 +114,13 @@ Microsoft Graph je **univerzální API** pro M365. Pokrytí:
 
 ### Použití v různých platformách
 
-#### V Semantic Kernel
-```python
-# SK automaticky generuje funkce z Graph API
-from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
-# Plugin wraps Graph API calls as kernel functions
+#### V Semantic Kernel (Copilot Agent Plugins)
+```csharp
+// SK může importovat Graph API jako plugin z OpenAPI spec
+// Kiota CLI generuje Copilot Agent Plugins z Graph OpenAPI specs
+await kernel.ImportPluginFromCopilotAgentPluginAsync("graph-mail", manifestUri);
 ```
+Nové: **Retrieval API** (Build 2025) umožňuje query přímo do Microsoft semantic indexu - eliminuje potřebu vlastních vector stores.
 
 #### V GPT Actions (přes Azure Functions)
 ```python
@@ -122,15 +140,19 @@ CLI for M365 MCP a Lokka wrappují Graph API do MCP tools.
 
 ## Azure AI Skills
 
-### Azure AI Search Skillsets
-Built-in cognitive skills pro enrichment:
-- **Entity Recognition** - Rozpoznání osob, míst, organizací
-- **Key Phrase Extraction** - Klíčová slova z textu
-- **Language Detection** - Detekce jazyka
-- **Sentiment Analysis** - Analýza sentimentu
-- **OCR** - Text z obrázků
-- **Image Analysis** - Popis obrázků, tagy
-- **Custom Skills** - Azure Functions webhooks
+### Azure AI Search Skillsets (~19 built-in skills)
+
+| Kategorie | Skills | Billing |
+|-----------|--------|---------|
+| **NLP** | Entity Recognition v3, Sentiment, PII Detection, Key Phrase Extraction, Language Detection, Text Translation, Custom Entity Lookup | Billable (Foundry) |
+| **Vision** | OCR (printed + handwritten), Image Analysis (faces, landmarks) | Billable (Foundry) |
+| **Chunking & Vectors** | Text Split (pages/sentences), Azure OpenAI Embedding, Document Layout | Mixed |
+| **Utility** | Conditional, Document Extraction, Shaper, Text Merge | **Free** |
+| **Azure-Hosted** | AML Skill (Azure ML endpoint), Azure Content Understanding | Your resource |
+| **Custom** | Custom Web API Skill (any REST endpoint) | Your infra |
+
+Free tier: 20 dokumentů/indexer/den pro billable enrichments.
+Docs: [Skills Reference](https://learn.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills)
 
 ### Azure OpenAI Function Calling
 ```python
