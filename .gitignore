@@ -18,4 +18,4 @@ knowledge-base/graphrag/.env
 knowledge-base/graphrag/input/
 knowledge-base/graphrag/cache/
 knowledge-base/graphrag/logs/
-knowledge-base/graphrag/output/lancedb/
+knowledge-base/graphrag/output/
