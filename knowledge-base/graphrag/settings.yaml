@@ -22,6 +22,9 @@ embedding_models:
     retry:
       type: exponential_backoff
 
+### Concurrency - maximize parallelism ###
+concurrent_requests: 50
+
 ### Document processing settings ###
 
 input:
@@ -63,6 +66,8 @@ vector_store:
 
 embed_text:
   embedding_model_id: default_embedding_model
+  batch_size: 64
+  batch_max_tokens: 8191
 
 extract_graph:
   completion_model_id: default_completion_model
