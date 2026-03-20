@@ -23,7 +23,7 @@ embedding_models:
       type: exponential_backoff
 
 ### Concurrency - maximize parallelism ###
-concurrent_requests: 50
+concurrent_requests: 250
 
 ### Document processing settings ###
 
