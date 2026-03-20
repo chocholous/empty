@@ -9,3 +9,13 @@ node_modules/
 __pycache__/
 *.pyc
 .venv/
+
+# Secrets
+.env
+knowledge-base/graphrag/.env
+
+# GraphRAG runtime (large, regenerable)
+knowledge-base/graphrag/input/
+knowledge-base/graphrag/cache/
+knowledge-base/graphrag/logs/
+knowledge-base/graphrag/output/lancedb/
