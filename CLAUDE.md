@@ -36,7 +36,27 @@ Při dotazu na konkrétní téma, **VŽDY načti příslušný soubor** z knowle
 | Jaké skills existují pro Azure? | Filtruj `nodes[tags contains 'azure']` + `edges[relation=provides_skills_for]` |
 | Jak spolu souvisí X a Y? | Hledej v `edges` propojení mezi node ID |
 
-### Fulltext hledání
+### Semantic search (TF-IDF, relevance ranking)
+
+```bash
+# Přirozený jazyk — vrátí top výsledky seřazené podle relevance
+python3 knowledge-base/tools/semantic-search.py "jak postavit MCP server"
+python3 knowledge-base/tools/semantic-search.py "multi-agent orchestrace" --top 10
+python3 knowledge-base/tools/semantic-search.py "autentizace M365" --section skills
+python3 knowledge-base/tools/semantic-search.py "azure deployment" --json
+```
+
+### Discovery (co tu je? co chybí? jak spolu věci souvisí?)
+
+```bash
+python3 knowledge-base/tools/discover.py coverage              # Přehled celé KB
+python3 knowledge-base/tools/discover.py topics --min-docs 2   # Všechna témata
+python3 knowledge-base/tools/discover.py related "MCP"         # Příbuzná témata
+python3 knowledge-base/tools/discover.py graph "copilot-studio" # Vztahy v grafu
+python3 knowledge-base/tools/discover.py gaps                   # Co v KB chybí
+```
+
+### Fulltext hledání (grep-based, exaktní shody)
 
 ```bash
 ./knowledge-base/tools/search.sh "azure devops"
@@ -64,7 +84,9 @@ knowledge-base/
 ├── graph/               # Knowledge graph
 │   └── knowledge-graph.json  # 30+ nodes, 40+ edges, vztahy mezi koncepty
 ├── tools/               # Nástroje
-│   ├── search.sh             # Fulltext search v KB
+│   ├── semantic-search.py    # TF-IDF semantic search (synonym expansion, relevance ranking)
+│   ├── discover.py           # Discovery tool (topics, related, coverage, gaps, graph explorer)
+│   ├── search.sh             # Fulltext search v KB (grep-based)
 │   └── update-sources.sh     # Aktualizace ze zdrojových repozitářů
 └── sources/             # 15 zdrojových repozitářů (extrahovaný obsah)
     ├── repos.json
