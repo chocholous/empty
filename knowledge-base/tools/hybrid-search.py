@@ -49,12 +49,20 @@ KB_DIR = SCRIPT_DIR.parent
 CATALOG_PATH = KB_DIR / "catalog.json"
 INDEX_DIR = KB_DIR / "tools" / ".hybrid-index"
 
-# Embedding model — small, fast, multilingual
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+# Embedding model — multilingual (50+ languages including Czech)
+EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
 RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 # RRF constant (standard value from Cormack et al. 2009)
 RRF_K = 60
+
+# Score thresholds — results below these are filtered out
+# RRF: doc at rank #1 in ONE list = 1/(60+1) = 0.0164
+# RRF: doc at rank #1 in BOTH lists = 2/(60+1) = 0.0328
+# We require results to appear in both lists or rank very high in one
+HYBRID_SCORE_THRESHOLD = 0.018
+BM25_SCORE_THRESHOLD = 2.0
+EMBEDDING_SCORE_THRESHOLD = 0.30
 
 # Czech/English stop words (reused from semantic-search.py)
 STOP_WORDS = {
@@ -74,6 +82,94 @@ STOP_WORDS = {
     "jak", "co", "kde", "kdy", "ten", "ta", "to", "tyto", "tato",
     "nebo", "ale", "když", "pokud", "než", "aby", "také", "tak",
     "jen", "pouze", "více", "méně", "pak", "již", "ještě",
+    "chci", "potřebuju", "potřebuji", "chtěl", "bych", "mám", "musím",
+    "nějak", "něco", "nějaký", "prosím",
+}
+
+# ─────────────────────────────────────────────────────────────
+# CZ → EN Query Translation (for BM25 keyword matching)
+# ─────────────────────────────────────────────────────────────
+
+# Czech terms that appear in user queries → English equivalents in our KB
+CZ_EN_TRANSLATION = {
+    # Verbs / intent
+    "srovnat": "compare comparison diff",
+    "porovnat": "compare comparison diff",
+    "porovnání": "compare comparison diff",
+    "vytvořit": "create build generate",
+    "napsat": "write create draft",
+    "opravit": "fix repair audit clean",
+    "zkontrolovat": "check audit review validate",
+    "analyzovat": "analyze analysis",
+    "nasadit": "deploy deployment publish",
+    "nastavit": "configure setup settings",
+    "najít": "find search discover",
+    "hledat": "search find query",
+    "spočítat": "calculate compute model",
+    "vyčistit": "clean normalize standardize",
+    "poslat": "send email notify",
+    "naplánovat": "plan schedule roadmap",
+    "debugovat": "debug troubleshoot fix",
+    # Nouns — documents
+    "tabulka": "spreadsheet excel xlsx table",
+    "tabulky": "spreadsheet excel xlsx table",
+    "tabulku": "spreadsheet excel xlsx table",
+    "dokument": "document docx word",
+    "smlouva": "contract agreement legal",
+    "smlouvu": "contract agreement legal",
+    "prezentace": "presentation slides powerpoint pptx",
+    "prezentaci": "presentation slides powerpoint pptx",
+    "report": "report analysis document",
+    "zpráva": "report analysis document",
+    "graf": "chart graph visualization",
+    # Nouns — finance
+    "valuace": "valuation dcf model",
+    "stojí": "valuation value worth dcf price intrinsic",
+    "ocenění": "valuation dcf model value intrinsic",
+    "ohodnotit": "valuation dcf model value appraise",
+    "cena": "price valuation value cost",
+    "hodnota": "value valuation worth dcf",
+    "firma": "company business enterprise",
+    "firmy": "company companies business peers",
+    "firmu": "company business enterprise",
+    "akcie": "stock equity shares",
+    "dluh": "debt leverage loan",
+    "akvizice": "acquisition merger m&a",
+    "investice": "investment portfolio returns",
+    "rozpočet": "budget forecast financial plan",
+    "zisk": "profit earnings income ebitda",
+    "tržby": "revenue sales turnover",
+    "náklady": "costs expenses opex",
+    "marže": "margin gross ebitda net",
+    "model": "model template framework",
+    # Nouns — tech
+    "server": "server deployment infrastructure",
+    "databáze": "database sql storage",
+    "pipeline": "pipeline ci/cd workflow automation",
+    "prostředí": "environment deployment infrastructure",
+    "aplikace": "application app service",
+    # Nouns — business
+    "zákazník": "customer client account",
+    "zákazníky": "customer client account",
+    "zaměstnanec": "employee staff hire",
+    "zaměstnance": "employee staff hire onboarding",
+    "schůzka": "meeting call prep",
+    "ticket": "ticket issue support triage",
+    "projekt": "project management plan",
+    "tým": "team organization",
+    "konkurence": "competitor competitive analysis",
+    "konkurenci": "competitor competitive analysis",
+    "trh": "market industry sector",
+    # Adjectives
+    "finanční": "financial finance",
+    "nový": "new create",
+    "nového": "new create",
+    "novou": "new create",
+    "chybný": "error broken fix audit",
+    "chybama": "error broken fix audit clean",
+    "chybami": "error broken fix audit clean",
+    "špatný": "wrong error incorrect",
+    "messy": "messy dirty clean normalize",
 }
 
 
@@ -228,8 +324,21 @@ def _clean_markdown(text: str) -> str:
 def tokenize(text: str) -> list[str]:
     """Tokenize for BM25."""
     text = text.lower()
-    tokens = re.findall(r'[a-z0-9][a-z0-9._-]*[a-z0-9]|[a-z0-9]+', text)
+    tokens = re.findall(r'[a-z0-9\u00c0-\u024f][a-z0-9\u00c0-\u024f._-]*[a-z0-9\u00c0-\u024f]|[a-z0-9\u00c0-\u024f]+', text)
     return [t for t in tokens if t not in STOP_WORDS and len(t) > 1]
+
+
+def translate_query(query: str) -> str:
+    """Expand Czech query with English equivalents for BM25 keyword matching."""
+    tokens = tokenize(query)
+    expanded = list(tokens)  # keep original tokens
+
+    for token in tokens:
+        if token in CZ_EN_TRANSLATION:
+            en_terms = CZ_EN_TRANSLATION[token].split()
+            expanded.extend(en_terms)
+
+    return " ".join(expanded)
 
 
 class BM25Index:
@@ -273,7 +382,9 @@ class BM25Index:
 
     def search(self, query: str, top_k: int = 50) -> list[tuple[str, float]]:
         """Return (doc_id, score) sorted by BM25 score."""
-        query_tokens = tokenize(query)
+        # Translate CZ→EN before tokenizing for BM25
+        translated = translate_query(query)
+        query_tokens = tokenize(translated)
         if not query_tokens:
             return []
 
@@ -553,6 +664,17 @@ class HybridSearch:
 
             fused = reciprocal_rank_fusion([bm25_results, emb_results])
 
+        # Apply score threshold
+        if mode == "hybrid":
+            fused = [(d, s) for d, s in fused if s >= HYBRID_SCORE_THRESHOLD]
+        elif mode == "bm25":
+            fused = [(d, s) for d, s in fused if s >= BM25_SCORE_THRESHOLD]
+        elif mode == "embedding":
+            fused = [(d, s) for d, s in fused if s >= EMBEDDING_SCORE_THRESHOLD]
+
+        # Deduplicate: same path → keep highest score
+        fused = self._deduplicate(fused)
+
         # Optional cross-encoder reranking
         if use_reranker and mode != "bm25":
             candidates = [
@@ -579,6 +701,35 @@ class HybridSearch:
 
         return results
 
+    def _deduplicate(self, ranked: list[tuple[str, float]]) -> list[tuple[str, float]]:
+        """Remove duplicate paths, keeping the highest-scoring entry.
+
+        For guides/skills docs (which are split into sections), we use
+        path + section_title as the dedup key so different sections of
+        the same file can appear independently.
+        For catalog/source entries pointing to the same SKILL.md file,
+        we keep only the highest-scoring one.
+        """
+        seen_keys: dict[str, tuple[str, float]] = {}
+        for doc_id, score in ranked:
+            doc = self.doc_map.get(doc_id)
+            if not doc:
+                continue
+
+            # Guides/skills docs are split by section — dedup by title
+            if doc.section in ("guides", "skills"):
+                dedup_key = f"{doc.path}::{doc.title}"
+            else:
+                # Catalog entries + source extracts — dedup by path
+                dedup_key = doc.path
+
+            if dedup_key not in seen_keys or score > seen_keys[dedup_key][1]:
+                seen_keys[dedup_key] = (doc_id, score)
+
+        # Preserve original order (by score)
+        deduped_ids = {v[0] for v in seen_keys.values()}
+        return [(doc_id, score) for doc_id, score in ranked if doc_id in deduped_ids]
+
 
 # ─────────────────────────────────────────────────────────────
 # Output formatting
@@ -601,7 +752,8 @@ def print_results(results, query: str, mode: str, verbose: bool = False):
     print(f"Results: {len(results)}\n")
 
     if not results:
-        print("  No results found. Try different keywords or language (CZ/EN).")
+        print("  No relevant results found (all below score threshold).")
+        print("  Try different keywords, be more specific, or try both CZ and EN.")
         return
 
     section_colors = {
