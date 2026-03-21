@@ -1,196 +1,157 @@
-# AI Tools Knowledge Base — Agent Router
+# AI Tools Knowledge Base — Discovery-First Agent
 
-Toto je knowledge base pro práci s AI nástroji napříč platformami (15 repozitářů, 6,200+ zdrojových dokumentů).
-Obsahuje skills, commands, best practices, MCP tools a connectors pro M365/Azure/Google/OpenAI.
+Knowledge base s 668 skills, pluginy a cookbooks z 15 repozitářů.
+Agent **nemusí znát všechny use cases předem** — najde relevantní skill a naučí se ho použít.
 
-## Routing pravidla
+## Hlavní princip: Discovery → Read → Execute
 
-Při dotazu na konkrétní téma, **VŽDY načti příslušný soubor** z knowledge-base/ a odpovídej na základě jeho obsahu.
+Když uživatel popíše problém:
 
-### Dotaz na platformu → Guides
+1. **Hledej v katalogu** (668 skills, pluginů a cookbooks):
+   ```bash
+   python3 knowledge-base/tools/build-catalog.py --search "popis problému" --top 5
+   ```
 
-| Klíčová slova | Soubor |
-|---------------|--------|
-| Claude Code, `.claude/`, SKILL.md tvorba, terminal AI, hooks, agent SDK | [guides/claude-code.md](knowledge-base/guides/claude-code.md) |
-| Claude Desktop, desktop app, `claude_desktop_config.json` | [guides/claude-desktop.md](knowledge-base/guides/claude-desktop.md) |
-| GitHub Copilot, `@workspace`, `@azure`, Copilot Extensions, `.github/skills/` | [guides/github-copilot.md](knowledge-base/guides/github-copilot.md) |
-| Copilot Studio, Topics, Actions, Power Platform, declarative agents | [guides/copilot-studio.md](knowledge-base/guides/copilot-studio.md) |
-| Cursor, `.cursor/rules/`, `.mdc` soubory, Cursor AI | [guides/cursor.md](knowledge-base/guides/cursor.md) |
-| Terminal workflows, CLI, CI/CD, scripting, pipe, batch AI | [guides/terminal.md](knowledge-base/guides/terminal.md) |
+2. **Přečti nalezený SKILL.md** — obsahuje přesné instrukce, triggers, workflow, gotchas:
+   ```bash
+   # Katalog vrátí cestu, např: sources/anthropic-skills/skills/xlsx/SKILL.md
+   # Přečti celý soubor a řiď se jeho instrukcemi
+   ```
 
-### Dotaz na technologii → Skills
+3. **Doplň z guides/skills** pokud potřebuješ kontext platformy nebo technologie (viz tabulky níže)
 
-| Klíčová slova | Soubor |
-|---------------|--------|
-| MCP, Model Context Protocol, MCP server, FastMCP, tools/resources/prompts | [skills/mcp-servers.md](knowledge-base/skills/mcp-servers.md) |
-| Semantic Kernel, SK, `@kernel_function`, Process Framework, SK agents | [skills/semantic-kernel.md](knowledge-base/skills/semantic-kernel.md) |
-| OpenAI, function calling, GPT Actions, Agents SDK, Responses API, Swarm | [skills/openai-tools.md](knowledge-base/skills/openai-tools.md) |
-| M365, Graph API, connectors, SharePoint, Outlook, Teams, Azure services | [skills/m365-connectors.md](knowledge-base/skills/m365-connectors.md) |
-| Cross-platform, SKILL.md standard, skills srovnání, progressive disclosure | [skills/cross-platform.md](knowledge-base/skills/cross-platform.md) |
+4. **Pokud katalog nic nevrátí**, použij semantic search přes celou KB:
+   ```bash
+   python3 knowledge-base/tools/semantic-search.py "popis problému" --top 10
+   ```
 
-### Dotaz na úkol → Task-Oriented Skills
-
-| Klíčová slova | Soubor |
-|---------------|--------|
-| Excel, XLS, porovnej tabulky, diff spreadsheet, konsoliduj, openpyxl | [skills/document-skills.md](knowledge-base/skills/document-skills.md) |
-| Word, DOCX, smlouva, dokument, tracked changes, docx-js | [skills/document-skills.md](knowledge-base/skills/document-skills.md) |
-| PDF, PPTX, prezentace, konverze dokumentů | [skills/document-skills.md](knowledge-base/skills/document-skills.md) |
-| DCF, comps, LBO, merger model, valuace, finanční model | [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) |
-| Audit XLS, vyčisti data, clean spreadsheet, sensitivity tabulky | [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) |
-| CIM, pitch deck, earnings, deal screening, IC memo | [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) |
-| Call prep, outreach, pipeline, forecast, account research | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
-| Contract review, NDA, compliance, GDPR, smlouva revize | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
-| PRD, spec, roadmap, product management, brainstorm | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
-| SQL dotaz, data analýza, vizualizace, dashboard | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
-| Ticket triage, customer support, eskalace, KB article | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
-| Enterprise search, digest, najdi napříč zdroji | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
-
-### Dotaz na vztahy/přehled → Knowledge Graph
-
-| Typ dotazu | Příkaz |
-|-----------|--------|
-| Které platformy podporují MCP? | Načti `graph/knowledge-graph.json`, filtruj `nodes[tags contains 'mcp']` |
-| Jaké skills existují pro Azure? | Filtruj `nodes[tags contains 'azure']` + `edges[relation=provides_skills_for]` |
-| Jak spolu souvisí X a Y? | Hledej v `edges` propojení mezi node ID |
-
-### Semantic search (TF-IDF, relevance ranking)
+## Katalog: 668 indexovaných zdrojů
 
 ```bash
-# Přirozený jazyk — vrátí top výsledky seřazené podle relevance
-python3 knowledge-base/tools/semantic-search.py "jak postavit MCP server"
-python3 knowledge-base/tools/semantic-search.py "multi-agent orchestrace" --top 10
-python3 knowledge-base/tools/semantic-search.py "autentizace M365" --section skills
-python3 knowledge-base/tools/semantic-search.py "azure deployment" --json
+# Hledat skill/plugin/cookbook pro konkrétní úkol
+python3 knowledge-base/tools/build-catalog.py --search "excel porovnání" --top 5
+python3 knowledge-base/tools/build-catalog.py --search "contract review" --top 5
+python3 knowledge-base/tools/build-catalog.py --search "dcf valuation" --top 5
+python3 knowledge-base/tools/build-catalog.py --search "azure deploy" --top 5
+
+# Přehled katalogu
+python3 knowledge-base/tools/build-catalog.py --stats
+
+# Rebuild katalogu (po update sources)
+python3 knowledge-base/tools/build-catalog.py
 ```
 
-### Discovery (co tu je? co chybí? jak spolu věci souvisí?)
+**Co je v katalogu:**
+- 624 SKILL.md souborů (Anthropic, Microsoft, Google, OpenAI, community)
+- 37 Claude pluginů (sales, legal, finance, PM, data, support, engineering, design, marketing, HR, operations)
+- 7 cookbook tutoriálů
+
+## Kdy použít který nástroj
+
+| Situace | Nástroj |
+|---------|---------|
+| Uživatel chce splnit úkol (porovnat XLS, napsat smlouvu, DCF model) | `build-catalog.py --search` → přečíst SKILL.md |
+| Potřebuju porozumět platformě (Claude Code, Copilot, Cursor) | Přečíst příslušný guide (viz tabulka) |
+| Potřebuju porozumět technologii (MCP, Semantic Kernel, function calling) | Přečíst příslušný skill doc (viz tabulka) |
+| Hledám napříč celou KB (přirozený jazyk) | `semantic-search.py "dotaz"` |
+| Chci vědět co KB pokrývá | `discover.py coverage` nebo `build-catalog.py --stats` |
+| Hledám vztahy mezi koncepty | `discover.py graph "node"` nebo `discover.py related "téma"` |
+
+## Referenční tabulky (pokud katalog nestačí)
+
+### Platformy → Guides
+
+| Klíčová slova | Soubor |
+|---------------|--------|
+| Claude Code, `.claude/`, SKILL.md tvorba, hooks, agent SDK | [guides/claude-code.md](knowledge-base/guides/claude-code.md) |
+| Claude Desktop, `claude_desktop_config.json` | [guides/claude-desktop.md](knowledge-base/guides/claude-desktop.md) |
+| GitHub Copilot, `@workspace`, Copilot Extensions | [guides/github-copilot.md](knowledge-base/guides/github-copilot.md) |
+| Copilot Studio, Topics, Actions, Power Platform | [guides/copilot-studio.md](knowledge-base/guides/copilot-studio.md) |
+| Cursor, `.cursor/rules/`, `.mdc` soubory | [guides/cursor.md](knowledge-base/guides/cursor.md) |
+| Terminal workflows, CLI, CI/CD | [guides/terminal.md](knowledge-base/guides/terminal.md) |
+
+### Technologie → Skills
+
+| Klíčová slova | Soubor |
+|---------------|--------|
+| MCP, FastMCP, Model Context Protocol | [skills/mcp-servers.md](knowledge-base/skills/mcp-servers.md) |
+| Semantic Kernel, `@kernel_function`, Process Framework | [skills/semantic-kernel.md](knowledge-base/skills/semantic-kernel.md) |
+| OpenAI, function calling, Agents SDK, Responses API | [skills/openai-tools.md](knowledge-base/skills/openai-tools.md) |
+| M365, Graph API, SharePoint, Teams, Azure | [skills/m365-connectors.md](knowledge-base/skills/m365-connectors.md) |
+| SKILL.md standard, cross-platform srovnání | [skills/cross-platform.md](knowledge-base/skills/cross-platform.md) |
+
+### Sumarizované workflows (pro rychlý kontext)
+
+| Téma | Soubor |
+|------|--------|
+| Excel, DOCX, PDF, PPTX — vzory a gotchas | [skills/document-skills.md](knowledge-base/skills/document-skills.md) |
+| DCF, comps, LBO, merger, audit XLS, IB/ER/PE/WM | [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) |
+| Sales, legal, PM, data, support, enterprise search | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
+
+## Nástroje
 
 ```bash
-python3 knowledge-base/tools/discover.py coverage              # Přehled celé KB
-python3 knowledge-base/tools/discover.py topics --min-docs 2   # Všechna témata
-python3 knowledge-base/tools/discover.py related "MCP"         # Příbuzná témata
-python3 knowledge-base/tools/discover.py graph "copilot-studio" # Vztahy v grafu
-python3 knowledge-base/tools/discover.py gaps                   # Co v KB chybí
-```
+# Skills catalog (hlavní discovery nástroj)
+python3 knowledge-base/tools/build-catalog.py --search "query"
+python3 knowledge-base/tools/build-catalog.py --stats
+python3 knowledge-base/tools/build-catalog.py --search "query" --json
 
-### Fulltext hledání (grep-based, exaktní shody)
+# Semantic search (TF-IDF, přirozený jazyk)
+python3 knowledge-base/tools/semantic-search.py "dotaz"
+python3 knowledge-base/tools/semantic-search.py "dotaz" --top 10 --section skills
 
-```bash
+# Discovery (témata, vztahy, mezery)
+python3 knowledge-base/tools/discover.py coverage
+python3 knowledge-base/tools/discover.py topics --min-docs 2
+python3 knowledge-base/tools/discover.py related "MCP"
+python3 knowledge-base/tools/discover.py graph "copilot-studio"
+python3 knowledge-base/tools/discover.py gaps
+
+# Fulltext grep
 ./knowledge-base/tools/search.sh "azure devops"
-./knowledge-base/tools/search.sh "MCP" --section guides
-./knowledge-base/tools/search.sh "SharePoint" --section skills
 ```
 
-## Struktura knowledge base
+## Struktura
 
 ```
 knowledge-base/
-├── guides/              # Per-stack návody (6 platforem)
-│   ├── claude-code.md        # Claude Code + Agent SDK + plugins
-│   ├── claude-desktop.md     # Desktop app + MCP + M365 connector
-│   ├── github-copilot.md     # Copilot + Agent Skills + declarative agents
-│   ├── copilot-studio.md     # Topics, actions, MCP, A2A, TypeSpec
-│   ├── cursor.md             # Rules (.mdc), MCP, AI composer
-│   └── terminal.md           # CLI workflows, Claude Code, Codex
-├── skills/              # Technologie, patterny a task-oriented skills
-│   ├── mcp-servers.md        # MCP servery + FastMCP + Azure MCP + Gemini
-│   ├── semantic-kernel.md    # SK plugins, agents, Process Framework, memory
-│   ├── openai-tools.md       # Function calling, Agents SDK, Structured Outputs
-│   ├── m365-connectors.md    # Graph API, Power Platform, Azure AI Search
-│   ├── cross-platform.md     # SKILL.md standard, srovnání platforem
-│   ├── financial-workflows.md # DCF, comps, LBO, merger, audit XLS, IB/ER/PE/WM
-│   ├── document-skills.md    # XLSX openpyxl, DOCX docx-js, PDF, PPTX
-│   └── office-workflows.md   # Sales, legal, PM, data, support, enterprise search
-├── graph/               # Knowledge graph
-│   └── knowledge-graph.json  # 30+ nodes, 40+ edges, vztahy mezi koncepty
-├── tools/               # Nástroje
-│   ├── semantic-search.py    # TF-IDF semantic search (synonym expansion, relevance ranking)
-│   ├── discover.py           # Discovery tool (topics, related, coverage, gaps, graph explorer)
-│   ├── search.sh             # Fulltext search v KB (grep-based)
-│   └── update-sources.sh     # Aktualizace ze zdrojových repozitářů
-└── sources/             # 15 zdrojových repozitářů (extrahovaný obsah)
-    ├── repos.json
-    ├── anthropic-cookbook/    anthropic-skills/    anthropic-financial-services-plugins/
-    ├── anthropic-knowledge-work-plugins/    anthropic-claude-quickstarts/
-    ├── microsoft-agent-skills/    microsoft-azure-skills/    microsoft-copilot-studio-samples/
-    ├── microsoft-power-platform-connectors/    microsoftdocs-agent-skills/
-    ├── openai-cookbook/    azure-samples-openai/
-    ├── google-gemini-cookbook/    google-gemini-skills/
-    └── pnp-copilot-pro-dev-samples/
+├── catalog.json          # Auto-generated index (668 entries)
+├── guides/               # 6 platform guides
+├── skills/               # 8 technology + workflow guides
+├── graph/                # Knowledge graph (30+ nodes, 40+ edges)
+├── tools/                # Search, discovery, catalog builder
+│   ├── build-catalog.py  # Skills catalog generator + search
+│   ├── semantic-search.py
+│   ├── discover.py
+│   └── search.sh
+└── sources/              # 15 source repos (6,200+ docs, raw SKILL.md files)
+    ├── anthropic-skills/                  # 18 reference skills
+    ├── anthropic-knowledge-work-plugins/  # 11 domain plugins (142 skills)
+    ├── anthropic-financial-services-plugins/  # 6 finance plugins (63 skills)
+    ├── anthropic-cookbook/                 # Tutorials, examples
+    ├── microsoft-agent-skills/            # 181 agent skills
+    ├── microsoftdocs-agent-skills/        # 192 Azure skills
+    ├── microsoft-azure-skills/            # 55 Azure deployment skills
+    ├── openai-cookbook/                    # Function calling, Agents SDK
+    ├── google-gemini-cookbook/             # Multimodal, Live API
+    └── ...                                # + 6 dalších repozitářů
 ```
-
-## Quick Reference — nejčastější úkoly
-
-### Task-oriented (co uživatelé reálně potřebují)
-
-#### Porovnej dva XLS / najdi rozdíly
-→ Načti [skills/document-skills.md](knowledge-base/skills/document-skills.md) → sekce "Porovnání XLS souborů"
-
-#### Vyčisti / konsoliduj data v Excelu
-→ Načti [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) → "Clean Data XLS" + [skills/document-skills.md](knowledge-base/skills/document-skills.md) → "Konsolidace více XLS"
-
-#### Postav finanční model (DCF, LBO, comps)
-→ Načti [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) → příslušný model + Excel pravidla
-
-#### Zkontroluj smlouvu / NDA
-→ Načti [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) → "Legal" sekce
-
-#### Napiš email klientovi / příprava na call
-→ Načti [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) → "Sales" sekce
-
-#### SQL dotaz / datová analýza
-→ Načti [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) → "Data Analysis" sekce
-
-#### Vytvoř dokument (Word, PDF, prezentaci)
-→ Načti [skills/document-skills.md](knowledge-base/skills/document-skills.md) → příslušný formát
-
-### Neznámý úkol — discovery postup
-1. `python3 knowledge-base/tools/semantic-search.py "popis problému uživatele"`
-2. Podívat se do routing tabulek výše (platformy, technologie, úkoly)
-3. `python3 knowledge-base/tools/discover.py related "klíčové slovo"`
-4. Prohledat `knowledge-base/sources/` pro konkrétní skills a cookbooks z 15 repozitářů
-
-### Tool-oriented (pro vývojáře nástrojů)
-
-#### Vytvořit SKILL.md
-→ Načti [skills/cross-platform.md](knowledge-base/skills/cross-platform.md) (formát, best practices, příklady)
-
-#### Postavit MCP server
-→ Načti [skills/mcp-servers.md](knowledge-base/skills/mcp-servers.md) (FastMCP pattern, TypeScript/Python, annotations)
-
-#### Nastavit MCP pro Claude/Cursor/Copilot
-→ Načti příslušný guide + [skills/mcp-servers.md](knowledge-base/skills/mcp-servers.md) (konfigurace podle platformy)
-
-#### Integrace s M365 (Graph API, SharePoint, Teams)
-→ Načti [skills/m365-connectors.md](knowledge-base/skills/m365-connectors.md) + [guides/copilot-studio.md](knowledge-base/guides/copilot-studio.md)
-
-#### Multi-agent orchestrace
-→ Načti [skills/semantic-kernel.md](knowledge-base/skills/semantic-kernel.md) (Process Framework) + [skills/openai-tools.md](knowledge-base/skills/openai-tools.md) (Swarm pattern) + [guides/claude-code.md](knowledge-base/guides/claude-code.md) (Agent SDK)
-
-#### Azure deployment/diagnostics
-→ Načti [skills/m365-connectors.md](knowledge-base/skills/m365-connectors.md) (Azure AI Skills) + `graph/knowledge-graph.json` → `microsoft-azure-skills` node
-
-#### Copilot Studio agent s MCP
-→ Načti [guides/copilot-studio.md](knowledge-base/guides/copilot-studio.md) (MCP integration, A2A, declarative agents, TypeSpec)
-
-#### Srovnání platforem
-→ Načti [skills/cross-platform.md](knowledge-base/skills/cross-platform.md) (srovnávací matice, skills formáty)
 
 ## Zdroje dat (15 repozitářů)
 
 ### Anthropic
 - [anthropics/anthropic-cookbook](https://github.com/anthropics/anthropic-cookbook) — Tool use, MCP, Agent SDK, RAG
-- [anthropics/skills](https://github.com/anthropics/skills) — SKILL.md open standard (17 reference skills)
+- [anthropics/skills](https://github.com/anthropics/skills) — SKILL.md open standard (18 reference skills)
 - [anthropics/anthropic-claude-quickstarts](https://github.com/anthropics/anthropic-claude-quickstarts) — Agent framework, MCP integration
-- [anthropics/anthropic-financial-services-plugins](https://github.com/anthropics/anthropic-financial-services-plugins) — Finance plugins (DCF, comps, LBO)
-- [anthropics/anthropic-knowledge-work-plugins](https://github.com/anthropics/anthropic-knowledge-work-plugins) — Enterprise plugins (sales, legal, bio-research)
+- [anthropics/anthropic-financial-services-plugins](https://github.com/anthropics/anthropic-financial-services-plugins) — 6 finance plugins (63 skills)
+- [anthropics/anthropic-knowledge-work-plugins](https://github.com/anthropics/anthropic-knowledge-work-plugins) — 11 domain plugins (142 skills)
 
 ### Microsoft
-- [microsoft/skills](https://github.com/microsoft/skills) — 133 agent skills, 4 jazyky, Agents.md
-- [microsoft/azure-skills](https://github.com/microsoft/azure-skills) — 22 Azure skills, deployment chain
+- [microsoft/skills](https://github.com/microsoft/skills) — 181 agent skills, 4 jazyky
+- [microsoft/azure-skills](https://github.com/microsoft/azure-skills) — 55 Azure skills
 - [microsoft/copilot-studio-samples](https://github.com/microsoft/copilot-studio-samples) — MCP, A2A, M365 Agents SDK
 - [microsoft/PowerPlatformConnectors](https://github.com/microsoft/PowerPlatformConnectors) — 1,400+ connectors
-- [MicrosoftDocs/Agent-Skills](https://github.com/MicrosoftDocs/Agent-Skills) — 193 Azure skills
+- [MicrosoftDocs/Agent-Skills](https://github.com/MicrosoftDocs/Agent-Skills) — 192 Azure skills
 
 ### OpenAI / Azure
 - [openai/openai-cookbook](https://github.com/openai/openai-cookbook) — Function calling, Agents SDK, Swarm

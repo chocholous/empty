@@ -243,6 +243,35 @@ def load_kb(section_filter: str = None) -> TFIDFIndex:
                 )
                 index.add_document(doc)
 
+    # Load catalog (primary source for skill discovery)
+    if not section_filter or section_filter in ("catalog", "sources"):
+        catalog_path = KB_DIR / "catalog.json"
+        if catalog_path.exists():
+            catalog = json.loads(catalog_path.read_text())
+            for entry in catalog.get("entries", []):
+                content_parts = [
+                    entry.get("name", ""),
+                    entry.get("description", ""),
+                    entry.get("title", ""),
+                    " ".join(entry.get("tags", [])),
+                    " ".join(entry.get("triggers", [])),
+                    " ".join(entry.get("skills", [])),
+                    " ".join(entry.get("commands", [])),
+                    " ".join(entry.get("connectors", [])),
+                    entry.get("repo", ""),
+                ]
+                content = " ".join(content_parts)
+                etype = entry.get("type", "skill")
+                name = entry.get("title", entry.get("name", "?"))
+                doc = Document(
+                    path=entry.get("path", ""),
+                    title=f"[{etype}] {name}",
+                    section="catalog",
+                    content=content
+                )
+                if len(doc.tokens) > 3:
+                    index.add_document(doc)
+
     # Load source extracts (lighter indexing - just READMEs and SKILLs)
     if not section_filter or section_filter == "sources":
         input_dir = KB_DIR / "graphrag" / "input"
@@ -309,7 +338,7 @@ def main():
     parser = argparse.ArgumentParser(description="Semantic search v Knowledge Base (TF-IDF)")
     parser.add_argument("query", help="Hledaný dotaz (přirozený jazyk)")
     parser.add_argument("--top", type=int, default=5, help="Počet výsledků (default: 5)")
-    parser.add_argument("--section", choices=["guides", "skills", "graph", "sources"],
+    parser.add_argument("--section", choices=["guides", "skills", "graph", "catalog", "sources"],
                        help="Omezit na sekci")
     parser.add_argument("--verbose", "-v", action="store_true", help="Podrobný výstup")
     parser.add_argument("--json", action="store_true", help="JSON výstup")
