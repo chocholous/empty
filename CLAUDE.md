@@ -7,22 +7,22 @@ Agent **nemusí znát všechny use cases předem** — najde relevantní skill a
 
 Když uživatel popíše problém:
 
-1. **Hledej v katalogu** (668 skills, pluginů a cookbooks):
+1. **Hledej hybridním vyhledáváním** (BM25 + embeddings, 1219 dokumentů):
    ```bash
-   python3 knowledge-base/tools/build-catalog.py --search "popis problému" --top 5
+   python3 knowledge-base/tools/hybrid-search.py "popis problému" --top 5
    ```
 
 2. **Přečti nalezený SKILL.md** — obsahuje přesné instrukce, triggers, workflow, gotchas:
    ```bash
-   # Katalog vrátí cestu, např: sources/anthropic-skills/skills/xlsx/SKILL.md
+   # Výsledek vrátí cestu, např: sources/anthropic-skills/skills/xlsx/SKILL.md
    # Přečti celý soubor a řiď se jeho instrukcemi
    ```
 
 3. **Doplň z guides/skills** pokud potřebuješ kontext platformy nebo technologie (viz tabulky níže)
 
-4. **Pokud katalog nic nevrátí**, použij semantic search přes celou KB:
+4. **Pro přesnější výsledky** použij cross-encoder reranker:
    ```bash
-   python3 knowledge-base/tools/semantic-search.py "popis problému" --top 10
+   python3 knowledge-base/tools/hybrid-search.py "popis problému" --rerank --top 5
    ```
 
 ## Katalog: 668 indexovaných zdrojů
@@ -50,12 +50,17 @@ python3 knowledge-base/tools/build-catalog.py
 
 | Situace | Nástroj |
 |---------|---------|
-| Uživatel chce splnit úkol (porovnat XLS, napsat smlouvu, DCF model) | `build-catalog.py --search` → přečíst SKILL.md |
+| Uživatel chce splnit úkol (porovnat XLS, napsat smlouvu, DCF model) | `hybrid-search.py "dotaz"` → přečíst SKILL.md |
+| Sémantický dotaz (CZ/EN, přirozený jazyk) | `hybrid-search.py "dotaz"` (rozumí významu, cross-language) |
+| Přesnější výsledky na top-K | `hybrid-search.py "dotaz" --rerank` (cross-encoder reranker) |
+| Jen keyword matching (rychlé) | `hybrid-search.py "dotaz" --mode bm25` |
+| Jen sémantická podobnost | `hybrid-search.py "dotaz" --mode embedding` |
 | Potřebuju porozumět platformě (Claude Code, Copilot, Cursor) | Přečíst příslušný guide (viz tabulka) |
 | Potřebuju porozumět technologii (MCP, Semantic Kernel, function calling) | Přečíst příslušný skill doc (viz tabulka) |
-| Hledám napříč celou KB (přirozený jazyk) | `semantic-search.py "dotaz"` |
 | Chci vědět co KB pokrývá | `discover.py coverage` nebo `build-catalog.py --stats` |
 | Hledám vztahy mezi koncepty | `discover.py graph "node"` nebo `discover.py related "téma"` |
+| Fallback: keyword search v katalogu | `build-catalog.py --search "query"` |
+| Fallback: TF-IDF search | `semantic-search.py "dotaz"` |
 
 ## Referenční tabulky (pokud katalog nestačí)
 
@@ -91,12 +96,20 @@ python3 knowledge-base/tools/build-catalog.py
 ## Nástroje
 
 ```bash
-# Skills catalog (hlavní discovery nástroj)
+# Hybrid search (hlavní discovery nástroj — BM25 + embeddings + RRF)
+python3 knowledge-base/tools/hybrid-search.py "dotaz"                    # Hybrid (doporučeno)
+python3 knowledge-base/tools/hybrid-search.py "dotaz" --rerank           # + cross-encoder reranker
+python3 knowledge-base/tools/hybrid-search.py "dotaz" --mode bm25       # Jen BM25 (keyword)
+python3 knowledge-base/tools/hybrid-search.py "dotaz" --mode embedding   # Jen embeddings (sémantika)
+python3 knowledge-base/tools/hybrid-search.py "dotaz" --top 10 --json    # JSON výstup
+python3 knowledge-base/tools/hybrid-search.py --build-index              # Rebuild indexu
+python3 knowledge-base/tools/hybrid-search.py "dotaz" -v                 # Verbose (BM25/emb skóre)
+
+# Skills catalog (keyword search, rychlý fallback)
 python3 knowledge-base/tools/build-catalog.py --search "query"
 python3 knowledge-base/tools/build-catalog.py --stats
-python3 knowledge-base/tools/build-catalog.py --search "query" --json
 
-# Semantic search (TF-IDF, přirozený jazyk)
+# Semantic search (TF-IDF, zero dependencies fallback)
 python3 knowledge-base/tools/semantic-search.py "dotaz"
 python3 knowledge-base/tools/semantic-search.py "dotaz" --top 10 --section skills
 
@@ -120,10 +133,12 @@ knowledge-base/
 ├── skills/               # 8 technology + workflow guides
 ├── graph/                # Knowledge graph (30+ nodes, 40+ edges)
 ├── tools/                # Search, discovery, catalog builder
-│   ├── build-catalog.py  # Skills catalog generator + search
-│   ├── semantic-search.py
-│   ├── discover.py
-│   └── search.sh
+│   ├── hybrid-search.py  # BM25 + embeddings + RRF + reranker (hlavní)
+│   ├── build-catalog.py  # Skills catalog generator + keyword search
+│   ├── semantic-search.py # TF-IDF search (zero-dependency fallback)
+│   ├── discover.py       # Topic discovery + knowledge graph
+│   ├── search.sh         # Fulltext grep wrapper
+│   └── .hybrid-index/    # Pre-computed embeddings cache
 └── sources/              # 15 source repos (6,200+ docs, raw SKILL.md files)
     ├── anthropic-skills/                  # 18 reference skills
     ├── anthropic-knowledge-work-plugins/  # 11 domain plugins (142 skills)
