@@ -28,6 +28,23 @@ Při dotazu na konkrétní téma, **VŽDY načti příslušný soubor** z knowle
 | M365, Graph API, connectors, SharePoint, Outlook, Teams, Azure services | [skills/m365-connectors.md](knowledge-base/skills/m365-connectors.md) |
 | Cross-platform, SKILL.md standard, skills srovnání, progressive disclosure | [skills/cross-platform.md](knowledge-base/skills/cross-platform.md) |
 
+### Dotaz na úkol → Task-Oriented Skills
+
+| Klíčová slova | Soubor |
+|---------------|--------|
+| Excel, XLS, porovnej tabulky, diff spreadsheet, konsoliduj, openpyxl | [skills/document-skills.md](knowledge-base/skills/document-skills.md) |
+| Word, DOCX, smlouva, dokument, tracked changes, docx-js | [skills/document-skills.md](knowledge-base/skills/document-skills.md) |
+| PDF, PPTX, prezentace, konverze dokumentů | [skills/document-skills.md](knowledge-base/skills/document-skills.md) |
+| DCF, comps, LBO, merger model, valuace, finanční model | [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) |
+| Audit XLS, vyčisti data, clean spreadsheet, sensitivity tabulky | [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) |
+| CIM, pitch deck, earnings, deal screening, IC memo | [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) |
+| Call prep, outreach, pipeline, forecast, account research | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
+| Contract review, NDA, compliance, GDPR, smlouva revize | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
+| PRD, spec, roadmap, product management, brainstorm | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
+| SQL dotaz, data analýza, vizualizace, dashboard | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
+| Ticket triage, customer support, eskalace, KB article | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
+| Enterprise search, digest, najdi napříč zdroji | [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) |
+
 ### Dotaz na vztahy/přehled → Knowledge Graph
 
 | Typ dotazu | Příkaz |
@@ -75,12 +92,15 @@ knowledge-base/
 │   ├── copilot-studio.md     # Topics, actions, MCP, A2A, TypeSpec
 │   ├── cursor.md             # Rules (.mdc), MCP, AI composer
 │   └── terminal.md           # CLI workflows, Claude Code, Codex
-├── skills/              # Technologie a patterny
+├── skills/              # Technologie, patterny a task-oriented skills
 │   ├── mcp-servers.md        # MCP servery + FastMCP + Azure MCP + Gemini
 │   ├── semantic-kernel.md    # SK plugins, agents, Process Framework, memory
 │   ├── openai-tools.md       # Function calling, Agents SDK, Structured Outputs
 │   ├── m365-connectors.md    # Graph API, Power Platform, Azure AI Search
-│   └── cross-platform.md     # SKILL.md standard, srovnání platforem
+│   ├── cross-platform.md     # SKILL.md standard, srovnání platforem
+│   ├── financial-workflows.md # DCF, comps, LBO, merger, audit XLS, IB/ER/PE/WM
+│   ├── document-skills.md    # XLSX openpyxl, DOCX docx-js, PDF, PPTX
+│   └── office-workflows.md   # Sales, legal, PM, data, support, enterprise search
 ├── graph/               # Knowledge graph
 │   └── knowledge-graph.json  # 30+ nodes, 40+ edges, vztahy mezi koncepty
 ├── tools/               # Nástroje
@@ -101,28 +121,59 @@ knowledge-base/
 
 ## Quick Reference — nejčastější úkoly
 
-### Vytvořit SKILL.md
+### Task-oriented (co uživatelé reálně potřebují)
+
+#### Porovnej dva XLS / najdi rozdíly
+→ Načti [skills/document-skills.md](knowledge-base/skills/document-skills.md) → sekce "Porovnání XLS souborů"
+
+#### Vyčisti / konsoliduj data v Excelu
+→ Načti [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) → "Clean Data XLS" + [skills/document-skills.md](knowledge-base/skills/document-skills.md) → "Konsolidace více XLS"
+
+#### Postav finanční model (DCF, LBO, comps)
+→ Načti [skills/financial-workflows.md](knowledge-base/skills/financial-workflows.md) → příslušný model + Excel pravidla
+
+#### Zkontroluj smlouvu / NDA
+→ Načti [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) → "Legal" sekce
+
+#### Napiš email klientovi / příprava na call
+→ Načti [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) → "Sales" sekce
+
+#### SQL dotaz / datová analýza
+→ Načti [skills/office-workflows.md](knowledge-base/skills/office-workflows.md) → "Data Analysis" sekce
+
+#### Vytvoř dokument (Word, PDF, prezentaci)
+→ Načti [skills/document-skills.md](knowledge-base/skills/document-skills.md) → příslušný formát
+
+### Neznámý úkol — discovery postup
+1. `python3 knowledge-base/tools/semantic-search.py "popis problému uživatele"`
+2. Podívat se do routing tabulek výše (platformy, technologie, úkoly)
+3. `python3 knowledge-base/tools/discover.py related "klíčové slovo"`
+4. Prohledat `knowledge-base/sources/` pro konkrétní skills a cookbooks z 15 repozitářů
+
+### Tool-oriented (pro vývojáře nástrojů)
+
+#### Vytvořit SKILL.md
 → Načti [skills/cross-platform.md](knowledge-base/skills/cross-platform.md) (formát, best practices, příklady)
 
-### Postavit MCP server
+#### Postavit MCP server
 → Načti [skills/mcp-servers.md](knowledge-base/skills/mcp-servers.md) (FastMCP pattern, TypeScript/Python, annotations)
 
-### Nastavit MCP pro Claude/Cursor/Copilot
+#### Nastavit MCP pro Claude/Cursor/Copilot
 → Načti příslušný guide + [skills/mcp-servers.md](knowledge-base/skills/mcp-servers.md) (konfigurace podle platformy)
 
-### Integrace s M365 (Graph API, SharePoint, Teams)
+#### Integrace s M365 (Graph API, SharePoint, Teams)
 → Načti [skills/m365-connectors.md](knowledge-base/skills/m365-connectors.md) + [guides/copilot-studio.md](knowledge-base/guides/copilot-studio.md)
 
-### Multi-agent orchestrace
+#### Multi-agent orchestrace
 → Načti [skills/semantic-kernel.md](knowledge-base/skills/semantic-kernel.md) (Process Framework) + [skills/openai-tools.md](knowledge-base/skills/openai-tools.md) (Swarm pattern) + [guides/claude-code.md](knowledge-base/guides/claude-code.md) (Agent SDK)
 
-### Azure deployment/diagnostics
+#### Azure deployment/diagnostics
 → Načti [skills/m365-connectors.md](knowledge-base/skills/m365-connectors.md) (Azure AI Skills) + `graph/knowledge-graph.json` → `microsoft-azure-skills` node
 
-### Copilot Studio agent s MCP
+#### Copilot Studio agent s MCP
 → Načti [guides/copilot-studio.md](knowledge-base/guides/copilot-studio.md) (MCP integration, A2A, declarative agents, TypeSpec)
 
-### Srovnání platforem
+#### Srovnání platforem
 → Načti [skills/cross-platform.md](knowledge-base/skills/cross-platform.md) (srovnávací matice, skills formáty)
 
 ## Zdroje dat (15 repozitářů)

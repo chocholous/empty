@@ -199,6 +199,25 @@ def cmd_related(args):
         for rt in sorted(related_topics)[:20]:
             print(f"    • {rt}")
 
+    # Content search fallback: grep through files for the query
+    if not direct and not partial and not related_topics:
+        print(f"\n  \033[1;33mŽádné přímé shody v tématech. Hledám v obsahu...\033[0m")
+        content_matches = []
+        for doc in all_docs:
+            filepath = KB_DIR / doc["file"]
+            if filepath.exists():
+                content = filepath.read_text(encoding="utf-8", errors="ignore").lower()
+                count = content.count(query)
+                if count > 0:
+                    content_matches.append((doc["file"], count))
+        content_matches.sort(key=lambda x: x[1], reverse=True)
+        if content_matches:
+            print(f"\n  \033[1;33mContent matches ({len(content_matches)}):\033[0m")
+            for f, count in content_matches[:10]:
+                print(f"    • {f} ({count} výskytů)")
+        else:
+            print(f"    Žádné výsledky ani v obsahu. Zkuste: python3 semantic-search.py \"{args.term}\"")
+
     # Also search knowledge graph
     graph = load_graph()
     graph_matches = []

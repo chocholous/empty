@@ -183,17 +183,3 @@ result = await runner.run("I need a refund for last month")
 - **Triage pattern** - Hlavní agent routuje, neřeší
 - **Handoffs** - Plný kontext se předává (ne jen summary)
 
-## Responses API + MCP (nativní podpora)
-```python
-response = client.responses.create(
-    model="gpt-4o",
-    input="Search docs for deployment guide",
-    tools=[{
-        "type": "mcp",
-        "server_label": "docs",
-        "server_url": "https://docs-mcp.example.com/sse",
-        "allowed_tools": ["search", "read_doc"]
-    }],
-    previous_response_id="resp_abc123"  # Cache tool lists
-)
-```

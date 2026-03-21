@@ -52,6 +52,7 @@ STOP_WORDS = {
 SYNONYMS = {
     "mcp": ["model context protocol", "fastmcp", "mcp server", "mcp tools"],
     "skill": ["skills", "skill.md", "dovednost", "schopnost"],
+    "skill.md": ["skill standard", "skill format", "cross-platform"],
     "agent": ["agents", "agenti", "multi-agent", "orchestrace"],
     "azure": ["microsoft azure", "az cli", "azure devops"],
     "m365": ["microsoft 365", "office 365", "graph api", "outlook", "sharepoint", "teams"],
@@ -63,13 +64,33 @@ SYNONYMS = {
     "connector": ["connectors", "konektor", "konektory"],
     "plugin": ["plugins", "extension", "extensions"],
     "orchestrace": ["orchestration", "orchestrate", "workflow"],
-    "semantic kernel": ["sk", "kernel_function"],
+    "semantic kernel": ["kernel_function", "process framework"],
     "openai": ["gpt", "gpt-4", "gpt actions", "chatgpt"],
     "gemini": ["google gemini", "vertex ai", "interactions api"],
     "cursor": ["cursor ide", ".cursorrules", ".mdc"],
     "terminal": ["cli", "command line", "bash", "shell"],
     "rag": ["retrieval", "vector", "embeddings", "search"],
     "declarative": ["declarative agent", "declarative agents", "manifest"],
+    # Czech → English
+    "debugovat": ["debug", "debugging", "troubleshoot"],
+    "nefunguje": ["troubleshoot", "error", "broken", "fix"],
+    "nasadit": ["deploy", "deployment", "publish"],
+    "nastavení": ["configuration", "config", "settings", "setup"],
+    "oprávnění": ["permissions", "rbac", "authorization", "access"],
+    "smlouva": ["contract", "contract review", "legal", "nda"],
+    "tabulka": ["spreadsheet", "excel", "xlsx", "openpyxl"],
+    "dokument": ["document", "docx", "word", "pdf"],
+    "hledání": ["search", "find", "query", "retrieval"],
+    "porovnat": ["compare", "diff", "differences", "comparison"],
+    "konsolidovat": ["consolidate", "merge", "aggregate", "combine"],
+    # Task-oriented
+    "excel": ["xlsx", "spreadsheet", "openpyxl", "workbook"],
+    "dcf": ["discounted cash flow", "valuation", "financial model"],
+    "lbo": ["leveraged buyout", "private equity", "pe model"],
+    "comps": ["comparable company", "trading multiples", "peer analysis"],
+    "pipeline": ["pipeline review", "sales pipeline", "forecast"],
+    "contract": ["contract review", "smlouva", "legal", "redline"],
+    "nda": ["non-disclosure", "confidentiality", "triage nda"],
 }
 
 
@@ -78,7 +99,7 @@ def tokenize(text: str) -> list[str]:
     text = text.lower()
     # Keep alphanumeric, dots (for package names), hyphens
     tokens = re.findall(r'[a-z0-9][a-z0-9._-]*[a-z0-9]|[a-z0-9]+', text)
-    return [t for t in tokens if t not in STOP_WORDS and len(t) > 1]
+    return [t for t in tokens if t not in STOP_WORDS and len(t) > 2]
 
 
 def expand_query(query: str) -> list[str]:
@@ -324,6 +345,12 @@ def main():
     if not results:
         print("  Žádné výsledky. Zkuste jiná klíčová slova.")
         return
+
+    # Low-score warning
+    top_score = results[0][1] if results else 0
+    if top_score < 3.0:
+        print(f"  \033[33m⚠ Nízká relevance (top score {top_score:.2f}). Výsledky nemusí odpovídat dotazu.\033[0m")
+        print(f"  \033[33m  Zkuste specifičtější klíčová slova nebo jiný jazyk (CZ/EN).\033[0m\n")
 
     for i, (doc, score, matched) in enumerate(results, 1):
         section_colors = {"guides": "34", "skills": "35", "graph": "36", "sources": "32"}
