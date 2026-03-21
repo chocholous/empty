@@ -85,6 +85,109 @@ Definuje 3 primitivy: **Resources** (data), **Tools** (akce), **Prompts** (šabl
 - **Tools:** retrieval, chat, meeting insights, semantic search, file-based chat
 - **Stav:** Nový, minimální adopce
 
+## MCP Server pro budování (FastMCP pattern)
+
+### TypeScript MCP Server
+```typescript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
+
+const server = new McpServer({ name: "my-server", version: "1.0.0" });
+
+server.tool(
+  "search_docs",
+  { query: z.string(), limit: z.number().optional().default(10) },
+  async ({ query, limit }) => ({
+    content: [{ type: "text", text: JSON.stringify(await search(query, limit)) }]
+  })
+);
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
+```
+
+### Python MCP Server (FastMCP)
+```python
+from mcp.server.fastmcp import FastMCP
+from pydantic import BaseModel, Field
+
+mcp = FastMCP("my_service")
+
+class SearchInput(BaseModel):
+    query: str = Field(..., description="Search query")
+    limit: int = Field(default=10, ge=1, le=100)
+
+@mcp.tool(name="search_docs", annotations={"readOnlyHint": True})
+async def search(params: SearchInput) -> str:
+    return json.dumps(await do_search(params.query, params.limit))
+```
+
+### Tool Annotations
+| Annotation | Popis |
+|-----------|-------|
+| `readOnlyHint` | Tool nemění data |
+| `destructiveHint` | Tool může smazat data |
+| `idempotentHint` | Bezpečné opakované volání |
+| `openWorldHint` | Interaguje s externím světem |
+
+## Microsoft Azure MCP (200+ nástrojů, 40+ služeb)
+
+Oficiální Azure MCP Server pokrývá:
+- **Storage:** Blob, Queue, Table, Data Lake
+- **Databases:** Cosmos DB, PostgreSQL, SQL, Redis
+- **AI:** AI Search, OpenAI, AI Foundry, Content Safety
+- **Compute:** App Service, Container Apps, Functions, AKS
+- **DevOps:** Azure DevOps (work items, repos, pipelines, builds, wikis)
+- **Identity:** Entra ID, Key Vault, RBAC
+- **Monitoring:** Monitor, Application Insights, Log Analytics
+- **Networking:** DNS, CDN, Front Door, Application Gateway
+
+```bash
+# Instalace
+npx -y @azure/mcp@latest server start
+
+# Auth: Azure CLI (az login) nebo DefaultAzureCredential
+```
+
+### Azure Skills deployment chain
+```
+azure-prepare → azure-validate → azure-deploy
+```
+Každá fáze vytváří artefakty: plan.md, validation results, deployment logs.
+
+## Gemini MCP & Skills
+
+### Gemini Skills (z google/gemini-skills)
+```bash
+# Instalace Gemini skills
+git clone https://github.com/google/gemini-skills.git
+# Key skills: gemini-api-dev, gemini-interactions-api, gemini-live-api-dev, vertex-ai-api-dev
+```
+
+### Gemini Interactions API (doporučená pro agenty)
+- Server-side state management (konverzační historie na serveru)
+- Background execution pro long-running tasks
+- Built-in agents: Deep Research
+- Remote MCP tool support
+
+```python
+from google import genai
+client = genai.Client()
+
+# Stateful conversation
+interaction1 = client.interactions.create(
+    model="gemini-3-flash-preview",
+    input="Hi, my name is Phil."
+)
+interaction2 = client.interactions.create(
+    model="gemini-3-flash-preview",
+    input="What is my name?",
+    previous_interaction_id=interaction1.id
+)
+# Server remembers: "Your name is Phil."
+```
+
 ## MCP Konfigurace podle platformy
 
 ### Claude Desktop (claude_desktop_config.json)

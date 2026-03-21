@@ -173,6 +173,133 @@ Z [microsoft/mcp](https://github.com/microsoft/mcp):
 5. **Analytics** - Sledujte topic completion rate a customer satisfaction
 6. **Security** - DLP policies, authentication pro connectors
 
+## MCP v Copilot Studio
+
+### MCP Integration Pattern
+1. Vytvořit MCP server (TypeScript/Python)
+2. Definovat tools a resources
+3. Připojit jako Copilot Studio action
+4. Předávat MCP resources jako agent inputs
+
+```json
+// Příklad MCP konfigurace pro Copilot Studio
+{
+  "connections": [
+    {
+      "name": "azure-search",
+      "url": "https://my-mcp-server.azurewebsites.net/sse",
+      "tools": ["search_documents", "get_document"]
+    }
+  ]
+}
+```
+
+### A2A Protocol (Agent-to-Agent)
+- Copilot Studio podporuje A2A pro multi-agent komunikaci
+- Agent může delegovat na jiného agenta
+- Příklad: HR agent → IT agent pro access provisioning
+
+## Declarative Agents (M365 Copilot)
+
+### Manifest (v1.2+)
+```json
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.2/schema.json",
+  "version": "v1.2",
+  "name": "IT Help Desk",
+  "description": "Handles IT support requests",
+  "instructions": "$[file('instruction.txt')]",
+  "actions": [
+    { "id": "action_1", "file": "ai-plugin.json" }
+  ],
+  "conversation_starters": [
+    { "text": "How do I reset my password?" },
+    { "text": "Request new software" }
+  ]
+}
+```
+
+### Teams Manifest Integration
+```json
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.25/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.25",
+  "copilotAgents": {
+    "declarativeAgents": [
+      {
+        "id": "declarativeAgent",
+        "file": "declarativeAgent.json"
+      }
+    ]
+  }
+}
+```
+
+### TypeSpec pro generování pluginů
+```yaml
+# tspconfig.yaml
+emit:
+  - "@typespec/openapi3"
+  - "@microsoft/typespec-m365-copilot"
+options:
+  "@typespec/openapi3":
+    emitter-output-dir: "./appPackage/.generated/specs"
+  "@microsoft/typespec-m365-copilot":
+    emitter-output-dir: "./appPackage/.generated"
+    output-file: declarativeAgent.json
+```
+
+## Contact Center Integration
+
+Copilot Studio podporuje handoff do live agent systémů:
+- **Salesforce Einstein** - Přímá integrace
+- **ServiceNow Virtual Agent** - IT support handoff
+- **Genesys** - Contact center handoff
+- **Custom skill** - Vlastní handoff logika
+
+### Handoff flow
+```
+1. Agent vede konverzaci
+2. Při eskalaci předá kontext live agentovi
+3. Live agent vidí historii + AI summary
+4. Po vyřešení může vrátit zpět agentovi
+```
+
+## PnP Solutions (importovatelné)
+
+Komunita nabízí hotové solutions k importu:
+- **Account/Contact lookup** - CRM integrace
+- **Language detection** - Auto-detect a překlad
+- **Dataverse indexer** - Automatická indexace
+- **Feedback analyzer** - Sentiment z feedbacku
+
+Import: `make.powerapps.com → Solutions → Import → .zip`
+
+## Build & Provision Workflow (m365agents.yml)
+```yaml
+version: v1.8
+provision:
+  - uses: teamsApp/create
+    with:
+      name: MyAgent${{APP_NAME_SUFFIX}}
+
+  - uses: typeSpec/compile
+    with:
+      path: ./main.tsp
+      manifestPath: ./appPackage/manifest.json
+
+  - uses: oauth/register
+    with:
+      name: MyAPIAuth
+      appId: ${{TEAMS_APP_ID}}
+      flow: authorizationCode
+
+  - uses: apiKey/register
+    with:
+      name: ApiKeyAuth
+      appId: ${{TEAMS_APP_ID}}
+```
+
 ## Zdroje
 
 - [microsoft/skills](https://github.com/microsoft/skills) - Microsoft skills včetně Copilot Studio

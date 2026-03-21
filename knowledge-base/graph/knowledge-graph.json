@@ -207,6 +207,87 @@
       "type": "service",
       "name": "Azure OpenAI",
       "tags": ["azure", "openai", "function-calling", "embeddings"]
+    },
+    {
+      "id": "gemini",
+      "type": "platform",
+      "name": "Google Gemini",
+      "tags": ["google", "multimodal", "function-calling", "live-api"],
+      "models": ["gemini-3-flash-preview", "gemini-3-pro-preview"],
+      "apis": ["generateContent", "interactions", "live"]
+    },
+    {
+      "id": "anthropic-skills-repo",
+      "type": "skills-repo",
+      "name": "Anthropic Skills",
+      "tags": ["anthropic", "skill-md", "standard", "reference"],
+      "repo": "anthropics/skills",
+      "skills_count": 17,
+      "categories": ["creative", "development", "documents", "enterprise"]
+    },
+    {
+      "id": "anthropic-financial-plugins",
+      "type": "plugin-repo",
+      "name": "Anthropic Financial Services Plugins",
+      "tags": ["anthropic", "finance", "investment-banking", "equity-research"],
+      "repo": "anthropics/anthropic-financial-services-plugins",
+      "plugins": ["financial-analysis", "investment-banking", "equity-research", "private-equity", "wealth-management"]
+    },
+    {
+      "id": "anthropic-knowledge-work-plugins",
+      "type": "plugin-repo",
+      "name": "Anthropic Knowledge Work Plugins",
+      "tags": ["anthropic", "enterprise", "sales", "marketing", "legal", "bio-research"],
+      "repo": "anthropics/anthropic-knowledge-work-plugins",
+      "plugins": ["productivity", "sales", "customer-support", "product-management", "marketing", "legal", "finance", "data", "enterprise-search", "bio-research"]
+    },
+    {
+      "id": "microsoft-agent-skills",
+      "type": "skills-repo",
+      "name": "Microsoft Agent Skills",
+      "tags": ["microsoft", "azure", "foundry", "multi-language"],
+      "repo": "microsoft/skills",
+      "skills_count": 133,
+      "languages": ["python", "dotnet", "typescript", "java"]
+    },
+    {
+      "id": "microsoft-azure-skills",
+      "type": "skills-repo",
+      "name": "Microsoft Azure Skills",
+      "tags": ["microsoft", "azure", "deployment", "diagnostics"],
+      "repo": "microsoft/azure-skills",
+      "skills_count": 22,
+      "deployment_chain": ["azure-prepare", "azure-validate", "azure-deploy"]
+    },
+    {
+      "id": "copilot-studio-samples",
+      "type": "reference",
+      "name": "Copilot Studio Samples",
+      "tags": ["microsoft", "copilot-studio", "mcp", "a2a", "contact-center"],
+      "repo": "microsoft/copilot-studio-samples"
+    },
+    {
+      "id": "pnp-copilot-samples",
+      "type": "reference",
+      "name": "PnP M365 Copilot Pro Dev Samples",
+      "tags": ["microsoft", "m365", "declarative-agents", "typespec"],
+      "repo": "pnp/copilot-pro-dev-samples",
+      "sample_count": 70
+    },
+    {
+      "id": "google-gemini-skills",
+      "type": "skills-repo",
+      "name": "Google Gemini Skills",
+      "tags": ["google", "gemini", "api", "interactions", "live"],
+      "repo": "google/gemini-skills",
+      "skills": ["gemini-api-dev", "gemini-interactions-api", "gemini-live-api-dev", "vertex-ai-api-dev"]
+    },
+    {
+      "id": "openai-skills",
+      "type": "skills-repo",
+      "name": "OpenAI Skills",
+      "tags": ["openai", "codex", "skill-md"],
+      "repo": "openai/skills"
     }
   ],
   "edges": [
@@ -258,7 +339,24 @@
     {"from": "anthropic-cookbook", "to": "mcp", "relation": "has_guide_for"},
 
     {"from": "azure-openai", "to": "azure-ai-search", "relation": "integrates_with"},
-    {"from": "power-platform", "to": "m365-graph", "relation": "wraps"}
+    {"from": "power-platform", "to": "m365-graph", "relation": "wraps"},
+
+    {"from": "gemini", "to": "mcp", "relation": "supports_remote"},
+    {"from": "google-gemini-skills", "to": "gemini", "relation": "provides_skills_for"},
+
+    {"from": "anthropic-skills-repo", "to": "claude-code", "relation": "provides_skills_for"},
+    {"from": "anthropic-financial-plugins", "to": "claude-code", "relation": "provides_plugins_for"},
+    {"from": "anthropic-knowledge-work-plugins", "to": "claude-code", "relation": "provides_plugins_for"},
+
+    {"from": "microsoft-agent-skills", "to": "github-copilot", "relation": "provides_skills_for"},
+    {"from": "microsoft-agent-skills", "to": "claude-code", "relation": "provides_skills_for"},
+    {"from": "microsoft-azure-skills", "to": "microsoft-mcp-catalog", "relation": "orchestrates"},
+    {"from": "copilot-studio-samples", "to": "copilot-studio", "relation": "documents"},
+    {"from": "copilot-studio-samples", "to": "mcp", "relation": "has_samples_for"},
+    {"from": "pnp-copilot-samples", "to": "copilot-studio", "relation": "provides_samples_for"},
+    {"from": "pnp-copilot-samples", "to": "m365-graph", "relation": "uses"},
+
+    {"from": "openai-skills", "to": "openai-cookbook", "relation": "companion_to"}
   ],
   "standards": [
     {

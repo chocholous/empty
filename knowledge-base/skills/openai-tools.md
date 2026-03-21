@@ -124,3 +124,76 @@ response = client.responses.create(
 - Cachujte tool listy přes previous_response_id
 - Kombinujte MCP s hosted tools (code_interpreter, web_search)
 - Reasoning modely rezervujte pro complex tasks
+
+## Structured Outputs
+
+```python
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[...],
+    response_format={
+        "type": "json_schema",
+        "json_schema": {
+            "name": "analysis",
+            "strict": True,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "sentiment": {"type": "string", "enum": ["positive", "negative", "neutral"]},
+                    "confidence": {"type": "number"},
+                    "summary": {"type": "string"}
+                },
+                "required": ["sentiment", "confidence", "summary"]
+            }
+        }
+    }
+)
+```
+
+## Multi-Agent s OpenAI Agents SDK
+
+### Routine-based pattern (Swarm)
+```python
+from openai.agents import Agent, Runner
+
+# Routines = system prompt + tools + conditional logic
+triage = Agent(
+    name="Triage",
+    instructions="""Route customer requests:
+    - Billing → transfer_to_billing
+    - Technical → transfer_to_support
+    - Sales → transfer_to_sales""",
+    tools=[transfer_to_billing, transfer_to_support, transfer_to_sales]
+)
+
+billing = Agent(
+    name="Billing",
+    instructions="Handle billing. Tools: check_balance, process_refund",
+    tools=[check_balance, process_refund]
+)
+
+# Handoff: triage → billing with full context
+runner = Runner(agent=triage)
+result = await runner.run("I need a refund for last month")
+```
+
+### Multi-Agent Best Practices
+- **Specializace** - Jeden agent = jeden doménový kontext
+- **Tool grouping** - Každý agent má jen relevantní tools (snižuje chybovost)
+- **Triage pattern** - Hlavní agent routuje, neřeší
+- **Handoffs** - Plný kontext se předává (ne jen summary)
+
+## Responses API + MCP (nativní podpora)
+```python
+response = client.responses.create(
+    model="gpt-4o",
+    input="Search docs for deployment guide",
+    tools=[{
+        "type": "mcp",
+        "server_label": "docs",
+        "server_url": "https://docs-mcp.example.com/sse",
+        "allowed_tools": ["search", "read_doc"]
+    }],
+    previous_response_id="resp_abc123"  # Cache tool lists
+)
+```

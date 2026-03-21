@@ -212,6 +212,135 @@ az login
 | Git | Git operace | `uvx mcp-server-git` |
 | Sequential Thinking | Strukturované myšlení | `npx @modelcontextprotocol/server-sequential-thinking` |
 
+## Agent SDK Patterns
+
+### Basic Agent Loop
+```python
+from anthropic import Anthropic
+
+client = Anthropic()
+
+def agent_loop(system_prompt, tools, user_message):
+    messages = [{"role": "user", "content": user_message}]
+    while True:
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            system=system_prompt,
+            tools=tools,
+            max_tokens=4096,
+            messages=messages
+        )
+        # Process tool_use blocks
+        if response.stop_reason == "tool_use":
+            tool_results = execute_tools(response.content)
+            messages.append({"role": "assistant", "content": response.content})
+            messages.append({"role": "user", "content": tool_results})
+        else:
+            return response.content
+```
+
+### Multi-Agent Orchestration
+```python
+# Chief of Staff pattern - coordinator delegates to specialists
+coordinator = Agent(name="coordinator", system="Route tasks to specialists")
+researcher = Agent(name="researcher", system="Deep research with web search")
+coder = Agent(name="coder", system="Write and review code")
+
+# Each agent has its own tool set and MCP servers
+researcher.mcp_servers = ["fetch", "memory"]
+coder.mcp_servers = ["filesystem", "git"]
+```
+
+### Extended Thinking
+```python
+response = client.messages.create(
+    model="claude-sonnet-4-20250514",
+    thinking={"type": "enabled", "budget_tokens": 5000},
+    max_tokens=8096,
+    messages=[{"role": "user", "content": "Complex analysis..."}]
+)
+# Access thinking: response.content[0] (thinking block)
+# Access answer: response.content[1] (text block)
+```
+
+## Plugin Architecture (z anthropic repos)
+
+### Plugin manifest (.claude-plugin/plugin.json)
+```json
+{
+  "name": "azure-operations",
+  "version": "1.0.0",
+  "description": "Azure resource management plugin",
+  "skills": ["skills/"],
+  "commands": ["commands/"],
+  "mcp": ".mcp.json",
+  "hooks": ["hooks/"]
+}
+```
+
+### Plugin structure
+```
+my-plugin/
+├── .claude-plugin/plugin.json    # Manifest
+├── commands/                      # Slash commands (/deploy, /status)
+├── skills/                        # Auto-triggered skills
+├── .mcp.json                      # MCP server connections
+└── hooks/                         # Event-driven automation
+```
+
+### MCP Builder Skill (4 fáze)
+1. **Research & Planning** - Pochopte API, definujte tool naming (e.g. `github_create_issue`)
+2. **Implementation** - Zod/Pydantic schemas, annotations (`readOnlyHint`, `destructiveHint`)
+3. **Review & Test** - Type coverage, build verification
+4. **Deployment** - Publish, version, monitor
+
+```python
+# Python MCP Server s FastMCP
+from mcp.server.fastmcp import FastMCP
+from pydantic import BaseModel, Field
+
+mcp = FastMCP("my_service")
+
+class SearchInput(BaseModel):
+    query: str = Field(..., description="Search query", min_length=1)
+    limit: int = Field(default=10, ge=1, le=100)
+
+@mcp.tool(
+    name="search_documents",
+    annotations={"readOnlyHint": True, "idempotentHint": True}
+)
+async def search(params: SearchInput) -> str:
+    results = await do_search(params.query, params.limit)
+    return json.dumps(results)
+```
+
+## Doporučené skill balíčky
+
+### Microsoft Agent Skills (133 skills)
+```bash
+# Instalace přes npx
+npx skills add microsoft/skills
+
+# Nebo manuálně
+git clone https://github.com/microsoft/skills.git
+cp -r skills/.github/skills/ .claude/skills/
+```
+Kategorie: Foundry, Data, Messaging, Monitoring, Identity, Security, Integration.
+Jazyky: Python (41), .NET (29), TypeScript (25), Java (26).
+
+### MicrosoftDocs Agent Skills (193 Azure skills)
+```bash
+git clone https://github.com/MicrosoftDocs/Agent-Skills.git
+cp -r Agent-Skills/skills/ .claude/skills/
+```
+9 kategorií: Compute, Integration, Data, AI/ML, Security, Networking, Infrastructure, Management, Specialized.
+
+### Anthropic Skills (17 reference skills)
+```bash
+git clone https://github.com/anthropics/skills.git
+# Skills: MCP builder, document skills (docx, pdf, pptx, xlsx), creative, enterprise
+```
+
 ## Zdroje
 
 - [anthropics/anthropic-cookbook](https://github.com/anthropics/anthropic-cookbook) - Příklady a patterns

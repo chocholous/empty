@@ -150,6 +150,91 @@ VS Code Copilot Chat podporuje MCP servery:
 4. **Extensions** - Pro integraci s firemními nástroji
 5. **MCP** - Pro přístup k datovým zdrojům
 
+## Declarative Agents pro M365 Copilot
+
+### 70+ PnP sample agents
+Z [pnp/copilot-pro-dev-samples](https://github.com/pnp/copilot-pro-dev-samples):
+- **Canvas LMS** - Student/teacher agents
+- **ServiceNow** - HR/IT helpdesk
+- **Repairs management** - Field service
+- **Document finder** - SharePoint search
+- **Learning/Writing/Career coach** - Personální agenti
+- **Sales Genie** - CRM integrace
+
+### Agent manifest (declarativeAgent.json)
+```json
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.2/schema.json",
+  "version": "v1.2",
+  "name": "CopilotGraphPluginDemo",
+  "description": "Declarative agent pro M365 Copilot",
+  "instructions": "$[file('instruction.txt')]",
+  "actions": [
+    { "id": "action_1", "file": "ai-plugin.json" }
+  ],
+  "conversation_starters": [
+    { "text": "How secure is searching in Bing?" }
+  ]
+}
+```
+
+### OpenAPI Plugin (Graph Search příklad)
+```yaml
+openapi: 3.0.1
+info:
+  title: Search - Microsoft Graph
+  version: beta
+servers:
+  - url: https://graph.microsoft.com/beta/
+paths:
+  /search/microsoft.graph.query:
+    post:
+      summary: Invoke search query
+      operationId: search_query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/microsoft.graph.searchRequest'
+```
+
+## Microsoft Agent Skills (133 skills, 4 jazyky)
+
+Z [microsoft/skills](https://github.com/microsoft/skills):
+
+### Instalace
+```bash
+npx skills add microsoft/skills
+# Nebo manuální kopie do .github/skills/
+```
+
+### Kategorie
+| Kategorie | Příklady | Počet |
+|-----------|----------|-------|
+| Core | mcp-builder, skill-creator, copilot-sdk | 6 |
+| Python | azure-ai-projects-py, azure-search-py | 41 |
+| .NET | azure-ai-projects-dotnet | 29 |
+| TypeScript | azure-ai-projects-ts | 25 |
+| Java | azure-ai-projects-java | 26 |
+
+### Agents.md principy
+- **Fresh info first** - Vždy aktuální data
+- **Simplicity** - Nejjednodušší řešení
+- **Surgical changes** - Minimální invasive changes
+- **TDD** - Test-driven development
+
+## Schema verze (aktuální)
+| Schema | Verze |
+|--------|-------|
+| Teams manifest | v1.25 |
+| Declarative agent | v1.2 |
+| API plugin | v2.4 |
+
 ## Zdroje
 
 - [github/awesome-copilot](https://github.com/github/awesome-copilot)
