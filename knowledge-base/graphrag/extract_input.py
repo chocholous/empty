@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Extract ALL text content from source repos for GraphRAG indexing.
+"""Extract text content from source repos for GraphRAG indexing.
 
-Processes every readable text file. Binary files are skipped automatically.
+Smart filtering: includes only knowledge-valuable files, skips
+machine-generated definitions, test data, build configs, and binaries.
 Each source file becomes one text document with metadata header.
 """
 
@@ -13,10 +14,59 @@ from pathlib import Path
 SOURCES_DIR = Path("knowledge-base/sources")
 OUTPUT_DIR = Path("knowledge-base/graphrag/input")
 
-# Skip dirs that are not useful
-SKIP_DIRS = {"node_modules", ".git", "__pycache__", ".venv", "venv"}
+# --- FILTERING RULES ---
 
-# Binary extensions to skip
+# Dirs to always skip
+SKIP_DIRS = {
+    "node_modules", ".git", "__pycache__", ".venv", "venv",
+    ".vscode", ".idea", ".github", "dist", "build", ".next",
+    ".tox", ".mypy_cache", ".pytest_cache", "coverage",
+}
+
+# Extensions to INCLUDE (knowledge-valuable)
+INCLUDE_EXTENSIONS = {
+    # Documentation (highest value)
+    ".md", ".mdx", ".rst", ".txt", ".ipynb",
+    # Code (implementation patterns)
+    ".py", ".ts", ".tsx", ".js", ".jsx", ".cs", ".csx",
+    # Infrastructure-as-code (deployment patterns)
+    ".bicep", ".tf", ".sh", ".ps1", ".bash",
+    # Config examples (when not in skip lists)
+    ".yaml", ".yml",
+}
+
+# Filenames to ALWAYS SKIP regardless of extension
+SKIP_FILENAMES = {
+    "package-lock.json", "yarn.lock", "pnpm-lock.yaml",
+    "composer.lock", "Gemfile.lock", "poetry.lock",
+    ".gitignore", ".gitattributes", ".editorconfig",
+    ".eslintrc.json", ".prettierrc", ".prettierrc.json",
+    "tsconfig.json", "jest.config.js", "jest.config.ts",
+    ".npmrc", ".nvmrc", ".node-version",
+    "thumbs.db", ".ds_store",
+}
+
+# Filenames to ALWAYS INCLUDE (high value, even if extension not in list)
+INCLUDE_FILENAMES = {
+    "skill.md", "agents.md", "claude.md", "copilot-instructions.md",
+    "manifest.json", "declarativeagent.json",
+    "sample.json", "samples.json",
+}
+
+# Path patterns to skip (substring match on relative path)
+SKIP_PATH_PATTERNS = [
+    "/test/", "/tests/", "/__tests__/",
+    "/spec/", "/.github/workflows/",
+    "/node_modules/", "/coverage/",
+]
+
+# Specific large-volume low-value files
+SKIP_SPECIFIC_FILENAMES = {
+    "apidefinition.swagger.json",
+    "apiproperties.json",
+}
+
+# Binary extensions
 BINARY_EXTENSIONS = {
     ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".ico", ".webp", ".svg",
     ".mp4", ".avi", ".mov", ".mp3", ".wav", ".flac",
@@ -28,10 +78,51 @@ BINARY_EXTENSIONS = {
     ".pkl", ".parquet", ".npy", ".npz", ".h5", ".hdf5",
     ".db", ".sqlite", ".sqlite3",
     ".DS_Store",
+    # Additional: generated/data
+    ".map", ".min.js", ".min.css",
+    ".csv", ".tsv",
+    ".xsd", ".xsl", ".xslt",
+    ".css", ".scss", ".less",
+    ".html", ".htm",
+    ".csproj", ".sln", ".props",
+    ".xml",
 }
 
-# Max single file size (1MB) - skip huge data files
-MAX_FILE_SIZE = 1_000_000
+# Max single file size (500KB)
+MAX_FILE_SIZE = 500_000
+
+
+def should_include(fpath: Path, rel_path_str: str) -> bool:
+    """Decide if a file should be included based on smart filtering."""
+    fname_lower = fpath.name.lower()
+    suffix = fpath.suffix.lower()
+
+    # Always skip specific low-value filenames
+    if fname_lower in SKIP_SPECIFIC_FILENAMES:
+        return False
+    if fname_lower in SKIP_FILENAMES:
+        return False
+
+    # Always include high-value filenames
+    if fname_lower in INCLUDE_FILENAMES:
+        return True
+
+    # Skip binary
+    if suffix in BINARY_EXTENSIONS:
+        return False
+
+    # Skip test paths
+    rel_lower = rel_path_str.lower()
+    for pattern in SKIP_PATH_PATTERNS:
+        if pattern in rel_lower:
+            return False
+
+    # Include by extension
+    if suffix in INCLUDE_EXTENSIONS:
+        return True
+
+    # Skip everything else (unknown extensions, .json without special name, etc.)
+    return False
 
 
 def extract_notebook(path: Path) -> str:
@@ -52,20 +143,6 @@ def extract_notebook(path: Path) -> str:
         return ""
 
 
-def is_binary(path: Path) -> bool:
-    """Check if file is binary by extension or content sampling."""
-    if path.suffix.lower() in BINARY_EXTENSIONS:
-        return True
-    try:
-        with open(path, "rb") as f:
-            chunk = f.read(8192)
-            if b"\x00" in chunk:
-                return True
-    except Exception:
-        return True
-    return False
-
-
 def read_text_file(path: Path) -> str:
     """Read any text file, handling encoding issues."""
     try:
@@ -75,9 +152,10 @@ def read_text_file(path: Path) -> str:
 
 
 def process_repo(repo_dir: Path, output_dir: Path):
-    """Process ALL files in a repo into GraphRAG input documents."""
+    """Process filtered files in a repo into GraphRAG input documents."""
     repo_name = repo_dir.name
     doc_count = 0
+    skip_count = 0
 
     for root, dirs, files in os.walk(repo_dir):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
@@ -85,18 +163,33 @@ def process_repo(repo_dir: Path, output_dir: Path):
 
         for fname in files:
             fpath = root_path / fname
+            rel_path = fpath.relative_to(SOURCES_DIR)
+            rel_path_str = str(rel_path)
 
-            # Skip large files
+            # Size check
             try:
                 size = fpath.stat().st_size
                 if size > MAX_FILE_SIZE or size == 0:
+                    skip_count += 1
                     continue
             except OSError:
                 continue
 
-            # Skip binary
-            if is_binary(fpath):
+            # Smart filter
+            if not should_include(fpath, rel_path_str):
+                skip_count += 1
                 continue
+
+            # Binary content check (null bytes)
+            if fpath.suffix.lower() != ".ipynb":
+                try:
+                    with open(fpath, "rb") as f:
+                        chunk = f.read(8192)
+                        if b"\x00" in chunk:
+                            skip_count += 1
+                            continue
+                except Exception:
+                    continue
 
             # Extract content
             suffix = fpath.suffix.lower()
@@ -109,7 +202,6 @@ def process_repo(repo_dir: Path, output_dir: Path):
                 continue
 
             # Create document with metadata header
-            rel_path = fpath.relative_to(SOURCES_DIR)
             header = f"Source: {rel_path}\nRepo: {repo_name}\nFile: {fname}\n\n"
 
             doc_name = str(rel_path).replace("/", "__").replace("\\", "__")
@@ -119,7 +211,7 @@ def process_repo(repo_dir: Path, output_dir: Path):
             out_path.write_text(header + content)
             doc_count += 1
 
-    return doc_count
+    return doc_count, skip_count
 
 
 def main():
@@ -130,13 +222,16 @@ def main():
         f.unlink()
 
     total = 0
+    total_skipped = 0
     for repo_dir in sorted(SOURCES_DIR.iterdir()):
         if repo_dir.is_dir() and not repo_dir.name.startswith("."):
-            count = process_repo(repo_dir, OUTPUT_DIR)
-            print(f"  {repo_dir.name}: {count} documents")
+            count, skipped = process_repo(repo_dir, OUTPUT_DIR)
+            print(f"  {repo_dir.name}: {count} docs ({skipped} skipped)")
             total += count
+            total_skipped += skipped
 
-    print(f"\nTotal: {total} documents extracted to {OUTPUT_DIR}")
+    print(f"\nTotal: {total} documents extracted ({total_skipped} skipped)")
+    print(f"Output: {OUTPUT_DIR}")
 
 
 if __name__ == "__main__":

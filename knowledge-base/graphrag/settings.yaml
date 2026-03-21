@@ -7,7 +7,7 @@
 completion_models:
   default_completion_model:
     model_provider: openai
-    model: gpt-5.4
+    model: gpt-4.1-mini
     auth_method: api_key # or azure_managed_identity
     api_key: ${GRAPHRAG_API_KEY} # set this in the generated .env file, or remove if managed identity
     retry:
@@ -73,7 +73,7 @@ extract_graph:
   completion_model_id: default_completion_model
   prompt: "prompts/extract_graph.txt"
   entity_types: [platform,framework,protocol,sdk,api,service,tool,connector,skill,pattern,standard,language,provider]
-  max_gleanings: 1
+  max_gleanings: 0
 
 summarize_descriptions:
   completion_model_id: default_completion_model
@@ -92,7 +92,7 @@ extract_claims:
   completion_model_id: default_completion_model
   prompt: "prompts/extract_claims.txt"
   description: "Any claims or facts that could be relevant to information discovery."
-  max_gleanings: 1
+  max_gleanings: 0
 
 community_reports:
   completion_model_id: default_completion_model

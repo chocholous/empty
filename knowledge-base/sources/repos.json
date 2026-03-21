@@ -18,7 +18,7 @@
       "localPath": "sources/microsoft-copilot-studio-samples",
       "category": "microsoft",
       "quality": "MEDIUM",
-      "description": "Implementation guides, SharePoint SSO, load testing, indexing samples, workshop materials. Některé samples jsou legacy PVA."
+      "description": "Implementation guides, SharePoint SSO, load testing, indexing samples, workshop materials."
     },
     {
       "id": "pnp-copilot-pro-dev-samples",
@@ -38,7 +38,7 @@
       "localPath": "sources/microsoft-power-platform-connectors",
       "category": "microsoft",
       "quality": "HIGH",
-      "description": "Open source certified + independent publisher connectors. 1,400+ systémů. apiDefinition.swagger.json + apiProperties.json format."
+      "description": "Open source certified + independent publisher connectors. 1,400+ systems. apiDefinition.swagger.json + apiProperties.json format."
     },
     {
       "id": "anthropic-cookbook",
@@ -68,7 +68,7 @@
       "localPath": "sources/anthropic-skills",
       "category": "anthropic",
       "quality": "HIGH",
-      "description": "Oficiální SKILL.md open standard. Referenční implementace přijatá Copilot, Codex CLI, Cursor, Semantic Kernel."
+      "description": "SKILL.md open standard. Reference implementation adopted by Copilot, Codex CLI, Cursor, Semantic Kernel."
     },
     {
       "id": "openai-cookbook",
@@ -89,10 +89,70 @@
       "localPath": "sources/microsoft-azure-skills",
       "category": "microsoft",
       "quality": "HIGH",
-      "description": "Azure-specific agent skills pro AI coding assistants."
+      "description": "Azure-specific agent skills for AI coding assistants."
+    },
+    {
+      "id": "microsoft-agent-skills",
+      "name": "Microsoft Agent Skills",
+      "repo": "microsoft/agent-skills",
+      "url": "https://github.com/microsoft/agent-skills",
+      "localPath": "sources/microsoft-agent-skills",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Microsoft agent skills, MCP servers, Agents.md for coding agents."
+    },
+    {
+      "id": "microsoftdocs-agent-skills",
+      "name": "MicrosoftDocs Agent Skills",
+      "repo": "MicrosoftDocs/Agent-Skills",
+      "url": "https://github.com/MicrosoftDocs/Agent-Skills",
+      "localPath": "sources/microsoftdocs-agent-skills",
+      "category": "microsoft",
+      "quality": "HIGH",
+      "description": "Curated agent skills for VS Code, GitHub Copilot integration."
+    },
+    {
+      "id": "google-gemini-skills",
+      "name": "Google Gemini Skills",
+      "repo": "google-gemini/gemini-skills",
+      "url": "https://github.com/google-gemini/gemini-skills",
+      "localPath": "sources/google-gemini-skills",
+      "category": "google",
+      "quality": "HIGH",
+      "description": "Gemini agent skills definitions."
+    },
+    {
+      "id": "google-gemini-cookbook",
+      "name": "Google Gemini Cookbook",
+      "repo": "google-gemini/cookbook",
+      "url": "https://github.com/google-gemini/cookbook",
+      "localPath": "sources/google-gemini-cookbook",
+      "category": "google",
+      "quality": "HIGH",
+      "description": "Gemini API examples, tool use, function calling, agents, multimodal."
+    },
+    {
+      "id": "anthropic-knowledge-work-plugins",
+      "name": "Anthropic Knowledge Work Plugins",
+      "repo": "anthropics/knowledge-work-plugins",
+      "url": "https://github.com/anthropics/knowledge-work-plugins",
+      "localPath": "sources/anthropic-knowledge-work-plugins",
+      "category": "anthropic",
+      "quality": "HIGH",
+      "description": "Knowledge work plugins for Claude - document analysis, research, writing assistance."
+    },
+    {
+      "id": "anthropic-financial-services-plugins",
+      "name": "Anthropic Financial Services Plugins",
+      "repo": "anthropics/financial-services-plugins",
+      "url": "https://github.com/anthropics/financial-services-plugins",
+      "localPath": "sources/anthropic-financial-services-plugins",
+      "category": "anthropic",
+      "quality": "HIGH",
+      "description": "Financial services plugins for Claude - compliance, risk analysis, reporting."
     }
   ],
-  "lastUpdated": "2026-03-20",
-  "totalRepos": 9,
-  "note": "Kompletní klony repozitářů v sources/. Velké binární soubory (>50MB) v .gitignore."
+  "lastUpdated": "2026-03-21",
+  "totalRepos": 15,
+  "note": "Complete repo clones in sources/. Smart filtered for GraphRAG indexing."
 }
