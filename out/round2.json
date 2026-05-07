@@ -1,0 +1,122 @@
+{
+  "round": 2,
+  "ocr_libraries": {
+    "tesseract": {
+      "install": "apt tesseract-ocr 5.3.4 + pytesseract pip",
+      "synth_clean_time_s": 0.2,
+      "synth_clean_text_quality": "perfect (all 5 dims read)",
+      "hf_00_time_s": 0.5,
+      "hf_00_quality": "garbage (no Arabic training in default tessdata)",
+      "verdict": "Latin-only baseline; cheap and fast"
+    },
+    "paddleocr_v4": {
+      "install": "pip paddlepaddle paddleocr; needs enable_mkldnn=False on CPU",
+      "synth_clean_time_s": 2.4,
+      "synth_clean_quality": "perfect (all 10 strings, scores ~0.98)",
+      "available_langs": [
+        "en",
+        "ch"
+      ],
+      "arabic_support": "no model in v4/v5 for our build",
+      "verdict": "best for Latin/Chinese plans; no Arabic in this build"
+    },
+    "easyocr": {
+      "install": "pip easyocr (~250 MB models on first run)",
+      "synth_clean_time_s": 0.8,
+      "synth_clean_quality": "near-perfect (bath→path, bed2→ped2)",
+      "hf_00_time_s": 10.5,
+      "hf_00_text_count": 44,
+      "hf_00_quality": "Arabic numerals & labels recovered (٤٫٦٥, مطبخ, معيشة, طرقة)",
+      "verdict": "WINNER for multilingual; Arabic out of the box"
+    }
+  },
+  "florence2": {
+    "install": "transformers 4.x + trust_remote_code (Microsoft)",
+    "smoke_test": "FAILED: Florence2LanguageConfig.forced_bos_token_id missing on transformers >= 4.45",
+    "fix": "pin transformers ~4.41 OR patch config",
+    "verdict": "Skipped — incompatibility with current transformers stack"
+  },
+  "cubicasa_segformer_community": {
+    "repo": "JessiP23/cubicasa-segformer-v2",
+    "install": "pip segmentation-models-pytorch albumentations + .pt checkpoint via HF",
+    "per_class_iou": {
+      "bg": 0.879,
+      "wall": 0.3,
+      "window": 0.3,
+      "door": 0.15,
+      "rooms (Living/Bed/Hall/Kitchen/Dining/Office)": 0.0
+    },
+    "verdict": "BROKEN: room classes weren't actually learned"
+  },
+  "cubicasa_yolo_community": {
+    "repo": "karanjaWakaba/Yolo_segmentation_cubicasa",
+    "n_classes": 235,
+    "synth_clean_detections": 0,
+    "hf_00_detections": 0,
+    "tested_conf": [
+      0.05,
+      0.1
+    ],
+    "tested_imgsz": [
+      640,
+      1024
+    ],
+    "verdict": "USELESS on out-of-distribution plans (synth + Arabic)"
+  },
+  "mobile_sam": {
+    "repo": "ultralytics SAM('mobile_sam.pt') — 38.8 MB",
+    "synth_clean_time_s": 133.2,
+    "synth_clean_masks": 29,
+    "hf_00_time_s": 118.6,
+    "hf_00_masks": 31,
+    "verdict": "CPU-feasible but slow (~2 min/image) and unfiltered (everything-segmentation)"
+  },
+  "vlm_ab": {
+    "synth_clean": {
+      "haiku_4_5": {
+        "time_s": 5.4,
+        "rooms": 5,
+        "all_dims_correct": true
+      },
+      "sonnet_4_6": {
+        "time_s": 4.8,
+        "rooms": 5,
+        "all_dims_correct": true
+      },
+      "opus_4_7": {
+        "time_s": 6.3,
+        "rooms": 5,
+        "all_dims_correct": true
+      }
+    },
+    "hf_00_arabic": {
+      "haiku_4_5": {
+        "time_s": 69.5,
+        "rooms": 8,
+        "total_m2": 71.9,
+        "issue": "systematically read ceiling 2.65 m as room height"
+      },
+      "sonnet_4_6": {
+        "time_s": 138.5,
+        "rooms": 9,
+        "total_m2": 101.4,
+        "issue": "slowest but most consistent"
+      },
+      "opus_4_7": {
+        "time_s": 17.6,
+        "rooms": 9,
+        "total_m2": 131.4,
+        "issue": "fastest on this image; over-counted rooms ~+13%"
+      }
+    }
+  },
+  "pymupdf_vector_pdf": {
+    "synth_vector_pdf_size_b": 1605,
+    "extract_time_s": 0.01,
+    "rectangles_recovered": 5,
+    "rectangles_expected": 5,
+    "text_spans": 10,
+    "area_error_pct": 0.0,
+    "verdict": "PERFECT for vector PDFs; the whole stack collapses to PyMuPDF + Shapely"
+  }
+}

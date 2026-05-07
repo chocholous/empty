@@ -1,0 +1,38 @@
+{
+  "claude-haiku-4-5": {
+    "samples/synth_clean.png": {
+      "ok": true,
+      "seconds": 5.4,
+      "stdout_head": "```json\n{\"rooms\":[{\"label\":\"kitchen\",\"w_m\":3.50,\"h_m\":4.00},{\"label\":\"living\",\"w_m\":5.00,\"h_m\":4.00},{\"label\":\"bath\",\"w_m\":2.50,\"h_m\":3.00},{\"label\":\"bed1\",\"w_m\":3.50,\"h_m\":3.00},{\"label\":\"bed2\",\"w_m\":2.50,\"h_m\":3.00}]}\n```"
+    },
+    "samples/hf_00.png": {
+      "ok": true,
+      "seconds": 69.5,
+      "stdout_head": "```json\n{\"rooms\":[{\"label\":\"Bedroom\",\"w_m\":3.0,\"h_m\":2.65},{\"label\":\"Bedroom\",\"w_m\":3.75,\"h_m\":2.65},{\"label\":\"Living\",\"w_m\":3.3,\"h_m\":2.65},{\"label\":\"Kitchen\",\"w_m\":3.2,\"h_m\":2.65},{\"label\":\"Living\",\"w_m\":4.68,\"h_m\":3.6},{\"label\":\"Bathroom\",\"w_m\":2.3,\"h_m\":2.3},{\"label\":\"Corridors\",\"w_m\":3.75,\"h_m\":2.5},{\"label\":\"Utility\",\"w_m\":2.3,\"h_m\":2.3}]}\n```"
+    }
+  },
+  "claude-sonnet-4-6": {
+    "samples/synth_clean.png": {
+      "ok": true,
+      "seconds": 4.8,
+      "stdout_head": "{\"rooms\":[{\"label\":\"kitchen\",\"w_m\":3.50,\"h_m\":4.00},{\"label\":\"living\",\"w_m\":5.00,\"h_m\":4.00},{\"label\":\"bath\",\"w_m\":2.50,\"h_m\":3.00},{\"label\":\"bed1\",\"w_m\":3.50,\"h_m\":3.00},{\"label\":\"bed2\",\"w_m\":2.50,\"h_m\":3.00}]}"
+    },
+    "samples/hf_00.png": {
+      "ok": true,
+      "seconds": 138.5,
+      "stdout_head": "{\"rooms\":[{\"label\":\"Bedroom\",\"w_m\":4.00,\"h_m\":3.91},{\"label\":\"Bedroom\",\"w_m\":3.30,\"h_m\":4.65},{\"label\":\"Living Room\",\"w_m\":4.45,\"h_m\":3.15},{\"label\":\"Salon\",\"w_m\":3.37,\"h_m\":2.75},{\"label\":\"Entry Hall\",\"w_m\":5.57,\"h_m\":3.00},{\"label\":\"Bedroom\",\"w_m\":4.20,\"h_m\":4.00},{\"label\":\"Kitchen\",\"w_m\":2.73,\"h_m\":2.71},{\"label\":\"Bathroom\",\"w_m\":1.80,\"h_m\":2.37},{\"label\":\"Balcony\",\"w_m\":1.00,\"h_m\":1.92}]}"
+    }
+  },
+  "claude-opus-4-7": {
+    "samples/synth_clean.png": {
+      "ok": true,
+      "seconds": 6.3,
+      "stdout_head": "{\"rooms\":[{\"label\":\"kitchen\",\"w_m\":3.50,\"h_m\":4.00},{\"label\":\"living\",\"w_m\":5.00,\"h_m\":4.00},{\"label\":\"bath\",\"w_m\":2.50,\"h_m\":3.00},{\"label\":\"bed1\",\"w_m\":3.50,\"h_m\":3.00},{\"label\":\"bed2\",\"w_m\":2.50,\"h_m\":3.00}]}"
+    },
+    "samples/hf_00.png": {
+      "ok": true,
+      "seconds": 17.6,
+      "stdout_head": "{\"rooms\":[{\"label\":\"Bedroom\",\"w_m\":3.91,\"h_m\":4.50},{\"label\":\"Bedroom\",\"w_m\":4.15,\"h_m\":3.30},{\"label\":\"Kitchen\",\"w_m\":2.76,\"h_m\":2.72},{\"label\":\"Bathroom\",\"w_m\":1.8,\"h_m\":2.7},{\"label\":\"Living Room\",\"w_m\":3.15,\"h_m\":4.45},{\"label\":\"Stairs\",\"w_m\":4.50,\"h_m\":4.50},{\"label\":\"Salon\",\"w_m\":4.75,\"h_m\":4.37},{\"label\":\"Bedroom\",\"w_m\":4.0,\"h_m\":4.0},{\"label\":\"Foyer\",\"w_m\":3.00,\"h_m\":5.57}]}"
+    }
+  }
+}

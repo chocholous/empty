@@ -3,4 +3,12 @@ __pycache__/
 *.pyc
 samples/raw/
 out/experiment.log
+out/vlm_ab.log
 .DS_Store
+
+# downloaded model weights (large, regenerable)
+models/
+mobile_sam.pt
+*.pt
+*.pth
+*.onnx

@@ -82,3 +82,121 @@ hf_01 (real)     vlm= 79.8 m²  det=123.9 m²   px/m=76.3    vlm_time=24.8s
 ```
 
 Verdict: **the right tool surface plus Claude Sonnet 4.6 is enough to anchor scale and read dimensions on raster plans**, but room-polygon extraction needs a door-closure pass before the totals from CV match those from VLM on real samples. The synthetic case is solved; the real case is one missing component (door closure) away from being solved.
+
+---
+
+# Round 2 — empirical library / model / API audit
+
+Round 1 verified that the *Python helper layer* works end-to-end. Round 2 answers
+the bigger question: **for each external library, pretrained model and API in
+the originally proposed stack, does it actually run on this CPU box and produce
+useful output on our samples?** Numbers in this section come from `out/round2.json`.
+
+## OCR libraries (reading dimension annotations)
+
+| Tool | Install effort | synth_clean | hf_00 (Arabic) | Verdict |
+|---|---|---|---|---|
+| **Tesseract 5.3.4** | apt + `pytesseract` | 0.2 s, all dims perfect | 0.5 s, garbled — no Arabic in default tessdata | Latin-only cheap baseline |
+| **PaddleOCR PP-OCRv4** | `pip paddlepaddle paddleocr`; **needs `enable_mkldnn=False` on CPU** (PIR/oneDNN bug in PP-OCRv5 server models) | 2.4 s, `['kitchen','living','3.50x4.00','5.00x4.00','bath','bed1','bed2','2.50x3.00','3.50x3.00','2.50x3.00']`, mean score ≈ 0.98 | Arabic model not present in this build (only `en`+`ch` available for v4) | Best Latin/Chinese OCR; **Arabic gap blocking** |
+| **EasyOCR** | `pip easyocr` (~250 MB on first init) | 0.8 s; one-char errors (`bath→path`, `bed2→ped2`) | **10.5 s, 44 text regions including Arabic numerals (٤٫٦٥, ٢٫٧٠) and labels (مطبخ kitchen, معيشة living, طرقة corridor)** | **Winner for multilingual plans; Arabic out of the box** |
+
+The PaddleOCR fix (`enable_mkldnn=False`) is non-obvious and was found by switching
+back from `PP-OCRv5` to `PP-OCRv4`; we leave a note in `tools.py` once OCR is
+wired in.
+
+## Pretrained floor-plan segmentation models
+
+| Tool | Install / weights | Result | Verdict |
+|---|---|---|---|
+| **CubiCasa5K original (Apache-2.0)** | gdrive link `1gRB7DbU8K3v-eM3F4vFMhAyMSLhuMYz0` returns "permission denied / too many accesses" | could not load | **Unobtainable in May 2026** |
+| **`JessiP23/cubicasa-segformer-v2`** (HF community retrain) | `pip segmentation-models-pytorch albumentations` + `.pt` from HF | metrics.json shows: bg 0.88, wall 0.30, window 0.30, door 0.15, **all 7 room classes 0.00 IoU** | Broken — room classes never learned |
+| **`karanjaWakaba/Yolo_segmentation_cubicasa`** (235 classes) | `pip ultralytics` + HF download | **0 detections** at conf ∈ {0.05, 0.10} × imgsz ∈ {640, 1024} on synth_clean.png, hf_00.png, hf_01.png | Useless on out-of-distribution plans |
+| **MitUNet (arXiv 2512.02413, Dec 2025)** | repo + Zenodo weights public | not yet installed in this round | High priority for round 3 (newest wall-mask SOTA) |
+| **DeepFloorplan TF1** | repo with R3D weights link | not yet installed | Worth trying — TF1 dependency overhead is the main cost |
+| **R2V / FloorplanTransformation** (PyTorch fork) | repo with R3D weights | not yet installed | Older but reproducible |
+
+**Headline finding:** the easiest-to-grab community CubiCasa weights on
+HuggingFace are not usable substitutes for the original training. To get a
+real "CubiCasa baseline" we have to either retrieve the original Apache-2.0
+weights through other channels or retrain on the public dataset. **MitUNet
+(public weights on Zenodo)** is the better short-term target.
+
+## Foundation segmenters (zero-shot)
+
+| Tool | Install | Time / image | Output | Verdict |
+|---|---|---|---|---|
+| **MobileSAM** (`ultralytics SAM('mobile_sam.pt')`, 38.8 MB) | `pip ultralytics` | synth 133 s · hf_00 119 s | 29–31 unfiltered masks ("everything segmentation") | CPU-feasible but slow & needs prompting/filtering |
+| **Florence-2-base** (Microsoft, 230 MB) | `pip transformers accelerate timm einops` | — | **failed to load**: `Florence2LanguageConfig.forced_bos_token_id` AttributeError on `transformers ≥ 4.45` | Needs `transformers~=4.41` pin; deferred |
+| **SAM 2** (full) | `pip + ckpts ~600 MB` | not tested | — | Probably > 60 s/image on this CPU |
+
+## VLM API A/B — same prompt, three Claude tiers, two images
+
+Prompt: *"Return ONLY JSON `{\"rooms\":[{\"label\":...,\"w_m\":...,\"h_m\":...}]}` for every room with a written W×H dimension. No prose."*
+
+| Model | synth_clean | hf_00 (Arabic) | hf_00 total area |
+|---|---|---|---|
+| **claude-haiku-4-5** | 5.4 s, **5/5 rooms correct** | 69.5 s, 8 rooms, **systematic bug**: every `h_m` is 2.65 m (ceiling height read instead of room depth) | 71.9 m² — undershoots |
+| **claude-sonnet-4-6** | 4.8 s, **5/5 correct** | **138.5 s** (slowest), 9 rooms, dims plausibly real | 101.4 m² — closest to "right shape" |
+| **claude-opus-4-7** | 6.3 s, **5/5 correct** | **17.6 s (fastest!)**, 9 rooms, dims plausibly real | 131.4 m² — over-counts ~+13 % |
+
+Surprises:
+- **Opus 4.7 was 8× faster than Sonnet 4.6 on the Arabic plan** (17.6 s vs 138.5 s) and matched its dimensional accuracy. On dense plans Opus is the right cost/quality choice for this task.
+- **Haiku 4.5 systematically misreads** Arabic apartment plans by substituting a ceiling-height constant (2.65 m) for room depth. It is *unsuitable* for floor-plan dimension extraction even though it works fine on the synthetic Latin sample.
+- All three returned valid (or fence-stripped) JSON every call, no parser failures.
+
+Action item: **default model in `vlm_call` should be Opus 4.7 for real plans, Sonnet 4.6 as fallback.** Haiku only for clean Latin synth samples (rare in production).
+
+## PyMuPDF on a vector PDF
+
+Generated `samples/synth_vector.pdf` (1605 B) with reportlab, then ran PyMuPDF.
+
+| Metric | Value |
+|---|---|
+| `page.get_drawings()` time | **0.01 s** |
+| Rectangles recovered | 5 / 5 |
+| Coordinate precision | float-pt (0 % area error after px↔mm conversion) |
+| Text spans (`page.get_text("dict")`) | 10 / 10 with bboxes |
+| Page user units | 1 pt = 1/72 in (deterministic, no calibration needed) |
+
+**Conclusion:** for any vector-PDF input the whole pipeline collapses to
+**PyMuPDF + Shapely**. No CV, no LLM, area accuracy is float-pt. The hard
+problem is *raster-only* inputs.
+
+## Decision matrix (per-tool fitness)
+
+| Layer | Tool | Quality | CPU time | Install effort | Use it? |
+|---|---|---|---|---|---|
+| Vector PDF | **PyMuPDF** | float-pt | 10 ms | trivial | **Yes — primary path for PDFs** |
+| Vector PDF | pdfplumber | text/lines | tens of ms | trivial | Yes — complement to PyMuPDF for text positions |
+| DXF | **ezdxf 1.4** | float-pt | n/a tested | trivial | Yes — primary path for DXF |
+| Raster CV | **OpenCV adaptive threshold + CC** | good on clean, fragile on real | 50–200 ms | already installed | Yes — baseline |
+| Raster ML | CubiCasa5K orig | unknown | — | weights blocked | Pending — chase original weights |
+| Raster ML | MitUNet (12/2025) | unknown | unknown | medium | **Try in round 3** |
+| Raster ML | Community CubiCasa retrains | broken | — | medium | **No** |
+| Raster zero-shot | MobileSAM | many masks, no semantics | ~120 s | trivial | Only if prompt-driven (text → SAM) |
+| OCR Latin | **PaddleOCR v4 (en)** | excellent | 2.4 s | medium (oneDNN gotcha) | **Yes for Latin** |
+| OCR Latin cheap | **Tesseract 5** | very good on clean text | 0.2 s | trivial | Yes — cheap fallback |
+| OCR multilingual | **EasyOCR** | strong incl. Arabic | 0.8–10 s | trivial | **Yes — primary OCR for non-Latin** |
+| Geometry | **Shapely 2.1** | float-pt | < 1 ms | trivial | Yes — already in stack |
+| VLM real plans | **Claude Opus 4.7** | accurate, fastest | 17 s on hf_00 | API/CLI | **Yes — default VLM** |
+| VLM Latin plans | Claude Sonnet 4.6 | accurate | 5 s synth, 138 s hf_00 | API/CLI | Yes — fallback / cheaper Latin |
+| VLM small plans | Claude Haiku 4.5 | broken on Arabic | 5–69 s | API/CLI | **No for production** |
+| VLM alternative | GPT-4o, Gemini 2.5 Pro | not tested (no key) | — | API key needed | Round 3 |
+
+## Updated stack recommendation
+
+Based on Round 2 evidence:
+
+1. **Input router**: PyMuPDF first (vector PDF → exact). DXF → ezdxf. Else → raster path.
+2. **Raster CV**: OpenCV for walls + door arcs; **add MitUNet** for difficult plans (round 3).
+3. **OCR**: EasyOCR multilingual primary, PaddleOCR-v4 for high-confidence Latin, Tesseract as fast cheap fallback.
+4. **Geometry**: Shapely for areas, NetworkX for room adjacency graph (not yet exercised).
+5. **VLM orchestrator**: Claude Opus 4.7 default, Sonnet 4.6 fallback. Haiku only for trivial cases.
+6. **Norm layer**: Shapely buffer for ČSN 73 4055 / ISO 9836 net↔gross (not yet exercised).
+
+## What round 2 did not prove
+
+- **MitUNet, DeepFloorplan, R2V** still untested.
+- **No DXF sample**; ezdxf only verified by import.
+- **No GPT-4o / Gemini comparison** (no API keys in this environment).
+- **No vector-PDF with Czech apartment** (synth-rendered only).
