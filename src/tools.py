@@ -13,12 +13,10 @@ import json
 import math
 import os
 import subprocess
-from typing import Iterable
 
 import cv2
 import numpy as np
-from shapely.geometry import Polygon, box
-from shapely.ops import unary_union
+from shapely.geometry import Polygon
 
 
 # ---------- I/O ----------
