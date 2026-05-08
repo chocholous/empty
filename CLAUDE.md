@@ -171,42 +171,48 @@ typical loop is 3–6 round-trips per plan.
 
 ---
 
-## 2. What "area" means in Czech, Slovak, and international practice
+## 2. What "area" means in Czech / Slovak practice — terminology only
 
-Most pipeline failures in this repo trace to comparing the wrong thing
-to the wrong number. Before computing any deviation %, identify which
-definition you're working with.
+**Caveat: this section lists definitions only.** We have *not*
+empirically benchmarked what each public data source actually publishes
+under "Plocha" / "Area" / "Výměra" — so any claim about reliability of
+a particular source belongs in `REPORT.md` only after we've measured it.
 
-### Czech standards (also valid in Slovakia with STN equivalents)
-| Term (CZ) | What it measures | Where it appears |
-|---|---|---|
-| **Užitná plocha** (UP) | Net useable floor area inside the unit, *excluding* walls, columns, shafts. Includes corridors and storage. Per **ČSN 73 4055** / ČSN ISO 9836. | sreality.cz "Užitná plocha", rental contracts, building permits |
-| **Podlahová plocha bytu** (PP) | UP **+ half-area of balconies/loggias/terraces**. Per **Act 311/2013 Sb.** §3 | tax declarations, real-estate transfer |
-| **Zastavěná plocha** (ZP) | Building footprint outline including exterior walls. | katastr nemovitostí "výměra zastavěné plochy", building permit |
-| **Obytná plocha** | Subset of UP — only living rooms (bedrooms, living rooms). Excludes kitchen, bath, hallway. | older communist-era valuations, housing stats |
-| **Hrubá podlažní plocha** (HPP / GFA) | Σ over floors of ZP (built area incl walls), excluding open balconies. | architectural project data, EIA |
-| **Obestavěný prostor** (OP) | Enclosed volume m³. | construction-cost estimates |
+The bare terms an agent will encounter on Czech / Slovak plans (per
+ČSN 73 4055 / ČSN ISO 9836; verify wording against the current standard
+text before quoting):
 
-### What different sources actually publish
-| Source | Field name | What it actually contains | Reliability |
-|---|---|---|---|
-| **sreality.cz** | "Užitná plocha" | UP per ČSN 73 4055 | High (legally binding for sales) |
-| **sreality.cz** | "Plocha bytu" | PP = UP + ½ balcony | Medium (rounded, sometimes confused with UP) |
-| **bezrealitky.cz** | "Užitná plocha" | UP, but inconsistent (sometimes seller-reported gross) | Medium |
-| **katastr nemovitostí** (cuzk.cz) | "Výměra" | ZP for buildings, "výměra parcely" for land | High but different from internal area |
-| **archiweb.cz / archdaily.com** | "Plocha" / "Area" | **Inconsistent**: GFA, footprint, per-unit, per-floor | **Low** — read the project notes |
-| **NOZ §1159** flat definition | n/a | Includes "příslušenství" (auxiliary spaces) | Legal fine print |
+- **Užitná plocha (UP)** — net useable area inside the unit, excluding
+  load-bearing walls, columns, shafts. Includes corridors / storage.
+  Common on sreality.cz, leases, building permits.
+- **Podlahová plocha bytu (PP)** — defined for legal / tax purposes;
+  typically larger than UP because it adds a fraction of balconies /
+  loggias / terraces. Exact fraction is set by the relevant statute,
+  which has changed over the years — look it up before relying on a
+  multiplier.
+- **Zastavěná plocha (ZP)** — building footprint outline including
+  exterior walls. Cadastre records this under "výměra zastavěné plochy".
+- **Obytná plocha** — subset of UP, only living rooms (bedrooms +
+  living). Excludes kitchen / bath / hallway. Older usage.
+- **Hrubá podlažní plocha (HPP)** / Gross Floor Area — Σ across floors
+  of built area incl walls. Architectural projects publish this under
+  various names ("plocha", "celková plocha", "GFA").
+- **Obestavěný prostor (OP)** — enclosed volume m³. Used for
+  construction-cost estimates, not floor area.
 
-Round 4 cost a debugging round because ArchDaily's "Area: 283 m²"
-turned out to be per-floor footprint for Podun but gross floor area for
-Iconik. **Never trust an "Area" field without confirming its
-definition** against a second source (cadastre, building permit, or the
-floor-plan note "Užitná plocha celkem").
+Empirical observations from this repo (only what we directly
+measured):
 
-### Cross-check arithmetic
-- For an apartment building: `HPP ≈ ZP × n_floors_above_ground − atrium_voids` (basement variable per local code)
-- For one apartment: `UP × ~1.10–1.15 ≈ PP` (depending on balcony share)
-- For a free-standing house: `ZP ≈ UP_ground_floor + wall_thickness ≈ UP_ground_floor × 1.07–1.10`
+- ArchDaily's "Area" field meant **gross floor area** for Iconik
+  Apartments (5 433 m² across 9 floors) and **per-floor footprint** for
+  Podun (283 m² × 5 floors). Two data points, one site, opposite
+  conventions. Our floor-sum invariant detected the mismatch but only
+  after the pipeline was already off by an order of magnitude. Cost
+  one debugging round.
+- We have **not** yet pulled and compared sreality.cz "Užitná plocha",
+  bezrealitky.cz, katastr / ČÚZK "výměra", archiweb.cz, or any other
+  Czech source on the same building. Doing that comparison is the
+  precondition for any reliability ranking and remains open work.
 
 ---
 
@@ -235,32 +241,43 @@ Read `REPORT.md` for full numbers. One-line summaries:
   upload.wikimedia.org, cdn.huggingface.co. **Egress works**:
   github.com, raw.githubusercontent.com, huggingface.co (incl LFS),
   images.adsttc.com, sreality.cz, bezrealitky.cz, archiweb.cz.
-- **`scale_consistency_w_h < 0.6`** is the auto-flag rule that caught
-  3/3 fail-cases in round 5 with zero false positives.
-- **Listed-total invariant + floor-sum invariant** together resolve
-  ArchDaily metadata ambiguity (round 4 Podun) without external lookup.
+- **`scale_consistency_w_h`** correlated cleanly with detector failure
+  on the 10 plans we ran (every value < 0.6 was a visually-confirmed
+  fail; every value > 0.67 passed). n = 10 — see section 4 for the
+  caveat.
+- **Listed-total invariant + floor-sum invariant** together pointed at
+  the ArchDaily metadata ambiguity on Podun without an external lookup;
+  it took a manual look at the apartment-floor plan to confirm the
+  per-floor reading.
 
 ---
 
-## 4. Verification disciplines
+## 4. Verification disciplines (signals worth checking, not validated rules)
 
-When you finish a measurement, check at least one of these. The pipeline
-is allowed to be ±10 % wrong, but it must *know* when it is wrong.
+When a measurement finishes, run as many of these checks as the data
+allows. The numeric thresholds below are starting points observed on a
+small sample (n = 10 plans, two buildings) — calibrate against your own
+sample before treating any of them as a rule.
 
-1. **Listed-total invariant**: Σ (per-floor pipeline area × instances) ≈
-   listed gross floor area. ±10 % flags review.
-2. **Floor-sum invariant**: typical-floor area should dominate. If F2…F5
-   are uniform but F1 is 3× larger, F1 is probably broken (parking floor
-   eating property lines — Podun F1).
-3. **Two-source GT**: never trust ArchDaily "Area" alone. Cross-reference
-   against sreality "Užitná plocha", katastr "výměra", or the floor-plan
-   note "Užitná plocha celkem".
+1. **Listed-total invariant**: Σ (per-floor pipeline area × instances)
+   compared to a listed total. Useful only if the listed number's
+   definition (gross / net / footprint) is known.
+2. **Floor-sum invariant**: typical-floor area should dominate the
+   stack. A floor that is e.g. 3× the others is suspect (Podun F1
+   parking floor ate the dashed property line).
+3. **Two-source GT**: do not trust a single "Area" / "Plocha" field.
+   Cross-reference against another source (cadastre, building permit,
+   or a different listing platform) before using it as ground truth.
 4. **Scale consistency**: `min(px_per_m_w, px_per_m_h) /
-   max(px_per_m_w, px_per_m_h)`. Below 0.6 → reject the result, fall
-   back to the second-best detector or human review.
+   max(px_per_m_w, px_per_m_h)`. In our 10-plan run, every value
+   below 0.6 corresponded to a visually-confirmed detector failure and
+   every value above 0.67 corresponded to a passing case. n is small;
+   treat as an early-warning signal, not a hard cut-off, until measured
+   on more data.
 5. **Fixture cross-check**: anchor scale via two independent fixtures
-   (e.g., door arc 0.9 m + bathtub 1.7 m). If they disagree by > 25 %,
-   flag.
+   (e.g. door arc ~0.9 m + bathtub ~1.7 m). Disagreement is a flag.
+   Round 6 live demo used this to reject a kitchen-island estimate
+   (49 m²) in favour of door-arc + W×D estimates (76–101 m²).
 
 ---
 
