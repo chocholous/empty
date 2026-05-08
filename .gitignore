@@ -12,3 +12,7 @@ mobile_sam.pt
 *.pt
 *.pth
 *.onnx
+
+# intermediate debug masks from morphology sweeps
+out/*.closed.png
+out/*.thick*.png
