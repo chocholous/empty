@@ -19,4 +19,5 @@ out/*.thick*.png
 
 # in-flight pipeline run logs (kept locally, not committed)
 out/round4_run.log
+out/round5_run.log
 out/*.walls.png
