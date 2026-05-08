@@ -1,0 +1,91 @@
+{
+  "ezdxf_load_seconds": 0.0193,
+  "entities_by_layer": {
+    "WALL": {
+      "LWPOLYLINE": 5
+    },
+    "DOOR": {
+      "ARC": 2
+    },
+    "WINDOW": {
+      "LWPOLYLINE": 1
+    },
+    "ROOM": {
+      "TEXT": 5
+    },
+    "DIM": {
+      "TEXT": 1
+    }
+  },
+  "rooms_recovered": 5,
+  "rooms_expected": 5,
+  "net_areas_m2": [
+    14.0,
+    20.0,
+    7.5,
+    10.5,
+    7.5
+  ],
+  "net_total_m2": 59.5,
+  "gross_total_m2": 61.847,
+  "to_centerline_m2": [
+    15.148,
+    21.372,
+    8.348,
+    11.498,
+    8.348
+  ],
+  "wall_thickness_m": 0.15,
+  "gt_net_total_m2": 59.5,
+  "gt_total_match": true,
+  "texts_found": [
+    {
+      "text": "kitchen",
+      "layer": "ROOM",
+      "pos": [
+        1.75,
+        2.0
+      ]
+    },
+    {
+      "text": "living",
+      "layer": "ROOM",
+      "pos": [
+        6.0,
+        2.0
+      ]
+    },
+    {
+      "text": "bath",
+      "layer": "ROOM",
+      "pos": [
+        1.25,
+        5.5
+      ]
+    },
+    {
+      "text": "bed1",
+      "layer": "ROOM",
+      "pos": [
+        4.25,
+        5.5
+      ]
+    },
+    {
+      "text": "bed2",
+      "layer": "ROOM",
+      "pos": [
+        7.25,
+        5.5
+      ]
+    },
+    {
+      "text": "3.50 m",
+      "layer": "DIM",
+      "pos": [
+        1.5,
+        -0.5
+      ]
+    }
+  ]
+}

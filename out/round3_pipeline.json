@@ -1,0 +1,78 @@
+{
+  "samples/synth_clean.png": {
+    "mitunet": {
+      "n_rooms_polygons": 5,
+      "total_area_m2": 53.896,
+      "overlay": "out/synth_clean.mitunet.overlay.png",
+      "areas_px_top10": [
+        46343,
+        31898,
+        23714,
+        16427,
+        16357
+      ]
+    },
+    "opencv": {
+      "n_rooms_polygons": 5,
+      "total_area_m2": 54.136,
+      "overlay": "out/synth_clean.opencv.overlay.png",
+      "areas_px_top10": [
+        46464,
+        32064,
+        23714,
+        16551,
+        16546
+      ]
+    }
+  },
+  "samples/hf_00.png": {
+    "mitunet": {
+      "n_rooms_polygons": 0,
+      "total_area_m2": null,
+      "overlay": "out/hf_00.mitunet.overlay.png",
+      "areas_px_top10": []
+    },
+    "opencv": {
+      "n_rooms_polygons": 18,
+      "total_area_m2": null,
+      "overlay": "out/hf_00.opencv.overlay.png",
+      "areas_px_top10": [
+        352394,
+        133644,
+        127218,
+        115688,
+        54139,
+        32883,
+        23987,
+        21505,
+        19965,
+        18836
+      ]
+    }
+  },
+  "samples/hf_01.png": {
+    "mitunet": {
+      "n_rooms_polygons": 0,
+      "total_area_m2": null,
+      "overlay": "out/hf_01.mitunet.overlay.png",
+      "areas_px_top10": []
+    },
+    "opencv": {
+      "n_rooms_polygons": 18,
+      "total_area_m2": null,
+      "overlay": "out/hf_01.opencv.overlay.png",
+      "areas_px_top10": [
+        307265,
+        87898,
+        80559,
+        78781,
+        47988,
+        25724,
+        16465,
+        13375,
+        13097,
+        12702
+      ]
+    }
+  }
+}

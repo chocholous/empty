@@ -1,0 +1,14 @@
+{
+  "mitunet": {
+    "iou_strict": 0.772,
+    "iou_dilated_gt": 0.781,
+    "precision_strict": 0.87,
+    "recall_strict": 0.872
+  },
+  "opencv_adaptive": {
+    "iou_strict": 0.826,
+    "iou_dilated_gt": 0.671,
+    "precision_strict": 0.826,
+    "recall_strict": 1.0
+  }
+}

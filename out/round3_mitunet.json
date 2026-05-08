@@ -1,0 +1,32 @@
+{
+  "samples/synth_clean.png": {
+    "mitunet_seconds": 3.58,
+    "image_size": [
+      505,
+      430
+    ],
+    "mitunet_wall_ratio": 0.0791,
+    "opencv_adaptive_wall_ratio": 0.0954,
+    "out_mask": "out/synth_clean.mitunet.png"
+  },
+  "samples/hf_00.png": {
+    "mitunet_seconds": 0.67,
+    "image_size": [
+      1080,
+      1537
+    ],
+    "mitunet_wall_ratio": 0.0521,
+    "opencv_adaptive_wall_ratio": 0.123,
+    "out_mask": "out/hf_00.mitunet.png"
+  },
+  "samples/hf_01.png": {
+    "mitunet_seconds": 0.67,
+    "image_size": [
+      1080,
+      1428
+    ],
+    "mitunet_wall_ratio": 0.0443,
+    "opencv_adaptive_wall_ratio": 0.09,
+    "out_mask": "out/hf_01.mitunet.png"
+  }
+}

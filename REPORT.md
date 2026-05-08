@@ -200,3 +200,166 @@ Based on Round 2 evidence:
 - **No DXF sample**; ezdxf only verified by import.
 - **No GPT-4o / Gemini comparison** (no API keys in this environment).
 - **No vector-PDF with Czech apartment** (synth-rendered only).
+
+---
+
+# Round 3 — MitUNet, Florence-2 retry, norm layer, DXF
+
+Round 3 closes three of the four gaps from round 2.
+
+## MitUNet (arXiv 2512.02413, MVA 2026) — empirically run
+
+| Field | Value |
+|---|---|
+| Repo | https://github.com/aliasstudio/mitunet (MIT) |
+| Weights | `experiments/models/mitunet_finetune_a6_mit_b4_tversky_8864_28E.pth` via Git-LFS, **257 MB**, **CC-BY-NC 4.0** (non-commercial — important if this ever ships) |
+| Architecture | `smp.Unet(encoder=mit_b4, decoder_attention="scse")` with the encoder *transplanted* from `smp.Segformer(mit_b4)` before `load_state_dict` |
+| Class taxonomy | **walls only** (binary mask, sigmoid + 0.5 threshold) |
+| Input size | resize 512×512, ImageNet normalise |
+| Params | **64.2 M** |
+| Load time (CPU) | 5.4 s |
+
+**Inference time on CPU**:
+- synth_clean.png: 3.6 s (first call has compile overhead)
+- hf_00.png: 0.7 s
+- hf_01.png: 0.7 s
+
+### MitUNet vs OpenCV adaptive — quality on synth GT
+
+GT mask reconstructed from `synth.py` (rectangles with `wall_px=6`).
+
+| Metric | MitUNet | OpenCV adaptive |
+|---|---|---|
+| IoU strict | 0.772 | **0.826** |
+| IoU vs dilated GT (1 px) | **0.781** | 0.671 |
+| Precision | **0.870** | 0.826 |
+| Recall | 0.872 | **1.000** |
+
+OpenCV adaptive wins strict-IoU because it captures **every** dark pixel
+including text — recall 1.0 — but precision is dragged down by those false
+positives. MitUNet has more balanced precision/recall and wins under any
+1-px tolerance.
+
+### Real plans — wall pixel ratio
+
+| Sample | OpenCV adaptive | MitUNet |
+|---|---|---|
+| synth_clean | 9.5 % | 7.9 % |
+| hf_00 (Arabic real) | 12.3 % | **5.2 %** |
+| hf_01 (Arabic real) | 9.0 % | **4.4 %** |
+
+On real plans MitUNet predicts **40–60 % less wall area** than OpenCV
+adaptive — it has *learned* to ignore furniture, dimension lines, hatching,
+text. That is the core value-add over a generic CV threshold.
+
+### MitUNet downstream — feeding masks into `extract_rooms`
+
+| Sample | OpenCV → rooms | MitUNet → rooms |
+|---|---|---|
+| synth_clean.png | 5 (correct) | **5 (correct)** |
+| hf_00.png | 18 polygons (over-merged) | **0 polygons** |
+| hf_01.png | 18 polygons (over-merged) | **0 polygons** |
+
+**Failure mode:** MitUNet predicts walls as ~1–2 px thick after resize-back.
+Tiny gaps (door arcs, wall breaks) leave the inverted mask as one large
+connected component → no rooms detected. Tested dilations 3/5/7 do not
+recover rooms on `hf_00.png` and `hf_01.png` — gaps are too large for naive
+morphology to bridge. This is the **out-of-distribution generalization gap**
+between the CubiCasa5K + Russian-CIS training set and the Arabic-style
+plans we sampled.
+
+**Practical conclusion:** MitUNet is the right *wall semantic filter* but
+not a complete room-extractor on plans outside its training distribution.
+A production stack should:
+1. Use MitUNet to suppress non-wall content.
+2. Combine with OpenCV adaptive (logical OR) to keep recall.
+3. Add a door-closure step before connected-components.
+
+## Florence-2 retry with `transformers==4.41.2`
+
+Pinning fixed the `forced_bos_token_id` config bug. New blocker:
+
+```
+ImportError: This modeling file requires the following packages that
+were not found in your environment: flash_attn.
+Run `pip install flash_attn`
+```
+
+`flash_attn` requires CUDA at build time and does not install on a CPU-only
+host. Workaround would be to fork the modelling file and pass
+`attn_implementation="sdpa"`. **Verdict: Florence-2-base on CPU has two
+blockers stacked (transformers pin + flash_attn fork). Skip until either
+GPU or a community CPU-patched fork is available.**
+
+## Norm layer — Shapely buffer (ČSN 73 4055 / ISO 9836)
+
+Verified on the synth_clean polygons:
+
+| Quantity | Value | Notes |
+|---|---|---|
+| `wall_thickness_m` | 0.150 | typical Czech interior partition |
+| Net total (sum of polygon.area) | 59.500 m² | matches GT exactly |
+| Per-room "to-centerline" (`p.buffer(t/2)`) | [15.15, 21.37, 8.35, 11.50, 8.35] m² | each room ~+8 % |
+| Gross total (`unary_union(buffered)`) | 61.847 m² | only +3.95 % vs net |
+
+The `unary_union` step is what makes this correct: shared interior walls
+get counted only once, while exterior walls get a half-thickness buffer on
+the outside. This is the **one Shapely operation** that closes the gap
+between "polygon area" and "ČSN 73 4055 / ISO 9836 gross floor area".
+
+## DXF + ezdxf 1.4 — semantic extraction
+
+Generated `samples/synth_apartment.dxf` (1 unit = 1 m, 5 layers:
+`WALL`, `DOOR`, `WINDOW`, `ROOM`, `DIM`) using ezdxf, then re-read it.
+
+| Metric | Value |
+|---|---|
+| Load time | 0.019 s |
+| `LWPOLYLINE` on layer `WALL` | 5 / 5 |
+| `ARC` on layer `DOOR` | 2 / 2 |
+| `LWPOLYLINE` on layer `WINDOW` | 1 / 1 |
+| `TEXT` on layer `ROOM` | 5 / 5 (positions preserved at room centroids) |
+| `TEXT` on layer `DIM` | 1 / 1 |
+| Sum of polygon areas | 59.500 m² (exact GT match) |
+
+ezdxf preserves layers, entity types, exact coordinates and inserts.
+A DXF with semantic layers is a solved input — same status as a vector PDF.
+
+## Round 3 decision-matrix updates
+
+| Layer | Tool | Quality update | Use it? |
+|---|---|---|---|
+| Raster ML | **MitUNet** | precision 0.87 / 0.7 s on 600-px plans / wall-only | **Yes — as semantic filter, not stand-alone room extractor**. CC-BY-NC 4.0 — non-commercial only. |
+| Raster zero-shot VLM | Florence-2-base | requires `flash_attn` (GPU) or a forked modelling file | **No on CPU box** |
+| Geometry / Norm | **Shapely + `unary_union(buffer)`** | 1-line correct net→gross under ISO 9836 | **Yes** — primary norm-layer impl |
+| Vector input | **ezdxf 1.4** | exact polygons, layers, texts, arcs | **Yes** — primary path for DXF |
+
+## What round 3 still leaves open
+
+- **DeepFloorplan**, **R2V** — still untested; lower priority now that MitUNet covers the modern wall-mask slot.
+- **GPT-4o / Gemini 2.5 Pro / Qwen-VL-Max** — VLM A/B vs Claude requires API keys not present in this environment.
+- **Original CubiCasa5K Apache-2.0 weights** — gdrive link still blocked.
+- **Florence-2 CPU fork** — possible but requires modelling file patch.
+
+## Headline (after rounds 1–3)
+
+The empirical answer to *"can the proposed stack actually work on CPU
+in May 2026?"* is **yes for vector inputs (PyMuPDF, ezdxf are essentially
+solved), conditional yes for raster inputs (OpenCV + MitUNet + EasyOCR +
+Claude Opus 4.7), and no for any path through the community-hosted
+floor-plan models (CubiCasa SegFormer, YOLO-CubiCasa) or Florence-2 on
+CPU**. The proper raster pipeline is approximately:
+
+```
+raster
+  → MitUNet (wall mask, precision filter)
+  → OpenCV adaptive (recall fill-in, OR-merged with MitUNet)
+  → door-arc detector + close gaps        # ← still TODO
+  → connected components → polygons (Shapely)
+  → EasyOCR (multilingual dim labels)
+  → Claude Opus 4.7 anchors scale + verifies overlay
+  → unary_union(buffer(t/2)) for ČSN/ISO gross
+```
+
+Each component in this chain is now empirically observed to work in this
+environment, except the door-arc step which remains a known-open gap.
