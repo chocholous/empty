@@ -1,0 +1,44 @@
+{
+  "buildings": [
+    {
+      "id": "iconik",
+      "title": "Iconik Apartments",
+      "architect": "Edit! architects",
+      "city_country": "Praha 8, Czechia",
+      "year": 2023,
+      "source_url": "https://www.archdaily.com/1014826/iconik-apartments-edit-architects",
+      "listed_total_m2": 5433,
+      "listed_label": "gross floor area",
+      "floors_above_ground": 8,
+      "floors_below_ground": 1,
+      "training_data_overlap_risk": "near-zero (post-CubiCasa5K-2019, post-RPLAN-2019, Czech)",
+      "plans": [
+        {"file": "iconik_basement.jpg", "level": "B",     "instances": 1, "url": "https://images.adsttc.com/media/images/65fc/db38/9fcc/1d53/161a/f994/large_jpg/02-basement-floor-plan-2.jpg"},
+        {"file": "iconik_ground.jpg",   "level": "G",     "instances": 1, "url": "https://images.adsttc.com/media/images/65fc/db39/9fcc/1d18/9ed2/e0fc/large_jpg/03-ground-floor-plan-3.jpg"},
+        {"file": "iconik_typical.jpg",  "level": "1-6",   "instances": 6, "url": "https://images.adsttc.com/media/images/65fc/db3b/b626/e801/7cb4/4ee7/large_jpg/04-typical-floor-plan-4.jpg"},
+        {"file": "iconik_7.jpg",        "level": "7",     "instances": 1, "url": "https://images.adsttc.com/media/images/65fc/db3a/b626/e801/7cb4/4ee6/large_jpg/05-7th-floor-plan-5.jpg"},
+        {"file": "iconik_8.jpg",        "level": "8",     "instances": 1, "url": "https://images.adsttc.com/media/images/65fc/db39/9fcc/1d18/9ed2/e0fd/large_jpg/06-8th-floor-plan-6.jpg"}
+      ]
+    },
+    {
+      "id": "podun",
+      "title": "Podun Apartment Building",
+      "architect": "Kuklica x Smerek Architekti",
+      "city_country": "Bratislava, Slovakia",
+      "year": 2024,
+      "source_url": "https://www.archdaily.com/1025536/podun-apartment-building-kuklica-x-smerek-architekti",
+      "listed_total_m2": 283,
+      "listed_label": "Area (per ArchDaily project info)",
+      "floors_above_ground": 5,
+      "floors_below_ground": 0,
+      "training_data_overlap_risk": "near-zero (post-CubiCasa5K, Slovak)",
+      "plans": [
+        {"file": "podun_f1.jpg", "level": "1 (parking + entry)", "instances": 1, "url": "https://images.adsttc.com/media/images/6780/2ca2/4bc3/6d01/879d/587d/large_jpg/1st-fp-1.jpg"},
+        {"file": "podun_f2.jpg", "level": "2", "instances": 1, "url": "https://images.adsttc.com/media/images/6780/2ca0/7ace/9501/886f/5343/large_jpg/2nd-fp-2.jpg"},
+        {"file": "podun_f3.jpg", "level": "3", "instances": 1, "url": "https://images.adsttc.com/media/images/6780/2ca0/7ace/9501/886f/5342/large_jpg/3rd-fp-3.jpg"},
+        {"file": "podun_f4.jpg", "level": "4", "instances": 1, "url": "https://images.adsttc.com/media/images/6780/2ca3/7ace/9501/886f/5349/large_jpg/4th-fp-4.jpg"},
+        {"file": "podun_f5.jpg", "level": "5", "instances": 1, "url": "https://images.adsttc.com/media/images/6780/2ca1/7ace/9501/886f/5345/large_jpg/5th-fp-5.jpg"}
+      ]
+    }
+  ]
+}

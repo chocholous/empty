@@ -16,3 +16,7 @@ mobile_sam.pt
 # intermediate debug masks from morphology sweeps
 out/*.closed.png
 out/*.thick*.png
+
+# in-flight pipeline run logs (kept locally, not committed)
+out/round4_run.log
+out/*.walls.png
