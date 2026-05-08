@@ -1,0 +1,75 @@
+{
+  "note": "Czech (mostly Praha) multi-floor apartment buildings from archiweb.cz. Images are 389x275 thumbnails (CDN does not expose full-res publicly). Resolution limit acknowledged: ~13 px/m, fixture-based scale anchoring may degrade vs Round 4-5.",
+  "buildings": [
+    {
+      "id": "akciz",
+      "title": "Bytový dům Akcíz",
+      "city_country": "Praha, ČR",
+      "year": 2022,
+      "source_url": "https://www.archiweb.cz/b/bytovy-dum-akciz",
+      "floors_above_ground": 3,
+      "apartments": 14,
+      "listed_areas_m2": {"uzitna_plocha": 527, "zastavena_plocha": 545, "plocha_pozemku": 1970},
+      "interpretation_note": "UP/HPP ratio = 527/(545*3) = 0.32 -- consistent with UP = sum of apartment areas only (excl stairs/common/basement). Verify against plans during pipeline.",
+      "plans": [
+        {"file": "akciz_1.np.jpg", "level": "1.NP", "instances": 1},
+        {"file": "akciz_2.np.jpg", "level": "2.NP", "instances": 1},
+        {"file": "akciz_3.np.jpg", "level": "3.NP", "instances": 1}
+      ]
+    },
+    {
+      "id": "karlin",
+      "title": "Block Karlín",
+      "city_country": "Praha, ČR",
+      "year": 2023,
+      "source_url": "https://www.archiweb.cz/b/block-karlin-98-bytu",
+      "floors_above_ground": 7,
+      "apartments": 98,
+      "listed_areas_m2": null,
+      "interpretation_note": "No listed area on archiweb. Use only for qualitative pipeline test (no GT).",
+      "plans": [
+        {"file": "karlin_2.np.jpg", "level": "2.NP", "instances": 1},
+        {"file": "karlin_3.np.jpg", "level": "3.NP", "instances": 1},
+        {"file": "karlin_4.np.jpg", "level": "4.NP", "instances": 1},
+        {"file": "karlin_5.np.jpg", "level": "5.NP", "instances": 1},
+        {"file": "karlin_6.np.jpg", "level": "6.NP", "instances": 1},
+        {"file": "karlin_7.np.jpg", "level": "7.NP", "instances": 1}
+      ]
+    },
+    {
+      "id": "neklance",
+      "title": "Bytový dům Na Neklance",
+      "city_country": "Praha, ČR",
+      "year": 2024,
+      "source_url": "https://www.archiweb.cz/b/bytovy-dum-na-neklance",
+      "floors_above_ground": 4,
+      "floors_below_ground": 1,
+      "apartments": 31,
+      "listed_areas_m2": null,
+      "interpretation_note": "No listed area on archiweb. Qualitative test only.",
+      "plans": [
+        {"file": "neklance_1.pp.jpg", "level": "1.PP (basement)", "instances": 1},
+        {"file": "neklance_1.np.jpg", "level": "1.NP", "instances": 1},
+        {"file": "neklance_2.np.jpg", "level": "2.NP", "instances": 1},
+        {"file": "neklance_3.np.jpg", "level": "3.NP", "instances": 1},
+        {"file": "neklance_4.np.jpg", "level": "4.NP", "instances": 1}
+      ]
+    },
+    {
+      "id": "panorama",
+      "title": "Bytový dům Panorama Jih (Brno control)",
+      "city_country": "Brno, ČR",
+      "year": 2024,
+      "source_url": "https://www.archiweb.cz/b/bytovy-dum-panorama-jih",
+      "floors_above_ground": 6,
+      "apartments": null,
+      "listed_areas_m2": {"uzitna_plocha": 5758, "zastavena_plocha": 1314},
+      "interpretation_note": "UP/HPP ratio = 5758/(1314*6) = 0.73 -- typical for residential building incl all common+circulation. Brno not Praha but kept as control with explicit GT.",
+      "plans": [
+        {"file": "panorama_suteren.jpg", "level": "suterén", "instances": 1},
+        {"file": "panorama_prizemi.jpg", "level": "přízemí", "instances": 1},
+        {"file": "panorama_3.np.jpg", "level": "typical (3.NP)", "instances": 4}
+      ]
+    }
+  ]
+}
