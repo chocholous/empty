@@ -1,0 +1,292 @@
+{
+  "iconik": {
+    "title": "Iconik Apartments",
+    "listed_total_m2": 5433,
+    "per_plan": [
+      {
+        "image": "samples/real_multifloor/iconik_basement.jpg",
+        "mitunet_seconds": 3.56,
+        "vlm_seconds": 6.8,
+        "vlm_width_m": 32.0,
+        "vlm_depth_m": 24.0,
+        "vlm_reasoning": "Estimated from parking bay widths (~2.5 m each) and door arcs at ~0.9 m visible along the upper row of small rooms.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 1310,
+          "outline_height_px": 1127,
+          "outline_area_px": 1382657,
+          "px_per_m": 43.95,
+          "scale_consistency_w_h": 0.872,
+          "floor_area_m2": 715.88
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 294,
+          "outline_height_px": 61,
+          "outline_area_px": 7247,
+          "px_per_m": 9.19,
+          "scale_consistency_w_h": 0.277,
+          "floor_area_m2": 85.85
+        },
+        "compare_overlay": "out/round5/iconik_basement.compare.png",
+        "level": "B",
+        "instances": 1
+      },
+      {
+        "image": "samples/real_multifloor/iconik_ground.jpg",
+        "mitunet_seconds": 0.81,
+        "vlm_seconds": 6.91,
+        "vlm_width_m": 30.0,
+        "vlm_depth_m": 24.0,
+        "vlm_reasoning": "Estimated by scaling toilet stalls (~0.9 m doors) in the bathroom block to gauge overall footprint proportions.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 2000,
+          "outline_height_px": 1414,
+          "outline_area_px": 2488840,
+          "px_per_m": 62.79,
+          "scale_consistency_w_h": 0.884,
+          "floor_area_m2": 631.24
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 437,
+          "outline_height_px": 1265,
+          "outline_area_px": 385228,
+          "px_per_m": 14.57,
+          "scale_consistency_w_h": 0.276,
+          "floor_area_m2": 1815.51
+        },
+        "compare_overlay": "out/round5/iconik_ground.compare.png",
+        "level": "G",
+        "instances": 1
+      },
+      {
+        "image": "samples/real_multifloor/iconik_typical.jpg",
+        "mitunet_seconds": 0.82,
+        "vlm_seconds": 7.8,
+        "vlm_width_m": 38.0,
+        "vlm_depth_m": 18.0,
+        "vlm_reasoning": "Scaling from visible bathtubs (~1.7 m) and door arcs (~0.9 m), the building footprint spans roughly 38 m wide by 18 m deep.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 2000,
+          "outline_height_px": 1414,
+          "outline_area_px": 1926370,
+          "px_per_m": 52.63,
+          "scale_consistency_w_h": 0.67,
+          "floor_area_m2": 695.42
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 488,
+          "outline_height_px": 1268,
+          "outline_area_px": 380359,
+          "px_per_m": 12.84,
+          "scale_consistency_w_h": 0.182,
+          "floor_area_m2": 2306.33
+        },
+        "compare_overlay": "out/round5/iconik_typical.compare.png",
+        "level": "1-6",
+        "instances": 6
+      },
+      {
+        "image": "samples/real_multifloor/iconik_7.jpg",
+        "mitunet_seconds": 0.79,
+        "vlm_seconds": 8.71,
+        "vlm_width_m": 32.0,
+        "vlm_depth_m": 16.0,
+        "vlm_reasoning": "Scaled from bathtub (~1.7 m) reference; building spans roughly twice as wide as deep across the footprint.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 2000,
+          "outline_height_px": 1414,
+          "outline_area_px": 1917205,
+          "px_per_m": 75.44,
+          "scale_consistency_w_h": 0.707,
+          "floor_area_m2": 336.89
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 429,
+          "outline_height_px": 1083,
+          "outline_area_px": 300209,
+          "px_per_m": 13.41,
+          "scale_consistency_w_h": 0.198,
+          "floor_area_m2": 1670.36
+        },
+        "compare_overlay": "out/round5/iconik_7.compare.png",
+        "level": "7",
+        "instances": 1
+      },
+      {
+        "image": "samples/real_multifloor/iconik_8.jpg",
+        "mitunet_seconds": 0.82,
+        "vlm_seconds": 7.21,
+        "vlm_width_m": 8.5,
+        "vlm_depth_m": 13.0,
+        "vlm_reasoning": "Scaled from visible door arcs (~0.9 m) and bathroom fixtures in the apartment footprint.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 2000,
+          "outline_height_px": 1414,
+          "outline_area_px": 1926482,
+          "px_per_m": 235.29,
+          "scale_consistency_w_h": 0.462,
+          "floor_area_m2": 34.8
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 252,
+          "outline_height_px": 663,
+          "outline_area_px": 135662,
+          "px_per_m": 29.65,
+          "scale_consistency_w_h": 0.581,
+          "floor_area_m2": 154.35
+        },
+        "compare_overlay": "out/round5/iconik_8.compare.png",
+        "level": "8",
+        "instances": 1
+      }
+    ],
+    "v1_pipeline_total_m2": 5891.33,
+    "v2_pipeline_total_m2": 17564.05,
+    "v1_deviation_pct": 8.4,
+    "v2_deviation_pct": 223.3
+  },
+  "podun": {
+    "title": "Podun Apartment Building",
+    "listed_total_m2": 283,
+    "per_plan": [
+      {
+        "image": "samples/real_multifloor/podun_f1.jpg",
+        "mitunet_seconds": 0.79,
+        "vlm_seconds": 7.59,
+        "vlm_width_m": 32.0,
+        "vlm_depth_m": 13.0,
+        "vlm_reasoning": "Scaling from the ~5 m car length and central stair/lift core (~6 m wide) gives a parking-level footprint of roughly 32 m by 13 m.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 273,
+          "outline_height_px": 200,
+          "outline_area_px": 50076,
+          "px_per_m": 8.53,
+          "scale_consistency_w_h": 0.555,
+          "floor_area_m2": 688.03
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 271,
+          "outline_height_px": 153,
+          "outline_area_px": 12416,
+          "px_per_m": 10.12,
+          "scale_consistency_w_h": 0.72,
+          "floor_area_m2": 121.26
+        },
+        "compare_overlay": "out/round5/podun_f1.compare.png",
+        "level": "1 (parking + entry)",
+        "instances": 1
+      },
+      {
+        "image": "samples/real_multifloor/podun_f2.jpg",
+        "mitunet_seconds": 0.78,
+        "vlm_seconds": 9.48,
+        "vlm_width_m": 24.0,
+        "vlm_depth_m": 12.0,
+        "vlm_reasoning": "Two symmetric apartments flanking a central stair/elevator core, with bathroom fixtures and door arcs suggesting roughly 24 m wide by 12 m deep.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 1125,
+          "outline_height_px": 641,
+          "outline_area_px": 598989,
+          "px_per_m": 50.15,
+          "scale_consistency_w_h": 0.878,
+          "floor_area_m2": 238.2
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 314,
+          "outline_height_px": 313,
+          "outline_area_px": 24522,
+          "px_per_m": 13.08,
+          "scale_consistency_w_h": 0.502,
+          "floor_area_m2": 143.26
+        },
+        "compare_overlay": "out/round5/podun_f2.compare.png",
+        "level": "2",
+        "instances": 1
+      },
+      {
+        "image": "samples/real_multifloor/podun_f3.jpg",
+        "mitunet_seconds": 0.77,
+        "vlm_seconds": 7.18,
+        "vlm_width_m": 26.0,
+        "vlm_depth_m": 13.0,
+        "vlm_reasoning": "Scaled from door arcs (~0.9 m) the plan reads roughly 26 m wide by 13 m deep at the outer wall bounding rectangle.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 1125,
+          "outline_height_px": 636,
+          "outline_area_px": 626060,
+          "px_per_m": 46.1,
+          "scale_consistency_w_h": 0.884,
+          "floor_area_m2": 294.64
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 314,
+          "outline_height_px": 313,
+          "outline_area_px": 24722,
+          "px_per_m": 12.08,
+          "scale_consistency_w_h": 0.502,
+          "floor_area_m2": 169.5
+        },
+        "compare_overlay": "out/round5/podun_f3.compare.png",
+        "level": "3",
+        "instances": 1
+      },
+      {
+        "image": "samples/real_multifloor/podun_f4.jpg",
+        "mitunet_seconds": 0.79,
+        "vlm_seconds": 6.9,
+        "vlm_width_m": 24.0,
+        "vlm_depth_m": 13.0,
+        "vlm_reasoning": "Scaled from typical bathroom fixtures and door arcs (~0.9 m) visible in the central core.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 1125,
+          "outline_height_px": 641,
+          "outline_area_px": 598989,
+          "px_per_m": 48.09,
+          "scale_consistency_w_h": 0.951,
+          "floor_area_m2": 258.99
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 314,
+          "outline_height_px": 313,
+          "outline_area_px": 24522,
+          "px_per_m": 13.08,
+          "scale_consistency_w_h": 0.543,
+          "floor_area_m2": 143.26
+        },
+        "compare_overlay": "out/round5/podun_f4.compare.png",
+        "level": "4",
+        "instances": 1
+      },
+      {
+        "image": "samples/real_multifloor/podun_f5.jpg",
+        "mitunet_seconds": 0.78,
+        "vlm_seconds": 8.23,
+        "vlm_width_m": 24.0,
+        "vlm_depth_m": 6.0,
+        "vlm_reasoning": "Long narrow upper floor with two symmetric units around a central stair; door arcs (~0.9 m) suggest each unit is ~10–11 m wide and ~6 m deep.",
+        "v1_cv_adaptive": {
+          "outline_width_px": 1125,
+          "outline_height_px": 638,
+          "outline_area_px": 619878,
+          "px_per_m": 46.88,
+          "scale_consistency_w_h": 0.441,
+          "floor_area_m2": 282.11
+        },
+        "v2_mitunet_hull": {
+          "outline_width_px": 821,
+          "outline_height_px": 150,
+          "outline_area_px": 24116,
+          "px_per_m": 29.6,
+          "scale_consistency_w_h": 0.731,
+          "floor_area_m2": 27.52
+        },
+        "compare_overlay": "out/round5/podun_f5.compare.png",
+        "level": "5",
+        "instances": 1
+      }
+    ],
+    "v1_pipeline_total_m2": 1761.97,
+    "v2_pipeline_total_m2": 604.8,
+    "v1_deviation_pct": 522.6,
+    "v2_deviation_pct": 113.7
+  }
+}

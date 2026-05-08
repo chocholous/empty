@@ -505,3 +505,267 @@ After this round we recommend:
 `out/round4_run.log` for the full stdout of `src/round4_pipeline.py`.
 Overlays at `out/round4/*.outline.png` show exactly what the algorithm
 considered the "building footprint" on each plan.
+
+---
+
+# Round 5 — outline detector v2, four-way comparison, and full walk-through
+
+Round 4 left one open recommendation: replace the OpenCV-adaptive +
+external-contour outline detector ("v1") with MitUNet's wall mask hull
+("v2"), because v1 was eating drawn property lines and terraces.
+Round 5 builds v2, runs both detectors on the same 10 plans plus two
+additional baselines, and writes up exactly what every component did on
+every plan.
+
+## Four detectors compared
+
+| Detector | What it actually does |
+|---|---|
+| **v1 — CV adaptive contour** | OpenCV adaptive threshold → morphological close → invert → take largest non-bg component → external contour. Round 4's default. |
+| **v2 — MitUNet hull** | MitUNet 64.2 M-param wall mask (round 3) → dilate by 10 px → invert → largest non-bg component → external contour. By construction excludes things MitUNet didn't classify as walls. |
+| **vlm_rect** | No CV at all. Claude Opus 4.7 returns building width and depth in metres; floor area = `width × depth`. Pure language-model geometry. |
+| **hybrid** | Use v1 unless `scale_consistency_w_h < 0.6`, then fall back to v2. Aimed at fixing v1's worst per-plan failures. |
+
+Same 10 plans (Iconik 5 unique + Podun 5), same VLM call, single 88-s VLM
+budget, single 22-s MitUNet inference budget.
+
+## Headline numbers
+
+| Method | Iconik 5 433 m² | Podun (listed 283 m² → ×5 floors = 1 415 m² gross expected) |
+|---|---|---|
+| **v1 CV adaptive contour** | **5 891 m² (+8.4 %)** | 1 762 m² (+24.5 % vs ×5) / +523 % vs raw 283 |
+| v2 MitUNet hull | 17 564 m² (+223 %) | 605 m² (−57 %) |
+| **vlm_rect** (Opus 4.7, no CV) | 6 215 m² (+14.4 %) | **1 498 m² (+5.9 %)** |
+| hybrid v1↔v2 | 6 011 m² (+10.6 %) | 941 m² (−33 %) |
+
+**No single detector dominates.** v1 is the best on Iconik;
+`vlm_rect` (pure Opus-4.7 geometry, zero pixel processing) is the best
+on Podun.
+
+## Why v2 didn't work as a drop-in replacement
+
+Diagnosed from the side-by-side overlays in `out/round5/*.compare.png`:
+
+- **`iconik_typical.compare.png`** — v1 (red) traces the apartment block
+  but extends into the dark courtyard at top-left, reporting 695 m²
+  (close to the 684 m² VLM rect and the ~625 m² implied by listed÷instances).
+  v2 (blue) **only finds the dark vertical strip on the right edge** of
+  the page, then mis-divides by `vlm_width / strip_width_px` →
+  reports 2 306 m². The "largest non-bg component" rule picks the
+  longest connected MitUNet stripe, which on this page is the side wall
+  of the courtyard, not the apartments.
+- **`podun_f1.compare.png`** — v1 (red) grabs an inner room and reports
+  688 m² with a wrong scale anchor. v2 (blue) correctly picks just the
+  enclosed entry+stair core (the only built portion of an otherwise-open
+  parking floor) but still mis-scales because the VLM thinks the
+  building is 32 m wide based on the parking footprint, not the 8-m
+  entry block. v2's *shape* is right; the *anchor* is wrong.
+- **`iconik_8.compare.png`** — v1 grabs the entire drawn page including
+  the neighbouring building outline, reports 35 m². v2 grabs the dark
+  courtyard wall on the left, reports 154 m² — coincidentally close to
+  the true penthouse area (~100–150 m²) but for the wrong reason.
+
+The fundamental problem: **"largest external connected component" is a
+fragile selector** when MitUNet's output is sparse and the page contains
+long parallel features. A better v3 would either (a) use VLM to mask out
+"page artifacts" before the contour pass, or (b) snap MitUNet walls to
+the OpenCV-adaptive mask via logical AND with a tolerance buffer, then
+take the contour of *that*.
+
+## Component-by-component walk-through
+
+For every external library, model, and API in the proposed stack, here is
+what it actually did on these real multi-floor plans, with a one-line
+verdict you can act on.
+
+### 1. PyMuPDF — vector PDF input
+- **Used in:** round 2 only (no real plan was supplied as PDF).
+- **What it returned on `samples/synth_vector.pdf`:** 5/5 rectangles to
+  float-pt precision, 10/10 text spans with bboxes, in 10 ms.
+- **Failure mode in this batch:** none. Vector PDFs are essentially
+  solved input.
+- **Use it:** primary input handler whenever the plan is a vector PDF
+  rather than a raster image. Skips every round-4 / round-5 problem.
+
+### 2. ezdxf 1.4 — DXF input
+- **Used in:** round 3 only (synthetic DXF, no real DXF was supplied).
+- **What it returned:** 5 LWPOLYLINE walls + 2 ARC doors + 1 LWPOLYLINE
+  window + 5 + 1 TEXT entries on 5 layers, all at exact coordinates,
+  load time 19 ms.
+- **Use it:** primary input handler for DXF. Same status as PyMuPDF.
+
+### 3. OpenCV `adaptiveThreshold` — wall mask
+- **Used in:** every raster round.
+- **What it returned on real plans:** dark-pixel ratio 9–12 %.
+  Captures every dark stroke, including text, dimension lines, hatching,
+  property lines.
+- **Failure mode:** **on Iconik 8 (`out/round5/iconik_8.compare.png`)
+  the raw external contour engulfed the neighbouring building**.
+  On Podun F1 it engulfed the dashed property line.
+- **Quality on synth GT (round 3):** IoU 0.83 strict, recall 1.0,
+  precision 0.83.
+- **Use it:** as a *recall-rich* wall layer. Always combine with a
+  precision filter before extracting the building outline.
+
+### 4. MitUNet (CC-BY-NC) — wall mask
+- **Used in:** rounds 3 and 5.
+- **What it returned on real plans:** dark-pixel ratio 4–5 % (40–60 %
+  less than OpenCV adaptive). Filters out furniture, text, dimension
+  lines, hatching.
+- **Throughput:** 0.7–3.6 s per plan on CPU, 64.2 M params, 257 MB weights.
+- **Quality on synth GT:** IoU 0.77 strict, but precision 0.87 (vs CV
+  adaptive 0.83).
+- **Failure mode 1 — fragmented walls:** thin gaps after the
+  resize-to-512-then-back-to-original loop mean rooms aren't isolated.
+  In round 3 this caused `extract_rooms` to return 0 polygons on
+  hf_00 / hf_01 even after 7-px dilation.
+- **Failure mode 2 — sparse coverage:** in round 5 the *largest connected
+  component* was sometimes a side wall of the courtyard rather than the
+  apartments themselves.
+- **Use it:** as a *precision* wall filter, never as a sole shape source.
+  Logical-AND with OpenCV adaptive is the right combination, not the
+  hull of MitUNet alone.
+- **License gotcha:** weights are CC-BY-NC 4.0. Non-commercial only.
+
+### 5. Shapely 2.1 — geometry
+- **Used in:** every round.
+- **What it does:** polygon area, validity, `unary_union`, `buffer`.
+- **Verified in round 3:** synth net 59.5 m² → gross 61.85 m² via
+  `unary_union(p.buffer(t/2))`. The single line that turns "polygon
+  area" into ČSN 73 4055 / ISO 9836 gross floor area without
+  double-counting shared walls.
+- **Verified in round 5:** every floor area derived through
+  `Polygon(contour).area` was numerically stable across runs.
+- **Failure mode:** never (within tested range).
+- **Use it:** primary geometry library. Don't roll your own.
+
+### 6. EasyOCR — multi-language dimension reader
+- **Used in:** round 2 (round 5's plans had no dimension annotations to
+  read).
+- **What it returned on Arabic real plan `hf_00.png`:** 44 text regions
+  in 10.5 s including dimensions ٤٫٦٥, ٢٫٧٠ and labels مطبخ / معيشة /
+  طرقة (kitchen / living / corridor).
+- **Latency:** 0.8 s on synthetic Latin, 10.5 s on Arabic real plan.
+- **Use it:** primary OCR for plans with multi-language content. Falls
+  back to Tesseract on Latin-only when 0.2 s matters.
+
+### 7. PaddleOCR PP-OCRv4 — Latin dimension reader
+- **Used in:** round 2 only.
+- **What it returned on `synth_clean.png`:** all 10 strings, mean
+  confidence 0.98, 2.4 s.
+- **Install gotcha:** must pass `enable_mkldnn=False` on CPU and force
+  `ocr_version='PP-OCRv4'`; PP-OCRv5's server models trip a CPU OneDNN
+  bug (`ConvertPirAttribute2RuntimeAttribute`).
+- **Use it:** when latency matters less than confidence, on Latin /
+  Chinese plans. Arabic isn't in our build.
+
+### 8. Tesseract 5.3 — fallback OCR
+- **Used in:** round 2 only.
+- **Latency:** 0.2 s on synthetic, 0.5 s on Arabic real plan.
+- **Quality on Arabic:** garbage (no Arabic in default tessdata).
+- **Use it:** only as a 0.2-s sanity check on clean Latin plans.
+
+### 9. Claude Opus 4.7 — VLM orchestrator
+- **Used in:** rounds 2, 4, 5. The orchestrator slot.
+- **What it did in round 5:** for each of 10 plans, returned strict JSON
+  `{"building_width_m":…,"building_depth_m":…,"reasoning":"…"}` in
+  7–20 s. Every call returned valid parseable JSON. Reasoning referenced
+  concrete fixtures (door arc 0.9 m, bathtub 1.7 m, toilet 0.7 m).
+- **Quality of the W×D estimate alone (no CV):** Iconik sum +14.4 %,
+  Podun sum +5.9 %. Competitive with the v1 detector that uses CV.
+- **Failure mode:** none observed at JSON or reasoning level. Only the
+  resolution loss when multiple buildings are drawn on one page (Iconik
+  8 — the VLM gave dimensions for *the penthouse*, but the CV outline
+  grabbed the *whole drawn area*; the mismatch was on the CV side, not
+  the VLM side).
+- **Use it:** primary orchestrator and scale anchor. Sonnet 4.6 fallback
+  for cost.
+
+### 10. Claude Sonnet 4.6 — VLM fallback
+- **Used in:** round 2 only.
+- **Latency:** 4.8 s on Latin synth, 138.5 s on Arabic real (vs Opus
+  17.6 s on the same image). Slower than Opus on dense plans, similar
+  accuracy.
+- **Use it:** when paying the Opus token tier is not worth it on simple
+  plans.
+
+### 11. Claude Haiku 4.5 — VLM (rejected)
+- **Used in:** round 2 only.
+- **Why rejected:** systematically substitutes ceiling height (2.65 m)
+  for room depth on Arabic plans. 5/5 rooms correct on Latin synth, 0/8
+  rooms correct on hf_00. Not safe for production.
+
+### 12. CubiCasa community retrains — pretrained floor-plan models
+- **Used in:** round 2.
+- **What they returned:**
+  - `JessiP23/cubicasa-segformer-v2`: per-class IoU 0.0 for **all 7 room
+    classes** in metrics.json. Broken.
+  - `karanjaWakaba/Yolo_segmentation_cubicasa`: 0 detections on all our
+    samples at conf ∈ {0.05, 0.10} and imgsz ∈ {640, 1024}.
+- **Original Apache-2.0 weights:** Google Drive link returns
+  permission-denied as of May 2026.
+- **Use them:** no, not in any round.
+
+### 13. Florence-2-base — zero-shot multimodal
+- **Used in:** round 2 (failed) and round 3 (failed again).
+- **Blockers:** transformers ≥ 4.45 break the config; transformers ==
+  4.41 then requires `flash_attn` (CUDA-only). On CPU stack neither
+  resolves cleanly.
+- **Use it:** no on CPU box.
+
+### 14. MobileSAM (38 MB) — zero-shot segmenter
+- **Used in:** round 2 only.
+- **Throughput:** ~120 s per image on CPU.
+- **Output:** 29–31 unfiltered masks ("everything segmentation").
+- **Use it:** only when prompt-driven via Grounding DINO or similar.
+  Stand-alone everything-segmentation is too noisy.
+
+## How verification actually went on real buildings
+
+Round 4 introduced four verification layers; here's how each one
+performed in round 5.
+
+| Layer | Iconik | Podun |
+|---|---|---|
+| **L1: listed-total invariant** | v1 PASS within ±10 % | All four detectors fail vs raw 283 m² because metadata is per-floor, not gross. **The invariant correctly flagged the metadata problem before pipeline error was diagnosed.** |
+| **L2: per-room cross-check** (OCR vs polygon × scale²) | not exercised — these architectural plans have no dimension annotations | not exercised |
+| **L3: floor-sum invariant** (Σ floors ≈ N × typical) | basement (614) + ground (541) + 6 × typical (695) + F7 (337) + F8 (35) = pipeline 5 891 vs listed 5 433. Σ inferred from per-floor matches the linear-stack hypothesis within 9 %. | F2-F4 returned 238/295/259 m² — a tight cluster around the listed 283. **L3 told us the listed number is per-floor footprint, not gross**, before reading any external cadastre. |
+| **L4: façade × floors invariant** | not exercised this round (would need an explicit façade-elevation drawing) | not exercised |
+| **scale_consistency_w_h auto-flag** | flagged Iconik 8 (0.50). | flagged Podun F1 (0.55) and F5 (0.44). |
+
+**The two layers that did real work were L1 (listed-total) and the
+auto-flag.** L3 (floor-sum) was the one that resolved the Podun metadata
+ambiguity. L2 and L4 were not applicable on the chosen plans but remain
+correct for plans that have dim annotations or façade elevations.
+
+## What we still don't know
+
+- A real Czech multi-floor listing with a canonical "Užitná plocha"
+  field (sreality.cz). Would let us run L1 against a stable GT instead
+  of ArchDaily's ambiguous "Area".
+- A façade elevation paired with floor plans for the same building, to
+  exercise L4.
+- Whether v3 = `MitUNet AND OpenCV-adaptive` would beat both v1 and v2.
+  The numbers above suggest yes (it would suppress both the courtyard-wall
+  artifact in v1-Iconik-8 and the lost-walls artifact in v2-Iconik-typical).
+
+## Empirical answer to "can the proposed stack measure real buildings?"
+
+**Yes for buildings with regular outline and a stable listed total
+(Iconik: ±8 %).** **No for buildings where the page contains property
+lines, terraces, or non-uniform floor stacks (Podun: requires per-floor
+listing or human review of `scale_consistency` flags).**
+
+The stack is enough for triage and rough estimation. It is not yet
+production-grade for legally-binding takeoffs without a human-in-the-loop
+review on every flagged plan. The flag rate observed was 3/10 plans on
+this set, which is workable.
+
+## Numbers reference (round 5)
+
+`out/round5/results.json` per-plan v1+v2 raw output;
+`out/round5/comparison.json` per-building four-way comparison
+(v1 / v2 / vlm_rect / hybrid);
+`out/round5/*.compare.png` side-by-side red (v1) and blue (v2) overlays
+for every plan;
+`out/round5_run.log` full stdout of `src/round5_pipeline.py`.

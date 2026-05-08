@@ -1,0 +1,128 @@
+{
+  "iconik": {
+    "listed": 5433,
+    "v1_total": 5891.33,
+    "v2_total": 17564.05,
+    "vlm_direct_total": 6214.5,
+    "hybrid_total": 6010.9,
+    "v1_dev": 8.4,
+    "v2_dev": 223.3,
+    "vlm_direct_dev": 14.4,
+    "hybrid_dev": 10.6,
+    "rows": [
+      {
+        "file": "iconik_basement.jpg",
+        "inst": 1,
+        "cons": 0.872,
+        "v1": 715.88,
+        "v2": 85.85,
+        "vlm_rect": 768.0,
+        "hybrid": 715.88,
+        "hybrid_pick": "v1"
+      },
+      {
+        "file": "iconik_ground.jpg",
+        "inst": 1,
+        "cons": 0.884,
+        "v1": 631.24,
+        "v2": 1815.51,
+        "vlm_rect": 720.0,
+        "hybrid": 631.24,
+        "hybrid_pick": "v1"
+      },
+      {
+        "file": "iconik_typical.jpg",
+        "inst": 6,
+        "cons": 0.67,
+        "v1": 695.42,
+        "v2": 2306.33,
+        "vlm_rect": 684.0,
+        "hybrid": 695.42,
+        "hybrid_pick": "v1"
+      },
+      {
+        "file": "iconik_7.jpg",
+        "inst": 1,
+        "cons": 0.707,
+        "v1": 336.89,
+        "v2": 1670.36,
+        "vlm_rect": 512.0,
+        "hybrid": 336.89,
+        "hybrid_pick": "v1"
+      },
+      {
+        "file": "iconik_8.jpg",
+        "inst": 1,
+        "cons": 0.462,
+        "v1": 34.8,
+        "v2": 154.35,
+        "vlm_rect": 110.5,
+        "hybrid": 154.35,
+        "hybrid_pick": "v2"
+      }
+    ]
+  },
+  "podun": {
+    "listed": 283,
+    "v1_total": 1761.97,
+    "v2_total": 604.8,
+    "vlm_direct_total": 1498.0,
+    "hybrid_total": 940.6,
+    "v1_dev": 522.6,
+    "v2_dev": 113.7,
+    "vlm_direct_dev": 429.3,
+    "hybrid_dev": 232.4,
+    "rows": [
+      {
+        "file": "podun_f1.jpg",
+        "inst": 1,
+        "cons": 0.555,
+        "v1": 688.03,
+        "v2": 121.26,
+        "vlm_rect": 416.0,
+        "hybrid": 121.26,
+        "hybrid_pick": "v2"
+      },
+      {
+        "file": "podun_f2.jpg",
+        "inst": 1,
+        "cons": 0.878,
+        "v1": 238.2,
+        "v2": 143.26,
+        "vlm_rect": 288.0,
+        "hybrid": 238.2,
+        "hybrid_pick": "v1"
+      },
+      {
+        "file": "podun_f3.jpg",
+        "inst": 1,
+        "cons": 0.884,
+        "v1": 294.64,
+        "v2": 169.5,
+        "vlm_rect": 338.0,
+        "hybrid": 294.64,
+        "hybrid_pick": "v1"
+      },
+      {
+        "file": "podun_f4.jpg",
+        "inst": 1,
+        "cons": 0.951,
+        "v1": 258.99,
+        "v2": 143.26,
+        "vlm_rect": 312.0,
+        "hybrid": 258.99,
+        "hybrid_pick": "v1"
+      },
+      {
+        "file": "podun_f5.jpg",
+        "inst": 1,
+        "cons": 0.441,
+        "v1": 282.11,
+        "v2": 27.52,
+        "vlm_rect": 144.0,
+        "hybrid": 27.52,
+        "hybrid_pick": "v2"
+      }
+    ]
+  }
+}
