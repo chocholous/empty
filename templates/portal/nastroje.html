@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}AI nástroje · Meet AI{% endblock %}
+
+{% block content %}
+  <form method="get" class="flex flex-col md:flex-row gap-3 mb-8">
+    <div class="relative flex-1">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ppf-gray">search</span>
+      <input type="search" name="q" value="{{ q }}" placeholder="Hledat nástroj, popis, tag…"
+             class="w-full pl-11 pr-4 py-3 rounded-xl border border-ppf-line bg-white focus:outline-none focus:ring-2 focus:ring-ppf-navy/30">
+    </div>
+    <button type="submit" class="px-5 py-3 rounded-xl bg-ppf-navy text-white font-medium hover:bg-ppf-navy2">Hledat</button>
+  </form>
+
+  <div class="flex flex-wrap gap-2 mb-8">
+    <a href="?{% if q %}q={{ q }}{% endif %}" class="px-3 py-1.5 rounded-full text-sm font-medium {% if not active_kategorie %}bg-ppf-navy text-white{% else %}bg-white border border-ppf-line text-ppf-gray hover:text-ppf-navy{% endif %}">Všechny</a>
+    {% for k in kategorie_list %}
+      <a href="?k={{ k }}{% if q %}&q={{ q }}{% endif %}"
+         class="px-3 py-1.5 rounded-full text-sm font-medium {% if active_kategorie == k %}bg-ppf-navy text-white{% else %}bg-white border border-ppf-line text-ppf-gray hover:text-ppf-navy{% endif %}">
+        {{ k }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    {% for n in nastroje %}
+      <a href="{% url 'portal:nastroj_detail' n.id %}" class="group block bg-white rounded-2xl border border-ppf-line hover:border-ppf-navy/30 hover:shadow-hover transition p-6">
+        <div class="flex items-center gap-3 mb-4">
+          {% if n.ikona_url %}
+            <img src="{{ n.ikona_url }}" alt="" class="w-10 h-10 rounded-lg object-contain bg-ppf-cream p-1">
+          {% else %}
+            <div class="w-10 h-10 rounded-lg bg-ppf-navy/10 flex items-center justify-center text-ppf-navy">
+              <span class="material-symbols-outlined">smart_toy</span>
+            </div>
+          {% endif %}
+          <div class="flex-1">
+            <div class="font-semibold text-ppf-navy group-hover:underline">{{ n.title }}</div>
+            <div class="text-xs text-ppf-gray uppercase tracking-wider">{{ n.kategorie }}</div>
+          </div>
+        </div>
+        <p class="text-sm text-ppf-gray line-clamp-4">{{ n.kratky_popis }}</p>
+        {% if n.tag_list %}
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            {% for t in n.tag_list|slice:":3" %}
+              <span class="text-[11px] px-2 py-0.5 rounded-full bg-ppf-cream text-ppf-gray border border-ppf-line">{{ t }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </a>
+    {% empty %}
+      <p class="text-ppf-gray col-span-full">Žádný nástroj neodpovídá filtru.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

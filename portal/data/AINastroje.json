@@ -1,0 +1,1043 @@
+[
+  {
+    "FileSystemObjectType": 0,
+    "Id": 1,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot M365",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "Chat Copilota napříč M365 — hledá v e-mailech, Teams zprávách, souborech v OneDrive/SharePoint i kalendáři. Odpovídá s plným kontextem vašich PPF dat.",
+    "Pouziti": "<ul><li><strong>Klientská 360°&#58;</strong> „Shrň, co jsme řešili s [klientem] za posledních 6 měsíců&quot; — prochází Outlook, Teams i sdílené soubory zároveň.</li><li><strong>Pre-meeting briefing&#58;</strong> „Zítřejší schůzka v 10&#58;00 — kdo to je, co jsme mluvili naposledy, co je otevřené.&quot;</li><li><strong>Team intelligence&#58;</strong> „Kdo v Central Europe finance pracoval s IFRS 17 a s jakým výstupem?&quot;</li><li><strong>Cross-service chaining</strong> přes Copilot Studio pluginy — propojení s CRM, ticketing, BI.</li></ul>",
+    "Limity": "<ul><li>Odpovědi mohou halucinovat — kritická data (čísla, jména, termíny) vždy ověřte ve zdroji.</li><li>Plánování v kalendáři je zatím omezené — funguje spíš pro hledání než pro zápis.</li><li>Přístup přes licenci, kterou schvaluje IT (ne automaticky každý uživatel PPF).</li></ul>",
+    "Pristup": "<ol><li>Pokud ještě nemáte, požádejte přes Freshdesk (volba „Microsoft Copilot&quot;).</li><li>Schvaluje IT + váš vedoucí.</li><li>Aktivace do 3 pracovních dnů.</li></ol>",
+    "LinkPristup": {
+      "Description": "Požádat o Copilot",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Learn — M365 Copilot",
+      "Url": "https://learn.microsoft.com/en-us/copilot/microsoft-365/"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "Copilot M365 logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/copilot.svg"
+    },
+    "Tagy": [
+      "Vsichni"
+    ],
+    "SortOrder": 1,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:08Z",
+    "Created": "2026-04-17T14:03:45Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "8.0",
+    "Attachments": false,
+    "GUID": "04e647ff-d4c9-497e-af69-b4f5cf7b9f3c"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 2,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Claude",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Claude",
+    "KratkyPopis": "Konverzační AI od Anthropic s dlouhým kontextem (až ~500 stran dokumentů v jednom dotazu) a silným strukturovaným uvažováním. Přes M365 connector, Enterprise Search a WorkIQ vidí do PPF dat. Data zpracovávána v USA (mimo EU).",
+    "Pouziti": "<ul><li><strong>M365 connector&#58;</strong> „Shrň mi e-maily od [klienta] za poslední měsíc a relevantní soubory v SharePointu.&quot; Claude chatuje s vašimi Outlook / SharePoint / Teams daty bez copy-paste.</li><li><strong>Enterprise Search&#58;</strong> „Najdi ve všech firemních zdrojích, co máme k tématu X — SharePoint, Confluence, Slack, Google Drive.&quot; Jedno vyhledávání napříč připojenými systémy.</li><li><strong>WorkIQ&#58;</strong> analýza vzorců pracovní komunikace — kdo s kým spolupracuje, kde jsou bottlenecky. Pro vedoucí týmů a HR.</li><li><strong>Long-form analýza bez connectoru&#58;</strong> „Nahraj 300-stránkový tender + klientskou smlouvu. Najdi nestandardní klauzule, konflikty, chybějící Force Majeure.&quot;</li><li><strong>Auditovatelné reasoning&#58;</strong> „Projdi tento business case krok po kroku — matematika, předpoklady, rizika.&quot; Claude ukáže kroky uvažování.</li></ul>",
+    "Limity": "<ul><li><strong>Data zpracovávána v USA (mimo EU).</strong> Pro klienty s EU residency požadavkem NEPOUŽÍVEJTE.</li><li>M365 connector / Enterprise Search / WorkIQ vyžadují samostatné zprovoznění v IT (ne součást základní licence).</li><li>Real-time informace omezené — Claude má znalostní cutoff.</li></ul>",
+    "Pristup": "<ol><li>Požádejte přes Freshdesk (volba „Claude Enterprise&quot;). Volitelně si vyžádejte M365 connector / Enterprise Search / WorkIQ.</li><li>Schvaluje IT + váš vedoucí.</li><li>Přístup přes <code>claude.ai</code>; připojené zdroje se objeví automaticky po aktivaci IT.</li></ol>",
+    "LinkPristup": {
+      "Description": "Požádat o Claude",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Claude dokumentace",
+      "Url": "https://docs.claude.com/"
+    },
+    "DataLevel": "yellow",
+    "IkonaUrl": {
+      "Description": "Claude logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/claude.png"
+    },
+    "Tagy": [
+      "Vsichni"
+    ],
+    "SortOrder": 10,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:30Z",
+    "Created": "2026-04-17T14:03:47Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "8.0",
+    "Attachments": false,
+    "GUID": "76d23c98-9de5-47fe-ae23-7fd195db4962"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 3,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "DeepL",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Specializovany",
+    "KratkyPopis": "Nejlepší překladač pro evropské jazyky. Schválený pro citlivá data.",
+    "Pouziti": "<ul><li>Překlady mezi CZ/EN/DE/SK/PL a 30+ dalšími jazyky</li><li>Překlad dokumentů včetně formátování</li><li>Formal/informal tone switching</li></ul>",
+    "Limity": "<ul><li>Asijské jazyky (čínština, japonština) jsou slabší než Google</li><li>Specializované obory (medicína, právo) — vždy ověřit</li></ul>",
+    "Pristup": "<p><strong>Předpoklady&#58;</strong> business potřeba pravidelného překládání<br><strong>Schvaluje&#58;</strong> manažer + IT<br><strong>Doba&#58;</strong> 3 dny</p>",
+    "LinkPristup": {
+      "Description": "Požádat o DeepL",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "DeepL docs",
+      "Url": "https://www.deepl.com/docs-api"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Legal,HR,Marketing,Compliance"
+    ],
+    "SortOrder": 30,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:12:03Z",
+    "Created": "2026-04-17T14:03:48Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "8.0",
+    "Attachments": false,
+    "GUID": "bec57c73-2a86-44c9-86bc-7331dbfeab8c"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 4,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Codexis AI",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Specializovany",
+    "KratkyPopis": "AI pro práci s českým právem — judikatura, předpisy, právní rešerše.",
+    "Pouziti": "<ul><li>Vyhledávání v judikatuře českých soudů</li><li>Analýza právních předpisů a jejich změn</li><li>Příprava právních rešerší</li></ul>",
+    "Limity": "<ul><li>Pouze české právo (mezinárodní jurisdikce nepokrývá)</li><li>Není to nástroj pro generický chat</li></ul>",
+    "Pristup": "<p><strong>Předpoklady&#58;</strong> právní role v PPF<br><strong>Schvaluje&#58;</strong> Legal department + IT<br><strong>Doba&#58;</strong> 5 dnů</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Codexis",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Codexis nápověda",
+      "Url": "https://www.codexis.cz/napoveda"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Legal,Compliance"
+    ],
+    "SortOrder": 31,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:12:06Z",
+    "Created": "2026-04-17T14:03:49Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "8.0",
+    "Attachments": false,
+    "GUID": "d474cff0-ac0f-4c81-8bf4-e0de89873e05"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 5,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "OpenAI (ChatGPT Enterprise)",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Chat",
+    "KratkyPopis": "ChatGPT v enterprise verzi se smluvní ochranou dat. Pro vybrané týmy.",
+    "Pouziti": "<ul><li>Generický chat a brainstorming</li><li>Analýza obrázků a multimodální vstupy</li><li>DALL-E pro generování obrázků</li><li>Přístup k pluginům a custom GPTs</li></ul>",
+    "Limity": "<ul><li>Data opouští EU</li><li>Slabší pro velmi dlouhé dokumenty (kontextové okno menší než Claude)</li></ul>",
+    "Pristup": "<p><strong>Předpoklady&#58;</strong> business case + AI Fluency školení<br><strong>Schvaluje&#58;</strong> AI tým + Finance (licenční náklad)<br><strong>Doba&#58;</strong> 7 dnů</p>",
+    "LinkPristup": {
+      "Description": "Požádat o OpenAI",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "ChatGPT Enterprise",
+      "Url": "https://help.openai.com/en/collections/4419757-enterprise"
+    },
+    "DataLevel": "yellow",
+    "IkonaUrl": {
+      "Description": "OpenAI (ChatGPT Enterprise) logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/openai.svg"
+    },
+    "Tagy": [
+      "Marketing,Operations,IT"
+    ],
+    "SortOrder": 20,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:44Z",
+    "Created": "2026-04-17T14:03:51Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "8.0",
+    "Attachments": false,
+    "GUID": "ab35f19c-e629-4a0a-bbd8-708e957f0865"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 6,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Aibility",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Vzdelavani",
+    "KratkyPopis": "Interní vzdělávací platforma PPF — kurzy přizpůsobené našemu prostředí.",
+    "Pouziti": "<ul><li>Onboarding na AI nástroje v PPF</li><li>Krátké video tutoriály (5–15 min)</li><li>Certifikační cesty (Beginner / Practitioner / Champion)</li></ul>",
+    "Limity": "<ul><li>Není nástroj pro samotnou práci, jen pro učení</li></ul>",
+    "Pristup": "<p><strong>Předpoklady&#58;</strong> žádné — dostupné všem zaměstnancům<br><strong>Schvaluje&#58;</strong> automatické (SSO)<br><strong>Doba&#58;</strong> okamžitě</p>",
+    "LinkPristup": {
+      "Description": "Otevřít Aibility",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Nápověda Aibility",
+      "Url": "https://aibility.ppf.local/help"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Vsichni"
+    ],
+    "SortOrder": 40,
+    "IsActive": true,
+    "Modified": "2026-04-22T16:17:15Z",
+    "Created": "2026-04-17T14:03:55Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "7.0",
+    "Attachments": false,
+    "GUID": "d0f202df-e386-494e-9595-930dc4a1e07b"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 7,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot Cowork",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "AI agent na pozadí. Delegujete úkol v přirozeném jazyce, agent pracuje samostatně 10 minut–několik hodin, výsledek dodá, až bude.",
+    "Pouziti": "<ul><li><strong>Bulk document processing&#58;</strong> „V této složce je 200 klientských smluv 2019–2024. Vytáhni platební podmínky a vytvoř přehled anomálií.&quot;</li><li><strong>Recurring monitoring&#58;</strong> „Každé pondělí 7&#58;00 projdi zprávy o konkurenci, shrň 5 nejdůležitějších událostí do e-mailu CEO.&quot;</li><li><strong>M&amp;A due diligence&#58;</strong> „Projdi všech 50 dokumentů v data room, najdi potenciální červené vlajky, prioritizuj podle dopadu.&quot;</li><li><strong>Self-healing workflows&#58;</strong> agent detekuje selhání dílčího kroku, přehodnotí strategii a pokračuje bez eskalace.</li></ul>",
+    "Limity": "<ul><li>Licence omezená — v PPF pilotní skupina, ne všichni mají přístup.</li><li>Dlouhé úkoly (hodiny) občas tichou chybou selžou; u kritických důležitých jobů kontrolujte výstup.</li><li>Sandbox omezuje přístup — nemá všechno, co mají Microsoft Copilot licence přímo.</li></ul>",
+    "Pristup": "<ol><li>Aktuálně je Cowork v pilotní fázi — omezené licence.</li><li>Pošlete žádost přes Freshdesk s odůvodněním, jak chcete Cowork využít.</li><li>IT + AI tým schvalují ad-hoc, rozhodnutí obvykle do 5 pracovních dnů.</li></ol>",
+    "LinkPristup": {
+      "Description": "Přihlásit do pilotu",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft 365 Blog — Copilot Cowork",
+      "Url": "https://www.microsoft.com/en-us/microsoft-365/blog/2026/03/09/copilot-cowork-a-new-way-of-getting-work-done/"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "Copilot Cowork logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/copilot.svg"
+    },
+    "Tagy": [
+      "Operations,Vsichni"
+    ],
+    "SortOrder": 5,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:19Z",
+    "Created": "2026-04-17T14:03:56Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "9.0",
+    "Attachments": false,
+    "GUID": "a8eaceac-6ed6-4c1d-8bf0-0a324a020cc7"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 8,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Granola",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Specializovany",
+    "KratkyPopis": "AI zápisy z meetingů s pokročilou rozpoznávací schopností hlasu a kontextu.",
+    "Pouziti": "<ul><li>Automatické zápisy z 1&#58;1, klientských callů a workshopů</li><li>Označení akčních bodů a deadlinů</li><li>Sdílené notebooky pro tým</li></ul>",
+    "Limity": "<ul><li>Pouze v anglickém + českém audio (ostatní jazyky méně přesné)</li><li>Aktuálně pilot — limitovaný počet uživatelů</li></ul>",
+    "Pristup": "<p><strong>Předpoklady&#58;</strong> pravidelné meetingy s externími partnery<br><strong>Schvaluje&#58;</strong> AI tým<br><strong>Doba&#58;</strong> 5 dnů</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Granolu",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Granola docs",
+      "Url": "https://granola.ai/help"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Marketing,Operations,HR"
+    ],
+    "SortOrder": 32,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:12:08Z",
+    "Created": "2026-04-17T14:03:57Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "8.0",
+    "Attachments": false,
+    "GUID": "4f44d522-7623-45f4-85a4-7e2dc6259da1"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 9,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot Word",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "Copilot přímo v Microsoft Wordu — draft, přepis stylu, sumarizace dlouhého dokumentu, návrh pokračování psaní.",
+    "Pouziti": "<ul><li><strong>Smart připomínkování smluv&#58;</strong> „Porovnej návrh s naší MSA šablonou v1.8, zvýrazni nestandardní klauzule a navrhni protinávrh.&quot;</li><li><strong>Quarterly report compilation&#58;</strong> prolnutí draftů z více business units do koherentního textu s harmonizovanou terminologií.</li><li><strong>Regulatorní style transfer&#58;</strong> „Přepiš risk memo do jazyka vhodného pro ČNB podání, zachovej věcný obsah, doplň odkazy na § v ZoB.&quot;</li><li><strong>Právnický překlad&#58;</strong> CZ draft → EN s jurisdiction-specific terminology (ne general translator).</li></ul>",
+    "Limity": "<ul><li>Fakta vždy kontrolujte — zejména čísla, jména, datumy. AI bere „pravděpodobný&quot; text, ne „pravdivý&quot;.</li><li>Citlivé klientské dokumenty drží v EU tenantu, neposílejte out-of-M365.</li></ul>",
+    "Pristup": "<p>Součást licence Microsoft Copilot. Aktivuje se automaticky, pokud máte přístup k Copilot M365.</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Copilot",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Support — Copilot ve Word",
+      "Url": "https://support.microsoft.com/en-us/copilot-word"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "Copilot Word logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/word.svg"
+    },
+    "Tagy": [
+      "Vsichni"
+    ],
+    "SortOrder": 2,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:11Z",
+    "Created": "2026-04-22T12:56:18Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "6.0",
+    "Attachments": false,
+    "GUID": "eba0a5fc-b01a-4e7c-a005-c7bc5772136b"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 10,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot Excel",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "Copilot v Excelu — navrhne formule, pivot tabulky, trendovou analýzu, podmíněné formátování. Přímo nad daty, která v listu máte.",
+    "Pouziti": "<ul><li><strong>Python v Excelu</strong> pro Monte Carlo, Black-Scholes, regresní analýzy — bez vývojáře.</li><li><strong>Unstructured → structured cleanup&#58;</strong> CSV s rozsypanými datumy, měnami, desetinnými tečkami → normalizovaná tabulka jedním promptem.</li><li><strong>Cohort analýza&#58;</strong> „Vytvoř cohorty podle měsíce akvizice, spočítej retention po 1/3/6/12 měsících, označ cohorty pod 70 %.&quot;</li><li><strong>Forecast s confidence intervaly&#58;</strong> „Z monthly revenue 2023–2025 udělej 12-měsíční forecast s 80% CI, zvýrazni sezónnost Q4.&quot;</li></ul>",
+    "Limity": "<ul><li>Na datasety větší než ~100k řádků zpomaluje; pro BI úlohy preferujte Power BI / Analyst.</li><li>Data musí být v Excel Table formátu (Ctrl+T), jinak některé pokyny nefungují spolehlivě.</li><li>Nehodí se pro nestrukturované textové exporty — nejdřív normalizovat.</li></ul>",
+    "Pristup": "<p>Součást licence Microsoft Copilot. Aktivuje se automaticky.</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Copilot",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Support — Copilot v Excelu",
+      "Url": "https://support.microsoft.com/en-us/copilot-excel"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "Copilot Excel logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/excel.svg"
+    },
+    "Tagy": [
+      "Finance,Operations,Vsichni"
+    ],
+    "SortOrder": 3,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:13Z",
+    "Created": "2026-04-22T12:56:19Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "6.0",
+    "Attachments": false,
+    "GUID": "cfa6d8fe-6ef1-453c-a386-27dc0401d371"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 11,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot PowerPoint",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "Copilot v PowerPointu — první návrh prezentace z Word dokumentu nebo osnovy, přeskládání slidů do PPF brandu, návrh obrázků.",
+    "Pouziti": "<ul><li><strong>Board-ready deck z dokumentu&#58;</strong> „Z 40-stránkového strategy documentu 12-slide prezentace pro Board — 1 message per slide, grafy z tabulek.&quot;</li><li><strong>Adaptive deck pro různá publika&#58;</strong> téže prezentace verze pro investory, interní manažery i regulátora — jiný level detailu.</li><li><strong>Narativní struktura&#58;</strong> „Mám 20 slidů obsahu — přeorganizuj do SCQA (Situation → Complication → Question → Answer).&quot;</li><li><strong>Brand-compliant generace</strong> s PPF master template, fonty a paletou (ne generické SmartArt).</li></ul>",
+    "Limity": "<ul><li>AI návrhy jsou často generické — počítejte s ručním doladěním klíčových slidů.</li><li>PPF brand template musíte vybrat ručně; Copilot ho neaplikuje sám.</li></ul>",
+    "Pristup": "<p>Součást licence Microsoft Copilot. Aktivuje se automaticky.</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Copilot",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Support — Copilot v PowerPointu",
+      "Url": "https://support.microsoft.com/en-us/copilot-powerpoint"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "Copilot PowerPoint logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/powerpoint.svg"
+    },
+    "Tagy": [
+      "Marketing,Vsichni"
+    ],
+    "SortOrder": 4,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:16Z",
+    "Created": "2026-04-22T12:56:21Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "6.0",
+    "Attachments": false,
+    "GUID": "fddfadad-fbff-4335-bb1f-02b84bb7f66e"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 12,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot Analyst",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "AI datový analytik. Projde Excel nebo CSV, odpovídá na otázky typu „co se změnilo v Q3 oproti Q2\", hledá trendy, spouští Python kód pro složitější výpočty.",
+    "Pouziti": "<ul><li><strong>Churn propensity scoring&#58;</strong> z CRM dat postaví ML model, určí score per klient, vysvětlí top drivery „tento klient odchází s 73% pravděpodobností&quot;.</li><li><strong>Fraud / anomaly detection&#58;</strong> „Najdi transakce, které neodpovídají historickému vzorci klienta (IP, čas, částka), seřaď podle pravděpodobnosti podvodu.&quot;</li><li><strong>Segmentace bez data scientisty&#58;</strong> K-means na klientská data s vysvětlením ekonomického smyslu segmentů.</li><li><strong>Narativní insights&#58;</strong> místo jen grafu → „Revenue v CEE klesla o 3 % kvůli FX pohybu (−1,8 %) a ztrátě 2 velkých klientů v Q3.&quot;</li></ul>",
+    "Limity": "<ul><li>Vyžaduje licenci Microsoft Copilot + Analyst agent (možné extra náklady).</li><li>Běh trvá 2–5 minut per úkol, ne okamžitá odpověď.</li><li>U klientských PII dat — ověřte bezpečnost s DPO před použitím.</li></ul>",
+    "Pristup": "<p>Vyžaduje Microsoft Copilot licenci. Analyst je dostupný přes <code>copilot.microsoft.com</code>. Pro vyšší licenci požádejte přes Freshdesk.</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Analyst",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Support — Analyst agent",
+      "Url": "https://support.microsoft.com/en-us/topic/get-started-with-analyst-in-microsoft-365-copilot-ff505b9c-a06c-4be9-b855-69d89b1d25d2"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "Copilot Analyst logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/copilot.svg"
+    },
+    "Tagy": [
+      "Finance,Operations"
+    ],
+    "SortOrder": 6,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:21Z",
+    "Created": "2026-04-22T12:56:24Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "6.0",
+    "Attachments": false,
+    "GUID": "240e1f7f-6be2-4d78-a31c-5b3a94b67f76"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 13,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot Researcher",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "AI research asistent. Prohledá web i firemní dokumenty, sestaví strukturovaný report s citacemi — 5 až 20 stránek za 3–5 minut.",
+    "Pouziti": "<ul><li><strong>M&amp;A target screening&#58;</strong> „Najdi v ČR/SK fintech firmy s obratem 50–500 mil. Kč, více než 30 % yoy růst. Dej top 10 s finančními daty a kontakty.&quot;</li><li><strong>Regulatory landscape scan&#58;</strong> „Co se změnilo v EU AML směrnicích za 12 měsíců? Dopad na PPF Group? Cituj ustanovení.&quot;</li><li><strong>Hloubková analýza konkurence&#58;</strong> „Srovnej Home Credit International s UniCredit Consumer a Santander — produkt mix, pricing, NPS. 5-stránkový report.&quot;</li><li><strong>ESG research pro IR&#58;</strong> syntéza annual reports konkurence + sustainability reports + ratings (MSCI, Sustainalytics) → PPF pozicování.</li></ul>",
+    "Limity": "<ul><li>Citace vždy ověřte zpětně — občas model citaci „vymyslí&quot; nebo přeloží špatně.</li><li>Public web data nepřijímají moc interního kontextu — pro PPF-specific závěry doplňte interní zdroje.</li><li>Pro research reporty delší než 20 stran raději rozdělit na více dílčích dotazů.</li></ul>",
+    "Pristup": "<p>Vyžaduje Microsoft Copilot licenci. Researcher je agent v <code>copilot.microsoft.com</code>. Pro vyšší licenci požádejte přes Freshdesk.</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Researcher",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Support — Researcher agent",
+      "Url": "https://support.microsoft.com/en-us/topic/get-started-with-researcher-in-microsoft-365-copilot-e63ab760-f3de-4c47-ae87-dad601b0e9c4"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "Copilot Researcher logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/copilot.svg"
+    },
+    "Tagy": [
+      "Marketing,Legal,Operations,Vsichni"
+    ],
+    "SortOrder": 7,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:24Z",
+    "Created": "2026-04-22T12:56:26Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "6.0",
+    "Attachments": false,
+    "GUID": "1e04dd74-efc8-41cb-bff4-13846c81ee1d"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 14,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "GitHub Copilot",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Agent",
+    "KratkyPopis": "AI pair programming asistent pro vývojáře. Autocomplete kódu, generování testů, vysvětlení cizího kódu, refactoring — přímo v IDE (VS Code, IntelliJ, Neovim).",
+    "Pouziti": "<ul><li><strong>Multi-file refactoring&#58;</strong> „Přesuň authentication logic z UserController do AuthService napříč backendem, updatuj 23 callerů, zachovej testy.&quot;</li><li><strong>Security review PR bot&#58;</strong> „Projdi tento PR, najdi SQL injection, XSS, missing auth checks, unsafe deserialization.&quot;</li><li><strong>Test generation s edge cases&#58;</strong> „Napiš testy pro tuto funkci včetně null inputs, empty collections, overflow, concurrency.&quot;</li><li><strong>Legacy modernization&#58;</strong> „Přepiš Java 8 do Java 21 style — records, sealed classes, virtual threads.&quot;</li><li><strong>Regression detection&#58;</strong> „Tento PR mění chování X — najdi všechna místa, která X volají a mohou být rozbitá.&quot;</li></ul>",
+    "Limity": "<ul><li><strong>Data zpracovávána v USA (mimo EU)</strong> — kód prochází přes GitHub cloud. Pro citlivé algoritmy (trading, credit scoring) konzultujte se Security.</li><li>Vyžaduje GitHub Copilot Business licenci (ne zdarma) — přiděluje IT vývojářům.</li><li>Proprietární algoritmy posílejte s opatrností — GitHub má vlastní záruky ochrany, ne stejné jako Microsoft 365.</li></ul>",
+    "Pristup": "<ol><li>Požádejte přes Freshdesk s odůvodněním (projekt, role).</li><li>IT přidělí GitHub Copilot Business licenci.</li><li>V IDE (VS Code, IntelliJ) aktivujete přes GitHub login — 5 minut.</li></ol>",
+    "LinkPristup": {
+      "Description": "Požádat o GitHub Copilot",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "GitHub Docs — Copilot",
+      "Url": "https://docs.github.com/copilot"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": {
+      "Description": "GitHub Copilot logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/github.svg"
+    },
+    "Tagy": [
+      "IT"
+    ],
+    "SortOrder": 8,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:25:01Z",
+    "Created": "2026-04-22T12:56:26Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "8.0",
+    "Attachments": false,
+    "GUID": "a9b18a2e-520b-4090-a399-fda343fd0cc4"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 15,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Claude Cowork",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Claude",
+    "KratkyPopis": "Desktop agent pro automatizaci práce se soubory, složkami a úkoly. Přes M365 connector a Enterprise Search dosáhne i na firemní SharePoint, Outlook a další připojené zdroje. Běží v izolovaném sandboxu, vy kontrolujete, ke kterým složkám má přístup.",
+    "Pouziti": "<ul><li><strong>Bulk file processing s M365 connectorem&#58;</strong> „Projdi SharePoint složku Klienti/2024, extrahuj platební podmínky ze smluv, vytvoř přehled v Excelu a ulož ho zpět.&quot; Bez stahování dat lokálně.</li><li><strong>Multi-step workflow napříč systémy&#58;</strong> „Najdi data v Excelu (SharePoint), zahrň loňský trend z Confluence, exportuj do Word šablony, odešli draft vedoucímu v Outlooku.&quot;</li><li><strong>Enterprise Search pro kontext&#58;</strong> agent nejdřív prohledá firemní zdroje, z relevantních dokumentů vytvoří kontext a teprve pak pracuje — přesnější výstupy než Cowork bez firemních dat.</li><li><strong>Opakující se automatizace&#58;</strong> „Každou středu projdi Analytics složku v SharePointu, najdi outliers, vytvoř shrnutí a pošli do Teams kanálu.&quot;</li></ul>",
+    "Limity": "<ul><li><strong>Data zpracovávána v USA (mimo EU).</strong> Zvažte, které složky a systémy agentovi zpřístupníte.</li><li>M365 connector / Enterprise Search vyžadují zprovoznění IT (ne součást základní licence).</li><li>Sandbox omezuje systémové akce — agent nemění nastavení OS, neinstaluje software.</li></ul>",
+    "Pristup": "<ol><li>Požádejte přes Freshdesk — uveďte, jaké systémy (M365, SharePoint, Confluence…) má agent znát.</li><li>Schvaluje IT + AI tým (pilot má omezený počet míst).</li><li>Po schválení instalace desktop aplikace, přihlášení přes Claude Enterprise a aktivace připojených zdrojů.</li></ol>",
+    "LinkPristup": {
+      "Description": "Přihlásit do pilotu",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Anthropic — Claude Cowork",
+      "Url": "https://www.anthropic.com/product/claude-cowork"
+    },
+    "DataLevel": "yellow",
+    "IkonaUrl": {
+      "Description": "Claude Cowork logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/anthropic.svg"
+    },
+    "Tagy": [
+      "Operations,Vsichni"
+    ],
+    "SortOrder": 11,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:33Z",
+    "Created": "2026-04-22T15:56:57Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "3.0",
+    "Attachments": false,
+    "GUID": "8dfcce94-fb45-471f-a394-706ca8f7f0a3"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 16,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Claude Code",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Agent",
+    "KratkyPopis": "CLI pár programátor. Běží v terminálu, edituje soubory, spouští shell příkazy, píše commity. Přes Enterprise Search a M365 connector dosáhne i mimo repo — na firemní wiki, tickety, dokumentaci.",
+    "Pouziti": "<ul><li><strong>Multi-file refactoring&#58;</strong> „Přesuň auth logiku z UserController do AuthService napříč celým repozitářem, updatuj testy, připrav commit.&quot;</li><li><strong>Enterprise Search pro kontext nad repem&#58;</strong> „Najdi v Confluence/Jira všechno o feature X, potom v kódu ukaž, kde je implementovaná a co zbývá.&quot; Spojí dokumentaci, tickety a kód v jedné úloze.</li><li><strong>M365 connector pro spec-driven implementaci&#58;</strong> „Přečti si product spec z SharePointu (ve Wordu), vygeneruj implementační plán a začni psát endpointy.&quot;</li><li><strong>Autonomní task execution&#58;</strong> „Fix failing test suite — projdi errors, najdi root cause, oprav a commit.&quot;</li><li><strong>Codebase onboarding&#58;</strong> „Vysvětli mi, jak funguje [modul]. Ukaž call graph a datový tok.&quot;</li></ul>",
+    "Limity": "<ul><li><strong>Data zpracovávána v USA (mimo EU).</strong> Pro proprietary PPF algoritmy (trading, credit scoring, fraud) konzultujte se Security.</li><li>Vyžaduje Claude Enterprise / API přístup a terminál (ne GUI).</li><li>Enterprise Search / M365 connector pro Claude Code zapíná IT zvlášť.</li><li>Určeno pro dev týmy — pro non-tech uživatele není vhodné.</li></ul>",
+    "Pristup": "<ol><li>Požádejte přes Freshdesk s odůvodněním (projekt, role, požadované Enterprise Search zdroje).</li><li>IT přidělí Claude API key / Enterprise licenci a aktivuje connectors.</li><li>Nainstalujte přes <code>npm install -g @anthropic-ai/claude-code</code> a přihlaste se.</li></ol>",
+    "LinkPristup": {
+      "Description": "Požádat o Claude Code",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Claude Code dokumentace",
+      "Url": "https://docs.claude.com/en/docs/claude-code"
+    },
+    "DataLevel": "yellow",
+    "IkonaUrl": {
+      "Description": "Claude Code logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/anthropic.svg"
+    },
+    "Tagy": [
+      "IT"
+    ],
+    "SortOrder": 12,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:19:19Z",
+    "Created": "2026-04-22T15:56:58Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "4.0",
+    "Attachments": false,
+    "GUID": "4a81c751-77e8-4916-b488-affac187bd98"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 17,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Claude v Excelu",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Claude",
+    "KratkyPopis": "Anthropic add-in přímo v Microsoft Excelu. Instalace z Microsoft AppSource, Claude běží v bočním panelu listu — vidí aktivní sheet, navrhuje vzorce, analyzuje data, generuje formule a makra.",
+    "Pouziti": "<ul><li><strong>Strukturovaná extrakce&#58;</strong> „Z této tabulky klientů vytáhni ty s churn risk &gt; 60 % a kteří v posledních 3 měsících kontaktovali support.&quot; Odpověď rovnou do buněk.</li><li><strong>Cross-sheet analýza&#58;</strong> „Porovnej revenue trendy 2023 a 2025 ze dvou listů. Co se změnilo a proč?&quot;</li><li><strong>Custom formule na míru&#58;</strong> „Navrhni vzorec, který přiřadí segment A/B/C podle kombinace tří kritérií.&quot; Claude vygeneruje vzorec přímo do cílové buňky.</li><li><strong>Data storytelling&#58;</strong> „Vyprávěj mi o těchto datech — co je zajímavé, co podezřelé, co akční?&quot; Narativní výstup vedle tabulky.</li></ul>",
+    "Limity": "<ul><li><strong>Data zpracovávána v USA (mimo EU).</strong> Pro klientská data s EU residency požadavkem NEPOUŽÍVEJTE — v tom případě Copilot Excel.</li><li>Vyžaduje Claude Enterprise licenci a instalaci add-inu z AppSource.</li><li>Pomalejší než Copilot Excel (2–5 s na dotaz), ale zvládne složitější reasoning a delší kontext.</li></ul>",
+    "Pristup": "<ol><li>Požádejte přes Freshdesk (Claude Enterprise + Excel add-in).</li><li>V Excelu&#58; <em>Home → Add-ins → Get Add-ins</em>, vyhledejte „Claude&quot; a nainstalujte.</li><li>Přihlaste se přes Claude účet, add-in se objeví v bočním panelu.</li></ol>",
+    "LinkPristup": {
+      "Description": "Požádat o Claude v Excelu",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Anthropic",
+      "Url": "https://www.anthropic.com/"
+    },
+    "DataLevel": "yellow",
+    "IkonaUrl": {
+      "Description": "Claude v Excelu logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/anthropic.svg"
+    },
+    "Tagy": [
+      "Finance,Operations"
+    ],
+    "SortOrder": 13,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:39Z",
+    "Created": "2026-04-22T15:57:00Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "3.0",
+    "Attachments": false,
+    "GUID": "654b7491-38a3-4212-bd16-2b42c197a28e"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 18,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Claude v PowerPointu",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Claude",
+    "KratkyPopis": "Anthropic add-in přímo v Microsoft PowerPointu. Instalace z Microsoft AppSource, Claude běží v bočním panelu — edituje slidy, generuje nové, převádí Word dokumenty na deck s narativní strukturou.",
+    "Pouziti": "<ul><li><strong>Long-form → deck conversion&#58;</strong> „Z 20-stránkového Word dokumentu vytvoř 12-slide deck pro Board. Každý slide má 1 message, narativně strukturováno.&quot;</li><li><strong>Content review&#58;</strong> „Projdi tuto prezentaci, zkritizuj strukturu a obsah z pohledu seniorního managementu. Kde ztrácí tah?&quot;</li><li><strong>Adaptace pro různá publika&#58;</strong> „Přepiš tento investor deck pro interní stakeholdery — jiný level detailu, méně pitch, víc fakta.&quot;</li><li><strong>Narrative rewrite&#58;</strong> „Přepracuj strukturu tak, aby sledovala McKinsey Pyramid Principle nebo SCQA framework.&quot;</li></ul>",
+    "Limity": "<ul><li><strong>Data zpracovávána v USA (mimo EU).</strong> Pro klienty s EU residency požadavkem NEPOUŽÍVEJTE.</li><li>Vyžaduje Claude Enterprise licenci a instalaci add-inu z AppSource.</li><li>Pomalejší než Copilot PowerPoint, ale silnější v narrative struktuře a kritickém review obsahu.</li></ul>",
+    "Pristup": "<ol><li>Požádejte přes Freshdesk (Claude Enterprise + PowerPoint add-in).</li><li>V PowerPointu&#58; <em>Home → Add-ins → Get Add-ins</em>, vyhledejte „Claude&quot; a nainstalujte.</li><li>Přihlaste se přes Claude účet, add-in se objeví v bočním panelu.</li></ol>",
+    "LinkPristup": {
+      "Description": "Požádat o Claude v PowerPointu",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Anthropic",
+      "Url": "https://www.anthropic.com/"
+    },
+    "DataLevel": "yellow",
+    "IkonaUrl": {
+      "Description": "Claude v PowerPointu logo",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SiteAssets/tool-logos/anthropic.svg"
+    },
+    "Tagy": [
+      "Marketing,Vsichni"
+    ],
+    "SortOrder": 14,
+    "IsActive": true,
+    "Modified": "2026-04-23T10:21:42Z",
+    "Created": "2026-04-22T15:57:01Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "3.0",
+    "Attachments": false,
+    "GUID": "171514de-43bb-461d-950c-a925d567caf8"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 19,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Perplexity",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Specializovany",
+    "KratkyPopis": "AI vyhledávač s citacemi zdrojů. Pro research, tržní analýzy a sledování trendů z veřejných zdrojů.",
+    "Pouziti": "<ul><li>Research konkurence a tržních trendů</li><li>Sumarizace veřejných studií, white paperů, novinových článků s citacemi</li><li>Ověřování faktů proti více zdrojům</li><li>Rychlý přehled nového tématu s odkazy na primární zdroje</li></ul>",
+    "Limity": "<ul><li><strong>Pouze veřejná data</strong> — nikdy nevkládejte interní, klientská ani jinak citlivá data</li><li>Data opouští EU (US hosting, bez smluvní ochrany pro PPF)</li><li>Free tier má denní limity dotazů</li><li>Citace vždy otevřete a ověřte — model občas citace parafrázuje</li></ul>",
+    "Pristup": "<p><strong>Předpoklady&#58;</strong> žádné — veřejný web<br><strong>Schvaluje&#58;</strong> samoschválení (free tier stačí pro většinu research)<br><strong>Doba&#58;</strong> okamžitě</p>",
+    "LinkPristup": {
+      "Description": "Otevřít Perplexity",
+      "Url": "https://www.perplexity.ai"
+    },
+    "LinkNavod": {
+      "Description": "Perplexity FAQ",
+      "Url": "https://www.perplexity.ai/hub/faq"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Marketing,Operations,Vsichni"
+    ],
+    "SortOrder": 33,
+    "IsActive": true,
+    "Modified": "2026-04-23T13:01:41Z",
+    "Created": "2026-04-23T13:01:41Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "971a6bd2-01ef-4458-8715-ce3242ce63f7"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 20,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Google Gemini",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Chat",
+    "KratkyPopis": "Multimodální AI od Googlu (text, obrázek, video, kód). Pro kreativní tvorbu a analýzu z veřejných zdrojů.",
+    "Pouziti": "<ul><li>Generování textu a kreativních draftů (marketing, komunikace)</li><li>Generování a analýza obrázků</li><li>Analýza veřejných dokumentů, webů a videí</li><li>Brainstorming a návrhy strategií na public datech</li><li>Překlad a reformulace</li></ul>",
+    "Limity": "<ul><li><strong>Pouze veřejná data</strong> — nikdy nevkládejte interní, klientská ani jinak citlivá data</li><li>Data opouští EU (US hosting, bez smluvní ochrany pro PPF)</li><li>Free tier (Gemini Pro) má limity; Advanced (Ultra) je placený</li><li>Pro práci s PPF daty použijte Microsoft Copilot nebo Claude</li></ul>",
+    "Pristup": "<p><strong>Předpoklady&#58;</strong> žádné — veřejný web, free Google účet<br><strong>Schvaluje&#58;</strong> samoschválení (free tier stačí pro většinu úkolů)<br><strong>Doba&#58;</strong> okamžitě</p>",
+    "LinkPristup": {
+      "Description": "Otevřít Gemini",
+      "Url": "https://gemini.google.com"
+    },
+    "LinkNavod": {
+      "Description": "Gemini nápověda",
+      "Url": "https://support.google.com/gemini"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Marketing,Operations,Vsichni"
+    ],
+    "SortOrder": 21,
+    "IsActive": true,
+    "Modified": "2026-04-23T13:01:45Z",
+    "Created": "2026-04-23T13:01:45Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "82706188-1a79-45f9-906b-3e6aec55d8c6"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 21,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot Outlook",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "AI asistent přímo v Outlooku. Sumarizuje e-mailová vlákna, navrhuje odpovědi, pomáhá s koncepty e-mailů a rekapituluje zmeškané konverzace.",
+    "Pouziti": "<ul><li><strong>Sumarizace vláken&#58;</strong> „Shrň, o čem se v tomto vlákně 30 mailů řešilo a co je závěr.&quot;</li><li><strong>Draft odpovědi&#58;</strong> „Navrhni odpověď — formální, stručnou, s potvrzením termínu.&quot;</li><li><strong>Tone coaching&#58;</strong> „Přepiš tento mail, aby zněl diplomatičtěji, ale zachovej věcný obsah.&quot;</li><li><strong>Catch-up po dovolené&#58;</strong> „Co důležitého přišlo za poslední týden? Seřaď podle priority.&quot;</li></ul>",
+    "Limity": "<ul><li>Sumarizace dlouhých vláken může vynechat detaily — vždy ověřte klíčová fakta.</li><li>Funguje jen s e-maily v Exchange Online (ne lokální PST).</li></ul>",
+    "Pristup": "<p>Součást licence Microsoft Copilot. Aktivuje se automaticky, pokud máte přístup k Copilot M365.</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Copilot",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Support — Copilot v Outlooku",
+      "Url": "https://support.microsoft.com/en-us/copilot-outlook"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Vsichni"
+    ],
+    "SortOrder": 9,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:13:46Z",
+    "Created": "2026-04-28T09:13:46Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "32abb836-9018-4cc4-8e05-ed1fadc339dd"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 22,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Copilot Edge",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Copilot",
+    "KratkyPopis": "AI sidebar v prohlížeči Microsoft Edge. Sumarizuje webové stránky a PDF, odpovídá na otázky k obsahu aktuální stránky.",
+    "Pouziti": "<ul><li><strong>Sumarizace webu/PDF&#58;</strong> „Shrň tuto 40stránkovou studii do 5 bodů.&quot;</li><li><strong>Q&amp;A nad stránkou&#58;</strong> „Co říká tento článek o regulaci AI v EU?&quot;</li><li><strong>Porovnání zdrojů&#58;</strong> „Otevři dvě stránky a porovnej jejich argumenty.&quot;</li><li><strong>Compose&#58;</strong> generování textu (e-mail, post, shrnutí) přímo v prohlížeči.</li></ul>",
+    "Limity": "<ul><li>Funguje pouze v Microsoft Edge (ne Chrome, Firefox).</li><li>Kontext omezen na aktuální stránku/tab — nepřistupuje k jiným tabům.</li></ul>",
+    "Pristup": "<p>Microsoft Edge + přihlášení firemním účtem. Copilot sidebar se aktivuje ikonou v pravém horním rohu.</p>",
+    "LinkPristup": {
+      "Description": "Stáhnout Microsoft Edge",
+      "Url": "https://www.microsoft.com/edge"
+    },
+    "LinkNavod": {
+      "Description": "Microsoft Support — Copilot v Edge",
+      "Url": "https://support.microsoft.com/en-us/topic/copilot-in-edge"
+    },
+    "DataLevel": "green",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Vsichni"
+    ],
+    "SortOrder": 16,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:13:50Z",
+    "Created": "2026-04-28T09:13:50Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "4904bea6-cfb8-42c6-9634-4c5659b7f114"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 23,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Codex",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Agent",
+    "KratkyPopis": "OpenAI agent pro autonomní práci s kódem. Řeší úlohy v GitHub repozitářích — opravy bugů, implementace features, generování testů.",
+    "Pouziti": "<ul><li><strong>Autonomní implementace&#58;</strong> zadáte úlohu, Codex sám projde repo, navrhne řešení a otevře PR.</li><li><strong>Bug fixing&#58;</strong> „Oprav tento bug — tady je stack trace a repro steps.&quot;</li><li><strong>Test generation&#58;</strong> „Přidej unit testy pro tento modul, pokryj edge cases.&quot;</li><li><strong>Code review asistence&#58;</strong> „Projdi tento PR a navrhni vylepšení.&quot;</li></ul>",
+    "Limity": "<ul><li><strong>Bez osobních údajů</strong> — nevkládejte PII do promptů ani kódu.</li><li>Vyžaduje napojení na GitHub repozitář.</li><li>Asynchronní — úlohy trvají minuty až desítky minut.</li></ul>",
+    "Pristup": "<ol><li>Požádejte přes Freshdesk (volba „OpenAI / Codex&quot;).</li><li>Schvaluje AI tým.</li><li>Aktivace do 3 pracovních dnů.</li></ol>",
+    "LinkPristup": {
+      "Description": "Požádat o Codex",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "OpenAI — Codex",
+      "Url": "https://openai.com/index/introducing-codex/"
+    },
+    "DataLevel": "yellow",
+    "IkonaUrl": null,
+    "Tagy": [
+      "IT"
+    ],
+    "SortOrder": 22,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:13:54Z",
+    "Created": "2026-04-28T09:13:54Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "99dc9a49-3088-437f-97ff-33768b78f560"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 24,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Plaud",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Specializovany",
+    "KratkyPopis": "Hardwarový AI záznamník schůzek. Nahrává, přepisuje a sumarizuje jednání — kompaktní zařízení s vlastní aplikací.",
+    "Pouziti": "<ul><li><strong>Záznam osobních schůzek&#58;</strong> přiložíte k telefonu nebo notebooku, nahrává v high-quality.</li><li><strong>Automatický přepis&#58;</strong> speech-to-text s rozpoznáním mluvčích.</li><li><strong>Sumarizace&#58;</strong> automatické shrnutí, akční body, klíčové momenty.</li><li><strong>Export&#58;</strong> přepisy a shrnutí exportovatelné do Notion, e-mailu aj.</li></ul>",
+    "Limity": "<ul><li><strong>Pouze veřejná data</strong> — nenahrávejte citlivá interní jednání ani klientské schůzky s důvěrnými informacemi.</li><li>Data zpracovávána v cloudu (bez smluvní ochrany pro PPF).</li><li>Vyžaduje souhlas všech účastníků s nahráváním.</li></ul>",
+    "Pristup": "<p>Vlastní zařízení Plaud + mobilní aplikace. K dispozici přes AI tým (pilotní program).</p>",
+    "LinkPristup": {
+      "Description": "Požádat o Plaud",
+      "Url": "https://freshdesk.ppf.cz/support/home"
+    },
+    "LinkNavod": {
+      "Description": "Plaud — podpora",
+      "Url": "https://www.plaud.ai/support"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Operations,Marketing"
+    ],
+    "SortOrder": 34,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:13:57Z",
+    "Created": "2026-04-28T09:13:57Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "9590560e-2be6-4fd2-8013-001baba95c7c"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 25,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Lovable",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Specializovany",
+    "KratkyPopis": "AI nástroj pro tvorbu webových aplikací z textového popisu. Generuje frontend i backend — pro rychlé prototypy a MVP.",
+    "Pouziti": "<ul><li><strong>Rapid prototyping&#58;</strong> „Vytvoř webovou aplikaci pro sledování projektových milníků.&quot;</li><li><strong>MVP za hodiny&#58;</strong> z popisu rovnou funkční aplikace s UI, databází a autentifikací.</li><li><strong>Iterativní vývoj&#58;</strong> úpravy popisem — „Přidej filtry, změň layout na karty.&quot;</li></ul>",
+    "Limity": "<ul><li><strong>Pouze veřejná data</strong> — nikdy nevkládejte interní, klientská ani jinak citlivá data.</li><li>Bez smluvní ochrany dat (US hosting).</li><li>Generovaný kód vyžaduje security review před production nasazením.</li></ul>",
+    "Pristup": "<p>Veřejný web — registrace na lovable.dev. Free tier pro základní použití.</p>",
+    "LinkPristup": {
+      "Description": "Otevřít Lovable",
+      "Url": "https://lovable.dev"
+    },
+    "LinkNavod": {
+      "Description": "Lovable — dokumentace",
+      "Url": "https://docs.lovable.dev"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "IT"
+    ],
+    "SortOrder": 35,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:14:00Z",
+    "Created": "2026-04-28T09:14:00Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "510b325a-2851-45b7-a78e-40e286af14ef"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 26,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "Base44",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Specializovany",
+    "KratkyPopis": "AI platforma pro tvorbu business aplikací bez kódu. Z textového popisu generuje kompletní aplikaci s databází a workflow.",
+    "Pouziti": "<ul><li><strong>Interní nástroje&#58;</strong> „Vytvoř aplikaci pro evidenci schvalování faktur.&quot;</li><li><strong>Formuláře a workflow&#58;</strong> automatizace jednoduchých business procesů.</li><li><strong>Dashboardy&#58;</strong> vizualizace dat bez nutnosti kódování.</li></ul>",
+    "Limity": "<ul><li><strong>Pouze veřejná data</strong> — nevkládejte interní informace.</li><li>Bez smluvní ochrany dat (US hosting).</li></ul>",
+    "Pristup": "<p>Veřejný web — registrace na base44.com. Free tier pro základní použití.</p>",
+    "LinkPristup": {
+      "Description": "Otevřít Base44",
+      "Url": "https://www.base44.com"
+    },
+    "LinkNavod": {
+      "Description": "Base44 — dokumentace",
+      "Url": "https://www.base44.com/docs"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "IT,Operations"
+    ],
+    "SortOrder": 36,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:14:04Z",
+    "Created": "2026-04-28T09:14:04Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "cea921c3-8a89-4bad-8ebd-3c06014edeb1"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 27,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100CD723709ABC3424BAE3B29317F0F2950",
+    "Title": "AIxploria",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Kategorie": "Vzdelavani",
+    "KratkyPopis": "Katalog a vyhledávač AI nástrojů. Pomáhá najít správný AI nástroj pro konkrétní úlohu — porovnání, recenze, kategorizace.",
+    "Pouziti": "<ul><li><strong>Discovery&#58;</strong> „Jaké AI nástroje existují pro automatizaci e-mailů?&quot;</li><li><strong>Porovnání&#58;</strong> porovnejte funkce a ceny alternativních AI řešení.</li><li><strong>Inspirace&#58;</strong> procházení kategorií pro objevování nových AI možností.</li></ul>",
+    "Limity": "<ul><li><strong>Pouze veřejná data</strong> — je to veřejný katalog, nic do něj nevkládáte.</li><li>Agregátor — neověřuje kvalitu ani bezpečnost uvedených nástrojů. Před použitím nalezeného nástroje kontaktujte AI tým.</li></ul>",
+    "Pristup": "<p>Veřejný web — žádná registrace nutná.</p>",
+    "LinkPristup": {
+      "Description": "Otevřít AIxploria",
+      "Url": "https://www.aixploria.com"
+    },
+    "LinkNavod": {
+      "Description": "AIxploria",
+      "Url": "https://www.aixploria.com"
+    },
+    "DataLevel": "red",
+    "IkonaUrl": null,
+    "Tagy": [
+      "Vsichni"
+    ],
+    "SortOrder": 41,
+    "IsActive": true,
+    "Modified": "2026-04-28T09:14:06Z",
+    "Created": "2026-04-28T09:14:06Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "9ae94923-fefb-4326-b715-f95e71075011"
+  }
+]

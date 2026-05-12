@@ -1,0 +1,9 @@
+{% comment %}Reusable card link partial — pass: url, title, sub, icon (material), badge (optional){% endcomment %}
+<a href="{{ url }}" class="group block p-6 rounded-2xl bg-white border border-ppf-line hover:border-ppf-navy/30 hover:shadow-hover transition relative">
+  {% if badge %}<span class="absolute top-4 right-4 text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-ppf-navy/8 text-ppf-navy font-semibold">{{ badge }}</span>{% endif %}
+  <div class="w-11 h-11 rounded-xl bg-ppf-navy/8 text-ppf-navy flex items-center justify-center mb-4">
+    <span class="material-symbols-outlined">{{ icon|default:"arrow_forward" }}</span>
+  </div>
+  <div class="font-semibold text-ppf-navy group-hover:underline">{{ title }}</div>
+  {% if sub %}<p class="text-sm text-ppf-gray mt-1">{{ sub }}</p>{% endif %}
+</a>

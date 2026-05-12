@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" rx="8" fill="#FAF8F5"/>
+  <!-- Speech bubbles -->
+  <rect x="80" y="70" width="160" height="80" rx="12" fill="#002C5A" opacity="0.1" stroke="#002C5A" stroke-width="2"/>
+  <polygon points="130,150 140,170 150,150" fill="#002C5A" opacity="0.1" stroke="#002C5A" stroke-width="2"/>
+  <rect x="160" y="140" width="160" height="80" rx="12" fill="#B06F41" opacity="0.1" stroke="#B06F41" stroke-width="2"/>
+  <polygon points="260,220 270,240 280,220" fill="#B06F41" opacity="0.1" stroke="#B06F41" stroke-width="2"/>
+  <!-- Lightbulb icon in first bubble -->
+  <circle cx="160" cy="105" r="15" fill="none" stroke="#002C5A" stroke-width="2"/>
+  <line x1="160" y1="120" x2="160" y2="130" stroke="#002C5A" stroke-width="2"/>
+  <rect x="153" y="128" width="14" height="4" rx="2" fill="#002C5A"/>
+  <!-- Heart in second bubble -->
+  <path d="M235 170 C235 165 240 160 245 160 C250 160 255 165 255 170 C255 165 260 160 265 160 C270 160 275 165 275 170 C275 180 255 195 255 195 C255 195 235 180 235 170Z" fill="#B06F41" opacity="0.3"/>
+</svg>

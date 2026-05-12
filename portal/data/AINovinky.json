@@ -1,0 +1,180 @@
+[
+  {
+    "FileSystemObjectType": 0,
+    "Id": 2,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x01008F14ADEBA6338F4E8F3EA777D99E791D",
+    "Title": "Copilot Cowork",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Perex": "Microsoft představil Copilot Cowork — nový způsob, jak delegovat úkoly na AI agenta přímo v prostředí M365.",
+    "Body": "Microsoft představil Copilot Cowork — nový způsob, jak delegovat úkoly na AI agenta přímo v prostředí M365. Na rozdíl od klasického Copilota, kde píšete prompty a čekáte na odpověď, Cowork funguje na pozadí. Zadáte úkol přirozeným jazykem a agent pracuje samostatně. Cowork má přístup k vašim souborům, e-mailům, kalendáři a Teams konverzacím. Všechna data zůstávají v prostředí Microsoft (EU). Aktuálně testujeme v pilotní skupině, pokud máte zájem o testování, ozvěte se IT oddělení.",
+    "Category": "Microsoft",
+    "PublishDate": "2026-03-31T22:00:00Z",
+    "Link1Url": {
+      "Description": "Co je Copilot Cowork",
+      "Url": "https://www.microsoft.com/en-us/microsoft-365/blog/2026/03/09/copilot-cowork-a-new-way-of-getting-work-done/"
+    },
+    "Link1Label": "Co je Copilot Cowork — Microsoft 365 Blog",
+    "Link2Url": {
+      "Description": "Copilot Cowork ve Frontier",
+      "Url": "https://www.microsoft.com/en-us/microsoft-365/blog/2026/03/30/copilot-cowork-now-available-in-frontier/"
+    },
+    "Link2Label": "Copilot Cowork ve Frontier programu",
+    "SortOrder": 1,
+    "IsActive": true,
+    "ArticleUrl": {
+      "Description": "Celý článek",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SitePages/copilot-cowork.aspx"
+    },
+    "Source": "External",
+    "Modified": "2026-04-21T10:16:57Z",
+    "Created": "2026-04-10T12:58:46Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "3.0",
+    "Attachments": false,
+    "GUID": "0f4221b8-6973-4c00-abec-5a2ec704d65d"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 3,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x01008F14ADEBA6338F4E8F3EA777D99E791D",
+    "Title": "Claude + M365",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Perex": "Claude od Anthropic je nyní propojený s naším Microsoft 365 prostředím.",
+    "Body": "Claude od Anthropic je nyní propojený s naším Microsoft 365 prostředím. V praxi to znamená, že Claude může přímo pracovat s vašimi e-maily v Outlooku, kalendářem, soubory na SharePointu a Teams zprávami. Konektor je read-only — Claude může číst a analyzovat vaše data, ale nemůže za vás odesílat e-maily, vytvářet dokumenty ani měnit obsah. Upozornění&#58; Data opouští EU (viz pravidla níže).",
+    "Category": "Claude",
+    "PublishDate": "2026-04-02T22:00:00Z",
+    "Link1Url": {
+      "Description": "M365 Connector",
+      "Url": "https://marketplace.microsoft.com/en-us/product/saas/anthropic.microsoft-365-connector-for-claude"
+    },
+    "Link1Label": "M365 Connector for Claude — Marketplace",
+    "Link2Url": {
+      "Description": "Bezpečnost",
+      "Url": "https://support.claude.com/en/articles/12684923-microsoft-365-connector-security-guide"
+    },
+    "Link2Label": "Bezpečnost konektoru — Claude Help Center",
+    "SortOrder": 2,
+    "IsActive": true,
+    "ArticleUrl": {
+      "Description": "Celý článek",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SitePages/claude-m365.aspx"
+    },
+    "Source": "External",
+    "Modified": "2026-04-21T10:16:58Z",
+    "Created": "2026-04-10T12:58:48Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "3.0",
+    "Attachments": false,
+    "GUID": "774a07af-557a-4d98-96bd-35bf66a51be0"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 4,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x01008F14ADEBA6338F4E8F3EA777D99E791D",
+    "Title": "Project Glasswing",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Perex": "Anthropic oznámil Claude Mythos Preview — svůj nejnovější a nejpokročilejší model pro bezpečnost softwaru.",
+    "Body": "Anthropic oznámil Claude Mythos Preview — svůj nejnovější a nejpokročilejší model. Mythos Preview je zatím zpřístupněn pouze vybraným organizacím v rámci iniciativy Project Glasswing, jejímž cílem je zabezpečení kritického softwaru pomocí AI. Mythos Preview prokázal schopnost autonomně nacházet bezpečnostní zranitelnosti v softwaru. Mezi partnery patří AWS, Apple, Cisco, CrowdStrike, Google, Microsoft a NVIDIA. Anthropic investuje 100M USD.",
+    "Category": "Anthropic",
+    "PublishDate": "2026-04-06T22:00:00Z",
+    "Link1Url": {
+      "Description": "Project Glasswing",
+      "Url": "https://www.anthropic.com/glasswing"
+    },
+    "Link1Label": "Project Glasswing — Anthropic",
+    "Link2Url": {
+      "Description": "Fortune článek",
+      "Url": "https://fortune.com/2026/04/07/anthropic-claude-mythos-model-project-glasswing-cybersecurity/"
+    },
+    "Link2Label": "Přehledný článek — Fortune",
+    "SortOrder": 3,
+    "IsActive": true,
+    "ArticleUrl": {
+      "Description": "Celý článek",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SitePages/project-glasswing.aspx"
+    },
+    "Source": "External",
+    "Modified": "2026-04-21T10:17:23Z",
+    "Created": "2026-04-10T12:58:51Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "3.0",
+    "Attachments": false,
+    "GUID": "7eb2ac21-a335-468b-bd07-699218af5086"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 5,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x01008F14ADEBA6338F4E8F3EA777D99E791D",
+    "Title": "PPF spustil AI portál Meet AI",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Perex": "Portál Meet AI je rozcestník pro práci s AI v PPF: šestero pravidel, semafor schválených nástrojů, slovníček, novinky a kontakt na AI tým.",
+    "Body": "Hlavní vstupní bod pro nové uživatele jsou Pravidla (situace „Chci vědět, co je OK a co ne&quot;) — šest stručných pravidel co smíte, co raději ne, plus semafor 6 schválených nástrojů s labely bez omezení / bez osobních údajů / jen veřejná data. Pro detailní lookup je v Pravidlech rozhodovací strom a sbalená matice typů dat × nástrojů.\\\n\nCo dalšího na portálu najdete&#58; knihovna use-cases s prompty na copy-paste, AI slovníček (Cowork, MCP, Skills, halucinace, osobní údaje, …), vzdělávací zdroje, novinky ze světa i z PPF, anketa hodnocení portálu škálou 1–10.\\\n\nKdyž si nejste jistý, napište AI týmu na team_ai@ppf.cz.",
+    "Category": "General",
+    "PublishDate": "2026-04-20T22:00:00Z",
+    "Link1Url": null,
+    "Link1Label": null,
+    "Link2Url": null,
+    "Link2Label": null,
+    "SortOrder": 4,
+    "IsActive": true,
+    "ArticleUrl": null,
+    "Source": "Internal",
+    "Modified": "2026-04-28T10:59:27Z",
+    "Created": "2026-04-21T10:17:00Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "2.0",
+    "Attachments": false,
+    "GUID": "5c89d0ff-5068-4f45-aaae-cce956c479d4"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 6,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x01008F14ADEBA6338F4E8F3EA777D99E791D",
+    "Title": "Microsoft Copilot Cowork je v PPF dostupný",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "Perex": "Cowork je AI agent, který zpracuje úkol na pozadí — Email Triage, shrnutí Teams konverzací, příprava týdenních reportů. V PPF plošně dostupný v Microsoft 365 Copilot Frontier.",
+    "Body": "Microsoft Copilot Cowork je nový režim Copilota, kdy AI agent pracuje na pozadí. Zadáte úkol přirozeným jazykem a výsledek dostanete, až bude hotový.\\\n\nCo Cowork umí&#58; Email Triage (kategorizace inboxu podle priority, návrh odpovědí, follow-up), shrnutí Teams konverzací, příprava týdenních reportů z OneDrive, sledování změn v dokumentech.\\\n\nJak ho v PPF používat&#58; aktivace na m365.cloud.microsoft/chat (v dolním panelu zvolit režim Cowork). Plošně dostupný v rámci Microsoft 365 Copilot Frontier — přístup mají všichni zaměstnanci PPF. Pro citlivé osobní údaje OK po vypnutí AI Flex routingu (probíhá).\\\n\nDetail na samostatné stránce Copilot Cowork. Pravidla pro práci s AI a daty na situaci „Chci vědět, co je OK a co ne&quot;. Pro otázky team_ai@ppf.cz.",
+    "Category": "Microsoft",
+    "PublishDate": "2026-04-19T22:00:00Z",
+    "Link1Url": {
+      "Description": "Detail Copilot Cowork",
+      "Url": "https://ppfgroup.sharepoint.com/sites/MeetAI/SitePages/copilot-cowork.aspx"
+    },
+    "Link1Label": "Detail Copilot Cowork",
+    "Link2Url": {
+      "Description": "Aktivace Cowork",
+      "Url": "https://m365.cloud.microsoft/chat"
+    },
+    "Link2Label": "Aktivace Cowork",
+    "SortOrder": 5,
+    "IsActive": true,
+    "ArticleUrl": null,
+    "Source": "Internal",
+    "Modified": "2026-04-28T10:59:30Z",
+    "Created": "2026-04-21T10:17:02Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "2.0",
+    "Attachments": false,
+    "GUID": "54c4129c-a586-4aa1-8f2a-eb85980e56a9"
+  }
+]

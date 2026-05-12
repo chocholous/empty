@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Meet AI · AI v PPF na jednom místě{% endblock %}
+
+{% block hero_extra %}
+  <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl">
+    <div class="px-5 py-4 rounded-xl bg-white/8 border border-white/10">
+      <div class="text-3xl font-bold leading-none">{{ STATS.nastroju }}</div>
+      <div class="text-white/70 text-xs uppercase tracking-wider mt-1">nástrojů</div>
+    </div>
+    <div class="px-5 py-4 rounded-xl bg-white/8 border border-white/10">
+      <div class="text-3xl font-bold leading-none">{{ STATS.pravidel }}</div>
+      <div class="text-white/70 text-xs uppercase tracking-wider mt-1">pravidel</div>
+    </div>
+    <div class="px-5 py-4 rounded-xl bg-white/8 border border-white/10">
+      <div class="text-3xl font-bold leading-none">{{ STATS.zdroju }}</div>
+      <div class="text-white/70 text-xs uppercase tracking-wider mt-1">vzdělávacích zdrojů</div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <section>
+    <div class="flex items-end justify-between mb-6">
+      <div>
+        <p class="text-xs uppercase tracking-[0.18em] text-ppf-gray font-semibold">Situace</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-ppf-navy mt-1">Vyberte, co právě řešíte</h2>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {% for tile in SITUACE_TILES %}
+        <a href="{{ tile.url }}" class="group relative p-6 rounded-2xl
+                  {% if tile.tone == 'amber' %}bg-ppf-sand text-ppf-navy{% else %}bg-ppf-navy text-white{% endif %}
+                  hover:shadow-hover transition overflow-hidden">
+          <span class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full
+                       {% if tile.tone == 'amber' %}bg-ppf-navy/10{% else %}bg-white/5{% endif %}
+                       group-hover:scale-110 transition-transform duration-500"></span>
+          <span class="relative material-symbols-outlined text-3xl
+                       {% if tile.tone == 'amber' %}text-ppf-navy{% else %}text-white{% endif %} mb-4 block">
+            {{ tile.icon }}
+          </span>
+          <div class="relative font-semibold text-lg leading-snug">{{ tile.label }}</div>
+          <p class="relative text-sm opacity-80 mt-1">{{ tile.desc }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if novinky %}
+    <section class="mt-16">
+      <div class="flex items-end justify-between mb-6">
+        <div>
+          <p class="text-xs uppercase tracking-[0.18em] text-ppf-gray font-semibold">Aktuality</p>
+          <h2 class="text-2xl md:text-3xl font-bold text-ppf-navy mt-1">Nejnovější novinky</h2>
+        </div>
+        <a href="{% url 'portal:novinky_svet' %}" class="text-sm font-medium text-ppf-navy hover:underline">
+          Všechny novinky →
+        </a>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        {% for n in novinky %}
+          <a href="{% url 'portal:novinka_detail' n.id %}" class="group block bg-white rounded-2xl border border-ppf-line hover:border-ppf-navy/30 hover:shadow-hover transition overflow-hidden">
+            <div class="h-1.5 {% if n.source == 'Internal' %}bg-ppf-navy{% else %}bg-ppf-sand{% endif %}"></div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 text-xs text-ppf-gray">
+                <span class="font-semibold {% if n.source == 'Internal' %}text-ppf-navy{% else %}text-amber-700{% endif %}">
+                  {{ n.get_source_display }}
+                </span>
+                <span>·</span>
+                <span>{{ n.publish_date|date:"j. n. Y" }}</span>
+              </div>
+              <h3 class="mt-2 font-semibold text-ppf-navy text-lg group-hover:underline">{{ n.title }}</h3>
+              <p class="text-sm text-ppf-gray mt-2 line-clamp-3">{{ n.perex }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  {% if terms %}
+    <section class="mt-16">
+      <div class="flex items-end justify-between mb-6">
+        <div>
+          <p class="text-xs uppercase tracking-[0.18em] text-ppf-gray font-semibold">AI slovníček</p>
+          <h2 class="text-2xl md:text-3xl font-bold text-ppf-navy mt-1">Pojmy, které by AI měla znát i člověk</h2>
+        </div>
+        <a href="{% url 'portal:vzdelavani' %}" class="text-sm font-medium text-ppf-navy hover:underline">
+          Celý slovníček →
+        </a>
+      </div>
+      <div class="grid md:grid-cols-2 gap-3">
+        {% for t in terms %}
+          <details class="bg-white rounded-xl border border-ppf-line group">
+            <summary class="cursor-pointer p-4 flex items-center gap-3 list-none">
+              <span class="material-symbols-outlined text-ppf-navy">{{ t.icon_name|default:"auto_stories" }}</span>
+              <span class="font-semibold text-ppf-navy flex-1">{{ t.title }}</span>
+              <span class="material-symbols-outlined text-ppf-gray group-open:rotate-180 transition">expand_more</span>
+            </summary>
+            <div class="px-4 pb-4 text-sm text-ppf-gray">{{ t.definition }}
+              {% if t.learn_more_url %}<div class="mt-2"><a class="text-ppf-navy hover:underline" href="{{ t.learn_more_url }}">{{ t.learn_more_label|default:"Více informací" }} →</a></div>{% endif %}
+            </div>
+          </details>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

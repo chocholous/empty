@@ -1,0 +1,42 @@
+[
+  {
+    "FileSystemObjectType": 0,
+    "Id": 1,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100BBE3470D809B774C9812C5BAF208B582",
+    "Title": "Feedback 2026-04-29T07:04:44.390Z",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "PageUrl": "/sites/MeetAI/SitePages/situace-home-final.aspx",
+    "Comment": null,
+    "Score": 9,
+    "Modified": "2026-04-29T07:04:45Z",
+    "Created": "2026-04-29T07:04:45Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "16ec9645-22cc-430e-89eb-c479d88a9623"
+  },
+  {
+    "FileSystemObjectType": 0,
+    "Id": 2,
+    "ServerRedirectedEmbedUri": null,
+    "ServerRedirectedEmbedUrl": "",
+    "ContentTypeId": "0x0100BBE3470D809B774C9812C5BAF208B582",
+    "Title": "Feedback 2026-05-06T07:27:32.054Z",
+    "OData__ColorTag": null,
+    "ComplianceAssetId": null,
+    "PageUrl": "/sites/MeetAI/SitePages/situace-vzdelavani.aspx",
+    "Comment": null,
+    "Score": 10,
+    "Modified": "2026-05-06T07:27:32Z",
+    "Created": "2026-05-06T07:27:32Z",
+    "AuthorId": 13,
+    "EditorId": 13,
+    "OData__UIVersionString": "1.0",
+    "Attachments": false,
+    "GUID": "3d814d87-b406-40f1-bfb1-17a52197a970"
+  }
+]

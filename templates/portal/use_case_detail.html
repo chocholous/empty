@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}{{ uc.title }} · Use-cases{% endblock %}
+
+{% block hero %}
+  <section class="bg-ppf-navy text-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 pt-10 pb-16">
+      <a href="{% url 'portal:use_cases' %}" class="text-white/70 hover:text-white text-sm inline-flex items-center gap-1">
+        <span class="material-symbols-outlined text-base">arrow_back</span> Knihovna use-cases
+      </a>
+      <div class="mt-6">
+        <div class="text-xs uppercase tracking-[0.18em] font-semibold text-white/70">{{ uc.cinnost }}</div>
+        <h1 class="text-3xl md:text-4xl font-bold mt-1 max-w-3xl">{{ uc.title }}</h1>
+        <p class="mt-3 text-white/85 max-w-2xl">{{ uc.naklik }}</p>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block content %}
+  <div class="grid lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 space-y-8">
+      {% if uc.postup %}
+        <section class="bg-white rounded-2xl border border-ppf-line p-6 md:p-8">
+          <h2 class="text-xl font-bold text-ppf-navy mb-3">Postup</h2>
+          <div class="prose-ppf text-ppf-ink">{{ uc.postup|safe }}</div>
+        </section>
+      {% endif %}
+      {% if uc.prompt %}
+        <section class="bg-ppf-ink text-white rounded-2xl p-6 md:p-8 relative">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-lg font-bold flex items-center gap-2"><span class="material-symbols-outlined">terminal</span> Hotový prompt</h2>
+            <button onclick="navigator.clipboard.writeText(this.closest('section').querySelector('pre').innerText); this.innerText='Zkopírováno ✓'"
+                    class="text-xs px-3 py-1.5 rounded-md bg-white/15 hover:bg-white/25">Kopírovat</button>
+          </div>
+          <pre class="whitespace-pre-wrap text-sm font-mono leading-relaxed">{{ uc.prompt }}</pre>
+        </section>
+      {% endif %}
+      {% if uc.ocekavany_vystup %}
+        <section class="bg-white rounded-2xl border border-ppf-line p-6 md:p-8">
+          <h2 class="text-xl font-bold text-ppf-navy mb-2">Očekávaný výstup</h2>
+          <p class="text-ppf-ink">{{ uc.ocekavany_vystup }}</p>
+        </section>
+      {% endif %}
+      {% if uc.kdyz_nefunguje %}
+        <section class="bg-amber-50 border border-amber-200 rounded-2xl p-6 md:p-8">
+          <h2 class="text-lg font-bold text-amber-800 mb-2 flex items-center gap-2">
+            <span class="material-symbols-outlined">help</span> Když to nefunguje
+          </h2>
+          <p class="text-amber-900">{{ uc.kdyz_nefunguje }}</p>
+        </section>
+      {% endif %}
+    </div>
+    <aside class="space-y-4">
+      {% if uc.nastroj %}
+        <a href="{% url 'portal:nastroj_detail' uc.nastroj.id %}" class="block bg-white rounded-2xl border border-ppf-line p-5 hover:border-ppf-navy/40">
+          <div class="text-xs uppercase tracking-wider text-ppf-gray font-semibold">Doporučený nástroj</div>
+          <div class="mt-1 font-semibold text-ppf-navy">{{ uc.nastroj.title }}</div>
+        </a>
+      {% endif %}
+      {% if uc.alternativy.all %}
+        <div class="bg-white rounded-2xl border border-ppf-line p-5">
+          <div class="text-xs uppercase tracking-wider text-ppf-gray font-semibold mb-3">Alternativní nástroje</div>
+          <ul class="space-y-2">
+            {% for a in uc.alternativy.all %}
+              <li><a href="{% url 'portal:nastroj_detail' a.id %}" class="text-ppf-navy hover:underline">{{ a.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      {% if uc.varovani %}
+        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5">
+          <div class="text-xs uppercase tracking-wider text-rose-800 font-semibold mb-1">Varování</div>
+          <p class="text-sm text-rose-900">{{ uc.varovani }}</p>
+        </div>
+      {% endif %}
+      <div class="bg-white rounded-2xl border border-ppf-line p-5">
+        <div class="text-xs uppercase tracking-wider text-ppf-gray font-semibold">Spolehlivost</div>
+        <div class="mt-1 font-semibold text-ppf-navy">{{ uc.success_rate }}</div>
+      </div>
+      {% if uc.komu_napsat %}
+        <a href="mailto:{{ uc.komu_napsat }}" class="block bg-ppf-navy text-white rounded-2xl p-5 hover:bg-ppf-navy2">
+          <div class="text-xs uppercase tracking-wider text-white/70 font-semibold">Kontakt</div>
+          <div class="mt-1 font-semibold">{{ uc.komu_napsat }}</div>
+        </a>
+      {% endif %}
+    </aside>
+  </div>
+{% endblock %}

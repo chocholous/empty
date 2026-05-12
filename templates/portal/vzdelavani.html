@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Vzdělávání · Meet AI{% endblock %}
+
+{% block content %}
+  <section>
+    <div class="flex items-end justify-between mb-6">
+      <h2 class="text-2xl font-bold text-ppf-navy">Všechny zdroje</h2>
+    </div>
+    <div class="flex flex-wrap gap-2 mb-6">
+      <a href="?" class="px-3 py-1.5 rounded-full text-sm font-medium {% if not active_kategorie %}bg-ppf-navy text-white{% else %}bg-white border border-ppf-line text-ppf-gray hover:text-ppf-navy{% endif %}">Vše</a>
+      {% for k in kategorie_list %}
+        <a href="?k={{ k }}" class="px-3 py-1.5 rounded-full text-sm font-medium {% if active_kategorie == k %}bg-ppf-navy text-white{% else %}bg-white border border-ppf-line text-ppf-gray hover:text-ppf-navy{% endif %}">{{ k }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for z in zdroje %}
+        <a href="{{ z.url|default:'#' }}" target="_blank" class="group bg-white rounded-2xl border border-ppf-line p-6 hover:border-ppf-navy/30 hover:shadow-card transition flex">
+          <div class="w-11 h-11 rounded-xl bg-ppf-navy/8 text-ppf-navy flex items-center justify-center mr-4 flex-shrink-0">
+            <span class="material-symbols-outlined">{{ z.icon_name|default:"school" }}</span>
+          </div>
+          <div class="flex-1">
+            <div class="text-xs uppercase tracking-wider text-ppf-gray font-semibold">{{ z.category }}</div>
+            <div class="font-semibold text-ppf-navy group-hover:underline">{{ z.title }}</div>
+            <p class="text-sm text-ppf-gray mt-1 line-clamp-3">{{ z.description }}</p>
+            {% if z.provider %}<div class="text-xs text-ppf-gray mt-2">{{ z.provider }}</div>{% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if terms %}
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold text-ppf-navy mb-6">AI slovníček</h2>
+      <div class="grid md:grid-cols-2 gap-3">
+        {% for t in terms %}
+          <details class="bg-white rounded-xl border border-ppf-line group">
+            <summary class="cursor-pointer p-4 flex items-center gap-3 list-none">
+              <span class="material-symbols-outlined text-ppf-navy">{{ t.icon_name|default:"auto_stories" }}</span>
+              <span class="font-semibold text-ppf-navy flex-1">{{ t.title }}</span>
+              <span class="material-symbols-outlined text-ppf-gray group-open:rotate-180 transition">expand_more</span>
+            </summary>
+            <div class="px-4 pb-4 text-sm text-ppf-gray">{{ t.definition }}
+              {% if t.learn_more_url %}<div class="mt-2"><a class="text-ppf-navy hover:underline" href="{{ t.learn_more_url }}">{{ t.learn_more_label|default:"Více informací" }} →</a></div>{% endif %}
+            </div>
+          </details>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

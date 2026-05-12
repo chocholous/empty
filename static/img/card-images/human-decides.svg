@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" rx="8" fill="#FAF8F5"/>
+  <!-- Person silhouette -->
+  <circle cx="200" cy="100" r="30" fill="#002C5A" opacity="0.15"/>
+  <path d="M150 200 C150 160 170 140 200 140 C230 140 250 160 250 200" fill="#002C5A" opacity="0.1"/>
+  <!-- Raised hand -->
+  <path d="M240 130 L260 90 L265 92 L248 125" fill="#B06F41" opacity="0.4" stroke="#B06F41" stroke-width="2"/>
+  <!-- Balance / scales -->
+  <line x1="130" y1="230" x2="270" y2="230" stroke="#002C5A" stroke-width="2"/>
+  <line x1="200" y1="210" x2="200" y2="250" stroke="#002C5A" stroke-width="3"/>
+  <!-- Left scale (AI) -->
+  <path d="M130 230 L145 215 L160 230" fill="none" stroke="#002C5A" stroke-width="2"/>
+  <text x="137" y="212" font-family="sans-serif" font-size="10" fill="#002C5A" opacity="0.4">AI</text>
+  <!-- Right scale (Human - heavier/lower) -->
+  <path d="M240 230 L255 220 L270 230" fill="none" stroke="#B06F41" stroke-width="2"/>
+  <circle cx="255" cy="218" r="5" fill="#B06F41" opacity="0.3"/>
+</svg>

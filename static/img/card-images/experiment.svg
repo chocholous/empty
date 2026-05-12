@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" rx="8" fill="#FAF8F5"/>
+  <!-- Flask -->
+  <path d="M175 70 L175 140 L130 230 C125 240 135 250 145 250 L255 250 C265 250 275 240 270 230 L225 140 L225 70" fill="#002C5A" opacity="0.06" stroke="#002C5A" stroke-width="2"/>
+  <line x1="165" y1="70" x2="235" y2="70" stroke="#002C5A" stroke-width="2"/>
+  <!-- Bubbles -->
+  <circle cx="180" cy="200" r="10" fill="#B06F41" opacity="0.2"/>
+  <circle cx="210" cy="185" r="14" fill="#B06F41" opacity="0.15"/>
+  <circle cx="230" cy="210" r="8" fill="#002C5A" opacity="0.15"/>
+  <circle cx="195" cy="220" r="6" fill="#48C78E" opacity="0.3"/>
+  <!-- Sparkles -->
+  <path d="M280 100 L285 90 L290 100 L300 105 L290 110 L285 120 L280 110 L270 105Z" fill="#B06F41" opacity="0.3"/>
+  <path d="M120 130 L123 123 L126 130 L133 133 L126 136 L123 143 L120 136 L113 133Z" fill="#002C5A" opacity="0.2"/>
+</svg>

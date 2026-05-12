@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Data matice · Meet AI{% endblock %}
+
+{% block content %}
+  <p class="text-ppf-gray max-w-3xl mb-8">
+    Najděte sloupec s typem dat, který chcete nahrát, a řádek s nástrojem.
+    Barva vám řekne, jestli to jde:
+    <span class="inline-flex items-center gap-1 ml-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> OK</span>
+    <span class="inline-flex items-center gap-1 ml-2"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Opatrně</span>
+    <span class="inline-flex items-center gap-1 ml-2"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Ne</span>
+  </p>
+
+  <div class="overflow-x-auto bg-white rounded-2xl border border-ppf-line">
+    <table class="min-w-full text-sm">
+      <thead>
+        <tr class="bg-ppf-navy/5 text-ppf-navy">
+          <th class="text-left p-4 font-semibold">Nástroj</th>
+          {% for k, label in data_types %}
+            <th class="text-left p-4 font-semibold whitespace-nowrap">{{ label }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in matrix %}
+          <tr class="border-t border-ppf-line">
+            <td class="p-4">
+              <a href="{% url 'portal:nastroj_detail' row.tool.id %}" class="font-semibold text-ppf-navy hover:underline">
+                {{ row.tool.title }}
+              </a>
+              <div class="text-xs text-ppf-gray">{{ row.tool.kategorie }}</div>
+            </td>
+            {% for c in row.cells %}
+              <td class="p-4">
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium
+                  {% if c.level == 'ok' %}bg-emerald-100 text-emerald-800
+                  {% elif c.level == 'warn' %}bg-amber-100 text-amber-800
+                  {% else %}bg-rose-100 text-rose-800{% endif %}">
+                  <span class="material-symbols-outlined text-base">
+                    {% if c.level == 'ok' %}check{% elif c.level == 'warn' %}warning{% else %}block{% endif %}
+                  </span>
+                  {% if c.level == 'ok' %}OK{% elif c.level == 'warn' %}Opatrně{% else %}Ne{% endif %}
+                </span>
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-10 bg-amber-50 border border-amber-200 rounded-2xl p-6 max-w-3xl">
+    <h3 class="font-bold text-amber-900 flex items-center gap-2"><span class="material-symbols-outlined">shield_lock</span> Hraniční případ s citlivými daty?</h3>
+    <p class="text-sm text-amber-900 mt-2">DPO (Data Protection Officer) odpoví do 24 h.</p>
+    <a href="mailto:dpo@ppf.cz" class="inline-block mt-3 px-4 py-2 rounded-lg bg-amber-600 text-white text-sm font-medium hover:bg-amber-700">
+      Napsat DPO
+    </a>
+  </div>
+{% endblock %}

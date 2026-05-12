@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" rx="8" fill="#FAF8F5"/>
+  <!-- Shield -->
+  <path d="M200 60 L260 90 L260 160 C260 200 230 230 200 245 C170 230 140 200 140 160 L140 90 Z" fill="#002C5A" opacity="0.1" stroke="#002C5A" stroke-width="2"/>
+  <!-- Checkmark -->
+  <path d="M175 155 L195 175 L230 130" stroke="#B06F41" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- M365 icon hint -->
+  <rect x="155" y="195" width="90" height="12" rx="6" fill="#002C5A" opacity="0.15"/>
+  <rect x="170" y="215" width="60" height="12" rx="6" fill="#002C5A" opacity="0.1"/>
+</svg>

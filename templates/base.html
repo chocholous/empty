@@ -1,0 +1,204 @@
+{% load static %}
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Meet AI · PPF{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/ppf-logo.svg' %}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ppf: {
+              navy:  '#002c5a',
+              navy2: '#0a3a6e',
+              navy3: '#0c4e8a',
+              cream: '#f5f1ea',
+              sand:  '#ecd9b8',
+              ink:   '#1a1f2e',
+              gray:  '#5b6675',
+              line:  '#e6e8eb',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            card: '0 1px 2px rgba(10,20,40,.04), 0 8px 24px rgba(10,20,40,.06)',
+            hover: '0 4px 12px rgba(10,20,40,.08), 0 16px 40px rgba(10,20,40,.12)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body { font-family: 'Inter', system-ui, sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'opsz' 24; }
+    .prose-ppf ul { list-style: disc; padding-left: 1.25rem; margin: .5rem 0; }
+    .prose-ppf ol { list-style: decimal; padding-left: 1.25rem; margin: .5rem 0; }
+    .prose-ppf li { margin: .25rem 0; }
+    .prose-ppf p { margin: .5rem 0; }
+    .prose-ppf strong { color: #002c5a; }
+    .prose-ppf a { color: #0c4e8a; text-decoration: underline; }
+  </style>
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-ppf-cream text-ppf-ink antialiased">
+
+  <header class="bg-ppf-navy text-white sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <a href="{% url 'portal:home' %}" class="flex items-center gap-3 group">
+        <img src="{% static 'img/ppf-logo.svg' %}" alt="PPF" class="h-7 w-auto invert brightness-0 contrast-200">
+        <span class="font-semibold tracking-tight text-lg">Meet AI</span>
+        <span class="hidden md:inline text-white/50 text-sm">· portál AI v PPF</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-1">
+        {% for item in MAIN_NAV %}
+          <a href="{{ item.url }}"
+             class="px-3 py-2 rounded-md text-sm font-medium text-white/85 hover:text-white hover:bg-white/10 transition">
+            {{ item.label }}
+          </a>
+        {% endfor %}
+        <a href="/admin/" class="ml-2 px-3 py-2 rounded-md text-sm font-medium border border-white/20 text-white/85 hover:bg-white/10 transition">
+          Admin
+        </a>
+      </nav>
+      <button id="mnav-toggle" class="md:hidden text-white/90" aria-label="Menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+    <div id="mnav" class="md:hidden hidden border-t border-white/10 bg-ppf-navy">
+      <div class="px-4 py-3 flex flex-col gap-1">
+        {% for item in MAIN_NAV %}
+          <a href="{{ item.url }}" class="py-2 text-white/85 hover:text-white">{{ item.label }}</a>
+        {% endfor %}
+        <a href="/admin/" class="py-2 text-white/85 hover:text-white">Admin</a>
+      </div>
+    </div>
+  </header>
+
+  {% if messages %}
+    <div class="max-w-7xl mx-auto px-4 md:px-8 mt-4 space-y-2">
+      {% for m in messages %}
+        <div class="rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-3 text-sm">
+          {{ m }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% block hero %}
+    {% if hero.heading %}
+      <section class="relative bg-ppf-navy text-white">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 pt-12 pb-16 md:pt-16 md:pb-24">
+          {% if hero.eyebrow %}
+            <div class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-semibold text-white/70 mb-4">
+              <span class="w-8 h-px bg-white/40"></span>{{ hero.eyebrow }}
+            </div>
+          {% endif %}
+          <h1 class="text-3xl md:text-5xl font-bold tracking-tight max-w-3xl leading-[1.1]">
+            {{ hero.heading }}
+          </h1>
+          {% if hero.subheading %}
+            <p class="mt-5 text-white/75 max-w-2xl md:text-lg">{{ hero.subheading }}</p>
+          {% endif %}
+          {% block hero_extra %}{% endblock %}
+        </div>
+        <div class="absolute inset-x-0 -bottom-px h-8 bg-gradient-to-b from-transparent to-ppf-cream pointer-events-none"></div>
+      </section>
+    {% endif %}
+  {% endblock %}
+
+  <main class="max-w-7xl mx-auto px-4 md:px-8 py-10 md:py-14">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block related %}
+    {% if related %}
+      <section class="border-t border-ppf-line bg-white">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+          <h2 class="text-xl font-bold text-ppf-navy mb-6">Kam dál</h2>
+          <div class="grid md:grid-cols-3 gap-4">
+            {% for url_name, label, sub in related %}
+              <a href="{% url url_name %}" class="group block p-5 rounded-xl border border-ppf-line bg-ppf-cream/40 hover:border-ppf-navy/40 hover:shadow-card transition">
+                <div class="flex items-start justify-between">
+                  <span class="font-semibold text-ppf-navy group-hover:underline">{{ label }}</span>
+                  <span class="material-symbols-outlined text-ppf-gray group-hover:text-ppf-navy">arrow_forward</span>
+                </div>
+                <p class="text-sm text-ppf-gray mt-1">{{ sub }}</p>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    {% endif %}
+  {% endblock %}
+
+  {% block feedback %}
+    <section class="bg-ppf-navy/5 border-t border-ppf-line">
+      <div class="max-w-7xl mx-auto px-4 md:px-8 py-10 grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-bold text-ppf-navy">Pomohla vám tato stránka?</h3>
+          <p class="text-sm text-ppf-gray mt-1">Zpětná vazba pomáhá AI týmu zlepšovat portál.</p>
+          <form method="post" action="{% url 'portal:feedback' %}" class="mt-4 space-y-3">
+            {% csrf_token %}
+            <input type="hidden" name="page_url" value="{{ request.path }}">
+            <input type="hidden" name="page_title" value="{{ hero.heading|default:'' }}">
+            <textarea name="comment" rows="2" placeholder="Volitelný komentář…"
+                      class="w-full rounded-lg border border-ppf-line bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ppf-navy/30"></textarea>
+            <div class="flex gap-2">
+              <button name="score" value="up" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-ppf-navy text-white text-sm font-medium hover:bg-ppf-navy2">
+                <span class="material-symbols-outlined text-base">thumb_up</span> Pomohlo
+              </button>
+              <button name="score" value="down" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-ppf-navy text-sm font-medium border border-ppf-line hover:border-ppf-navy/40">
+                <span class="material-symbols-outlined text-base">thumb_down</span> Nepomohlo
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="md:border-l md:border-ppf-line md:pl-8">
+          <h3 class="text-lg font-bold text-ppf-navy">Zeptat se AI týmu</h3>
+          <p class="text-sm text-ppf-gray mt-1">Nenašli jste odpověď? Napište nám.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="https://teams.microsoft.com/l/chat/0/0?users=ai-team@ppf.cz"
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-ppf-navy text-white text-sm font-medium hover:bg-ppf-navy2">
+              <span class="material-symbols-outlined text-base">chat</span> Napsat v Teams
+            </a>
+            <a href="mailto:ai-team@ppf.cz"
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-ppf-navy text-sm font-medium border border-ppf-line hover:border-ppf-navy/40">
+              <span class="material-symbols-outlined text-base">mail</span> ai-team@ppf.cz
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endblock %}
+
+  <footer class="bg-ppf-navy text-white/70 text-sm">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="{% static 'img/ppf-logo.svg' %}" alt="PPF" class="h-7 w-auto invert brightness-0 contrast-200">
+        <span>Meet AI · interní portál PPF</span>
+      </div>
+      <div class="flex flex-wrap gap-x-6 gap-y-2">
+        <a href="{% url 'portal:pravidla' %}" class="hover:text-white">Pravidla</a>
+        <a href="{% url 'portal:faq' %}" class="hover:text-white">FAQ</a>
+        <a href="{% url 'portal:vzdelavani' %}" class="hover:text-white">Vzdělávání</a>
+        <a href="mailto:ai-team@ppf.cz" class="hover:text-white">ai-team@ppf.cz</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('mnav-toggle')?.addEventListener('click', () => {
+      document.getElementById('mnav').classList.toggle('hidden');
+    });
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

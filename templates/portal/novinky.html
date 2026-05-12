@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ hero.heading }} · Meet AI{% endblock %}
+
+{% block content %}
+  <div class="space-y-5">
+    {% for n in novinky %}
+      <a href="{% url 'portal:novinka_detail' n.id %}" class="group block bg-white rounded-2xl border border-ppf-line hover:border-ppf-navy/30 hover:shadow-card transition p-6 md:p-7">
+        <div class="flex items-center gap-3 text-xs text-ppf-gray mb-2">
+          {% if n.category %}<span class="font-semibold text-ppf-navy uppercase tracking-wider">{{ n.category }}</span><span>·</span>{% endif %}
+          <span>{{ n.publish_date|date:"j. n. Y" }}</span>
+        </div>
+        <h2 class="text-xl md:text-2xl font-bold text-ppf-navy group-hover:underline">{{ n.title }}</h2>
+        <p class="text-ppf-gray mt-3 max-w-3xl">{{ n.perex }}</p>
+      </a>
+    {% empty %}
+      <p class="text-ppf-gray">Zatím žádné novinky.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
