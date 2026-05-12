@@ -56,6 +56,20 @@
       ]
     },
     {
+      "id": "zitnymlyn",
+      "title": "Žitný mlýn Boršov",
+      "city_country": "Boršov nad Vltavou, ČR",
+      "year": 2025,
+      "source_url": "https://www.archiweb.cz/b/zitny-mlyn-borsov",
+      "floors_above_ground": 5,
+      "apartments": 83,
+      "listed_areas_m2": {"uzitna_plocha": 15800, "zastavena_plocha": 3855},
+      "interpretation_note": "Only 1 floor plan published on archiweb (1.NP). UP=15800 m² across 5 NP → ~3160 m²/floor UP avg. UP/HPP ratio = 15800/(3855*5) = 0.82, typical for large residential. Limited verification value with only 1 plan but listed total is unusually high-quality (legally-defined CZ label, recent project, large building).",
+      "plans": [
+        {"file": "zitnymlyn_1.np.jpg", "level": "1.NP", "instances": 1}
+      ]
+    },
+    {
       "id": "panorama",
       "title": "Bytový dům Panorama Jih (Brno control)",
       "city_country": "Brno, ČR",
