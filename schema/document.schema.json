@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chocholous/empty/schema/document.schema.json",
+  "title": "Regulatory KB source entry",
+  "description": "Schema for an entry in manifest.json 'sources' and (loosely) for the YAML frontmatter of dataset cards in documents/ and reports/.",
+  "type": "object",
+  "required": ["id", "category", "file_name", "drive_id", "item_id", "web_url", "type", "refresh", "topics", "summary", "citation"],
+  "properties": {
+    "id": { "type": "string", "description": "Stable slug used to cross-reference from cards/taxonomy." },
+    "category": { "type": "string", "description": "KB subfolder, e.g. '01_Profile', '04_CNB_decisions'." },
+    "file_name": { "type": "string" },
+    "drive_id": { "type": "string", "description": "Microsoft Graph drive id of the shared KB folder." },
+    "item_id": { "type": "string", "description": "Microsoft Graph item id of the file." },
+    "web_url": { "type": "string", "format": "uri" },
+    "type": { "type": "string", "enum": ["docx", "xlsx", "xlsm", "pdf", "msg", "md"] },
+    "refresh": {
+      "type": "string",
+      "enum": ["static", "quarterly", "ongoing", "encrypted"],
+      "description": "static=extracted to a card; quarterly=read live; ongoing=appended over time; encrypted=not extractable."
+    },
+    "extractable": { "type": "boolean", "description": "Whether Graph text extraction works (false for MIP-encrypted)." },
+    "reporting_date": { "type": "string", "description": "Reporting reference date (YYYY-MM-DD), for periodic reports." },
+    "last_modified": { "type": "string" },
+    "priority": { "type": "string", "description": "e.g. PRIMARY/SECONDARY for overlapping numeric sources." },
+    "document_id": { "type": "string" },
+    "version": { "type": "string" },
+    "status": { "type": "string" },
+    "owner": { "type": "string" },
+    "decision_ref": { "type": "string", "description": "ČNB č.j. for individual decisions." },
+    "decision_date": { "type": "string" },
+    "topics": { "type": "array", "items": { "type": "string" } },
+    "key_sheets": { "type": "array", "items": { "type": "string" }, "description": "For workbooks: relevant sheet/template codes." },
+    "summary": { "type": "string" },
+    "dataset_card": { "type": "string", "description": "Relative path to the extracted card, if any." },
+    "citation": { "type": "string", "description": "Ready-to-use citation string." },
+    "read_when": { "type": "string", "description": "Trigger guidance for the agent." }
+  },
+  "additionalProperties": true
+}
