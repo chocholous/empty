@@ -33,6 +33,18 @@ export interface DetectedRule {
   category: string;
 }
 
+/**
+ * Keep only rules whose selector was actually present in the digest we sent.
+ * This is the guard that stops the model from injecting an arbitrary selector.
+ * Pure (no DOM/SDK) so it is unit-testable in isolation.
+ */
+export function filterToAllowedSelectors(
+  rules: DetectedRule[],
+  allowed: Set<string>,
+): DetectedRule[] {
+  return rules.filter((rule) => allowed.has(rule.selector));
+}
+
 export type DetectResponse =
   | { ok: true; rules: DetectedRule[] }
   | { ok: false; error: string };

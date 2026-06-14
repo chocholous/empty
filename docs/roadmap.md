@@ -207,18 +207,18 @@ filter fixes, each shipped through the CI + release pipeline above.
   these rather than hand-writing the engine.
 - **On-demand AI cleanup (shipped in scaffold).** A user-triggered "Clean up this
   page" button uses Claude Haiku to author selectors from a compact page digest —
-  *not* a runtime detector. See [`ai-detector.md`](ai-detector.md). Runtime
+  _not_ a runtime detector. See [`ai-detector.md`](ai-detector.md). Runtime
   detection stays pure selector matching (cost/latency/privacy).
 
 ## Tooling to add along the way
 
-| When | Add | Purpose |
-|---|---|---|
-| Phase 7 | `vitest`, `@webext-core/fake-browser`, `happy-dom` | Unit/integration tests |
-| Phase 7 | `@playwright/test` | E2E with the extension loaded |
-| Phase 8 | `eslint`, `@typescript-eslint/*`, `prettier`, `lint-staged` | Lint/format gates |
-| Phase 8 | GitHub Actions workflow | CI |
-| Phase 11 | `web-ext` (Firefox), `chrome-webstore-upload-cli` | Store packaging/upload |
+| When     | Add                                                         | Purpose                       |
+| -------- | ----------------------------------------------------------- | ----------------------------- |
+| Phase 7  | `vitest`, `@webext-core/fake-browser`, `happy-dom`          | Unit/integration tests        |
+| Phase 7  | `@playwright/test`                                          | E2E with the extension loaded |
+| Phase 8  | `eslint`, `@typescript-eslint/*`, `prettier`, `lint-staged` | Lint/format gates             |
+| Phase 8  | GitHub Actions workflow                                     | CI                            |
+| Phase 11 | `web-ext` (Firefox), `chrome-webstore-upload-cli`           | Store packaging/upload        |
 
 ## CI pipeline (target shape)
 

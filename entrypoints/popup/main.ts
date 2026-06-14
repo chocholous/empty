@@ -52,7 +52,10 @@ async function save(): Promise<void> {
 }
 
 $('save').addEventListener('click', () => void save());
-apiKey.addEventListener('change', () => void apiKeyItem.setValue(apiKey.value.trim()));
+apiKey.addEventListener(
+  'change',
+  () => void apiKeyItem.setValue(apiKey.value.trim()),
+);
 
 /* ---------- AI cleanup ---------- */
 
@@ -117,9 +120,7 @@ async function saveSelectedRules(): Promise<void> {
     .filter((s): s is string => !!s);
 
   const current = await settingsItem.getValue();
-  const merged = Array.from(
-    new Set([...current.hideSelectors, ...selected]),
-  );
+  const merged = Array.from(new Set([...current.hideSelectors, ...selected]));
   await settingsItem.setValue({ ...current, hideSelectors: merged });
   hideSelectors.value = merged.join('\n');
   aiStatus.textContent = `Saved ${selected.length} rule(s).`;

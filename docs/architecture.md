@@ -5,12 +5,12 @@ page load — is exactly what modern ad blockers do with **cosmetic filtering**.
 
 ## Two complementary layers
 
-| Layer | API | What it does | Stealthy? |
-|---|---|---|---|
-| Network blocking | `declarativeNetRequest` | Cancels requests before they reach the server | No — server sees the resource was never fetched |
-| Cosmetic filtering | content scripts + CSS/JS | Lets the request complete, then hides the resulting DOM | Yes — server sees a normal load |
+| Layer              | API                      | What it does                                            | Stealthy?                                       |
+| ------------------ | ------------------------ | ------------------------------------------------------- | ----------------------------------------------- |
+| Network blocking   | `declarativeNetRequest`  | Cancels requests before they reach the server           | No — server sees the resource was never fetched |
+| Cosmetic filtering | content scripts + CSS/JS | Lets the request complete, then hides the resulting DOM | Yes — server sees a normal load                 |
 
-For the goal *"the web thinks you see it, but you don't"*, **cosmetic filtering is
+For the goal _"the web thinks you see it, but you don't"_, **cosmetic filtering is
 the primary mechanism**. Requests are allowed through; the resulting elements are
 hidden from view. Network blocking (`public/rules.json`) is reserved for trackers
 and telemetry you genuinely want to cancel.
@@ -19,10 +19,10 @@ and telemetry you genuinely want to cancel.
 
 `chrome.scripting` injects into one of two JS worlds:
 
-| World | Page JS access | `chrome.*` access | Detectable by page |
-|---|---|---|---|
-| `ISOLATED` (default) | No | Yes | Harder |
-| `MAIN` | Yes (shares `window`) | No | Easier |
+| World                | Page JS access        | `chrome.*` access | Detectable by page |
+| -------------------- | --------------------- | ----------------- | ------------------ |
+| `ISOLATED` (default) | No                    | Yes               | Harder             |
+| `MAIN`               | Yes (shares `window`) | No                | Easier             |
 
 This project uses **ISOLATED** (`entrypoints/content.ts`) for all cosmetic work,
 and **MAIN** (`entrypoints/main-world.content.ts`) only to patch page-level globals that
@@ -43,13 +43,13 @@ power anti-adblock detection. The two are bridged with a `CustomEvent`
 
 ## Anti-detection strategy
 
-| Detection the site uses | Counter-strategy here |
-|---|---|
-| Bait element check (fake ad div, is it hidden?) | Hide selectively; don't blanket-hide bait |
-| `window` property sniffing (`adsbygoogle`, `googletag`) | Spoof via MAIN-world scriptlet |
-| Network request check (does an ad domain load?) | Don't block at network level; hide cosmetically |
-| DOM mutation watching for `display:none` on its own nodes | Use `remove()` instead of hiding |
-| Extension-origin `<link>` tag detection | Use manifest CSS injection / a `<style>` element, never a runtime `<link>` |
+| Detection the site uses                                   | Counter-strategy here                                                      |
+| --------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Bait element check (fake ad div, is it hidden?)           | Hide selectively; don't blanket-hide bait                                  |
+| `window` property sniffing (`adsbygoogle`, `googletag`)   | Spoof via MAIN-world scriptlet                                             |
+| Network request check (does an ad domain load?)           | Don't block at network level; hide cosmetically                            |
+| DOM mutation watching for `display:none` on its own nodes | Use `remove()` instead of hiding                                           |
+| Extension-origin `<link>` tag detection                   | Use manifest CSS injection / a `<style>` element, never a runtime `<link>` |
 
 ## Request lifecycle
 

@@ -7,7 +7,7 @@ by uBlock Origin's cosmetic filters — see [`docs/architecture.md`](docs/archit
 for the full technical breakdown.
 
 > Scope: this runs only in your own browser, on pages you visit, and changes only
-> what *you* see. It does not attack, probe, or send data to any third party.
+> what _you_ see. It does not attack, probe, or send data to any third party.
 
 ## Stack
 
@@ -27,7 +27,13 @@ npm run dev:firefox
 npm run build      # production build into .output/
 npm run zip        # packaged .zip for the stores
 npm run compile    # type-check only (tsc --noEmit)
+
+npm run gate       # all quality gates: format, lint, type-check, test, build
+npm test           # vitest unit/integration suite
 ```
+
+Quality gates (format, lint, type-check, tests, build) are enforced in CI on
+every push and PR — see [`docs/gates.md`](docs/gates.md).
 
 Load the unpacked build (`.output/chrome-mv3/`) via `chrome://extensions` →
 Developer mode → "Load unpacked". See [`docs/development.md`](docs/development.md).

@@ -18,14 +18,22 @@
 
       <label class="field">
         <span>Hide selectors <small>(display: none)</small></span>
-        <textarea id="hideSelectors" rows="5" spellcheck="false"
-          placeholder="[data-ad]&#10;.sponsored-content"></textarea>
+        <textarea
+          id="hideSelectors"
+          rows="5"
+          spellcheck="false"
+          placeholder="[data-ad]&#10;.sponsored-content"
+        ></textarea>
       </label>
 
       <label class="field">
         <span>Remove selectors <small>(detach from DOM)</small></span>
-        <textarea id="removeSelectors" rows="3" spellcheck="false"
-          placeholder=".paywall-overlay"></textarea>
+        <textarea
+          id="removeSelectors"
+          rows="3"
+          spellcheck="false"
+          placeholder=".paywall-overlay"
+        ></textarea>
       </label>
 
       <label class="check">
@@ -42,8 +50,15 @@
 
       <section class="ai">
         <label class="field">
-          <span>Anthropic API key <small>(stored locally, not synced)</small></span>
-          <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" />
+          <span
+            >Anthropic API key <small>(stored locally, not synced)</small></span
+          >
+          <input
+            type="password"
+            id="apiKey"
+            placeholder="sk-ant-..."
+            autocomplete="off"
+          />
         </label>
         <button id="cleanup" type="button" class="secondary">
           Clean up this page (AI)
@@ -52,7 +67,9 @@
         <div id="results" class="results"></div>
         <div class="row results-actions" id="resultsActions" hidden>
           <button id="saveRules" type="button">Save selected</button>
-          <button id="clearPreview" type="button" class="secondary">Clear</button>
+          <button id="clearPreview" type="button" class="secondary">
+            Clear
+          </button>
         </div>
       </section>
     </main>

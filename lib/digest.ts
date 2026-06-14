@@ -5,7 +5,10 @@ import type { PageDigest, DigestNode } from './detect';
  * uniquely identifies it, otherwise a `>`-joined path using :nth-of-type.
  */
 export function cssPath(el: Element): string {
-  if (el.id && document.querySelectorAll(`#${CSS.escape(el.id)}`).length === 1) {
+  if (
+    el.id &&
+    document.querySelectorAll(`#${CSS.escape(el.id)}`).length === 1
+  ) {
     return `#${CSS.escape(el.id)}`;
   }
 

@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { filterToAllowedSelectors } from './detect';
 import type { PageDigest, DetectedRule } from './detect';
 
 /**
@@ -92,5 +93,5 @@ export async function detectElementsToHide(
   // Safety net: only keep selectors the model copied from the digest, so it can
   // never inject an arbitrary selector that hides real content.
   const allowed = new Set(digest.nodes.map((n) => n.sel));
-  return (parsed.rules ?? []).filter((r) => allowed.has(r.selector));
+  return filterToAllowedSelectors(parsed.rules ?? [], allowed);
 }

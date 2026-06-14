@@ -15,7 +15,9 @@ body {
   width: 320px;
   margin: 0;
   padding: 14px;
-  font: 13px/1.45 system-ui, sans-serif;
+  font:
+    13px/1.45 system-ui,
+    sans-serif;
   background: var(--bg);
   color: var(--fg);
 }
@@ -59,7 +61,9 @@ textarea {
   padding: 6px 8px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  font: 12px/1.4 ui-monospace, monospace;
+  font:
+    12px/1.4 ui-monospace,
+    monospace;
   background: transparent;
   color: var(--fg);
 }
@@ -153,7 +157,9 @@ input[type='password'] {
   padding: 6px 8px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  font: 12px/1.4 ui-monospace, monospace;
+  font:
+    12px/1.4 ui-monospace,
+    monospace;
   background: transparent;
   color: var(--fg);
 }

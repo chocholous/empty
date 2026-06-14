@@ -18,14 +18,24 @@ npm install
 
 ## Day-to-day commands
 
-| Command | Purpose |
-|---|---|
-| `npm run dev` | Launch Chrome with hot-module reload |
-| `npm run dev:firefox` | Same, in Firefox |
-| `npm run build` | Production build → `.output/chrome-mv3/` |
+| Command                 | Purpose                                   |
+| ----------------------- | ----------------------------------------- |
+| `npm run dev`           | Launch Chrome with hot-module reload      |
+| `npm run dev:firefox`   | Same, in Firefox                          |
+| `npm run build`         | Production build → `.output/chrome-mv3/`  |
 | `npm run build:firefox` | Production build → `.output/firefox-mv2/` |
-| `npm run zip` | Store-ready `.zip` |
-| `npm run compile` | Type-check only (`tsc --noEmit`) |
+| `npm run zip`           | Store-ready `.zip`                        |
+| `npm run compile`       | Type-check only (`tsc --noEmit`)          |
+| `npm run lint`          | ESLint (`lint:fix` to autofix)            |
+| `npm run format`        | Prettier write (`format:check` to verify) |
+| `npm test`              | Vitest unit/integration suite             |
+| `npm run gate`          | All quality gates in sequence             |
+
+## Quality gates
+
+`npm run gate` runs the full sequence (format → lint → type-check → test → build)
+that CI enforces on every push and PR. See [`gates.md`](gates.md) for the gate
+policy, the test layers, and the pre-release manual/user-testing gates.
 
 ## Load the unpacked extension
 
@@ -38,19 +48,20 @@ npm install
 
 ## Where to make changes
 
-| Task | File |
-|---|---|
-| Add/adjust default selectors | `lib/settings.ts` (`DEFAULT_SETTINGS`) |
-| Change hide/remove logic, observer | `lib/hider.ts` |
-| ISOLATED-world behavior, world bridge | `entrypoints/content.ts` |
-| MAIN-world anti-detection scriptlets | `entrypoints/main-world.content.ts` |
-| Network-level blocking rules | `public/rules.json` |
-| Permissions / manifest | `wxt.config.ts` |
-| Popup UI | `entrypoints/popup/` |
+| Task                                  | File                                   |
+| ------------------------------------- | -------------------------------------- |
+| Add/adjust default selectors          | `lib/settings.ts` (`DEFAULT_SETTINGS`) |
+| Change hide/remove logic, observer    | `lib/hider.ts`                         |
+| ISOLATED-world behavior, world bridge | `entrypoints/content.ts`               |
+| MAIN-world anti-detection scriptlets  | `entrypoints/main-world.content.ts`    |
+| Network-level blocking rules          | `public/rules.json`                    |
+| Permissions / manifest                | `wxt.config.ts`                        |
+| Popup UI                              | `entrypoints/popup/`                   |
 
 ## Adding selectors at runtime
 
 Open the popup and enter one CSS selector per line:
+
 - **Hide selectors** → `display: none !important` (element stays in DOM).
 - **Remove selectors** → element is detached via `.remove()`.
 
