@@ -18,18 +18,19 @@ npm install
 
 ## Day-to-day commands
 
-| Command                 | Purpose                                   |
-| ----------------------- | ----------------------------------------- |
-| `npm run dev`           | Launch Chrome with hot-module reload      |
-| `npm run dev:firefox`   | Same, in Firefox                          |
-| `npm run build`         | Production build → `.output/chrome-mv3/`  |
-| `npm run build:firefox` | Production build → `.output/firefox-mv2/` |
-| `npm run zip`           | Store-ready `.zip`                        |
-| `npm run compile`       | Type-check only (`tsc --noEmit`)          |
-| `npm run lint`          | ESLint (`lint:fix` to autofix)            |
-| `npm run format`        | Prettier write (`format:check` to verify) |
-| `npm test`              | Vitest unit/integration suite             |
-| `npm run gate`          | All quality gates in sequence             |
+| Command                 | Purpose                                    |
+| ----------------------- | ------------------------------------------ |
+| `npm run dev`           | Launch Chrome with hot-module reload       |
+| `npm run dev:firefox`   | Same, in Firefox                           |
+| `npm run build`         | Production build → `.output/chrome-mv3/`   |
+| `npm run build:firefox` | Production build → `.output/firefox-mv2/`  |
+| `npm run zip`           | Store-ready `.zip`                         |
+| `npm run compile`       | Type-check only (`tsc --noEmit`)           |
+| `npm run lint`          | ESLint (`lint:fix` to autofix)             |
+| `npm run format`        | Prettier write (`format:check` to verify)  |
+| `npm test`              | Vitest unit/integration suite              |
+| `npm run test:e2e`      | Playwright E2E (loads the built extension) |
+| `npm run gate`          | All quality gates in sequence              |
 
 ## Quality gates
 

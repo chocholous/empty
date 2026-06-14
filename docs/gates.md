@@ -28,23 +28,30 @@ sequence.
 Ordering is intentional — cheapest, most-localized failures first (format, lint),
 then types, then behavior (tests), then the full build. A failure stops the chain.
 
+### E2E gate (separate)
+
+`npm run test:e2e` builds the extension and runs Playwright, which loads the
+built `.output/chrome-mv3/` into real Chromium (new headless, so no display
+server needed) and asserts a default selector actually hides an element. It is a
+**separate CI job** and is intentionally **not** part of `npm run gate` — it
+downloads a browser and is slower than the unit gates.
+
 ### Planned additions (roadmap)
 
-| Gate                                            | When it lands | Notes                                                           |
-| ----------------------------------------------- | ------------- | --------------------------------------------------------------- |
-| **E2E** (Playwright, loads the built extension) | Phase 7       | Asserts a hide actually works in a real browser                 |
-| **Bundle-size check**                           | Phase 9       | Fail if `background.js` / content scripts exceed a budget       |
-| **Security & permission review**                | Phase 10–11   | `npm audit` clean + permission justification (pre-release gate) |
+| Gate                             | When it lands | Notes                                                           |
+| -------------------------------- | ------------- | --------------------------------------------------------------- |
+| **Bundle-size check**            | Phase 9       | Fail if `background.js` / content scripts exceed a budget       |
+| **Security & permission review** | Phase 10–11   | `npm audit` clean + permission justification (pre-release gate) |
 
 ## Test layers
 
 The automated test gate (#4) is a pyramid, widest at the bottom:
 
-| Layer           | Tool               | Scope                                                                                 | Status     |
-| --------------- | ------------------ | ------------------------------------------------------------------------------------- | ---------- |
-| **Unit**        | Vitest             | Pure logic — `filterToAllowedSelectors`, selector generation                          | ✅ now     |
-| **Integration** | Vitest + happy-dom | DOM behavior — `createHider` hide/remove, `cssPath`, `buildPageDigest`                | ✅ now     |
-| **E2E**         | Playwright         | The built extension in a real browser: popup flows, hide-on-load, the AI cleanup path | ⏳ Phase 7 |
+| Layer           | Tool               | Scope                                                                                        | Status |
+| --------------- | ------------------ | -------------------------------------------------------------------------------------------- | ------ |
+| **Unit**        | Vitest             | Pure logic — `filterToAllowedSelectors`, selector generation                                 | ✅ now |
+| **Integration** | Vitest + happy-dom | DOM behavior — `createHider` hide/remove, `cssPath`, `buildPageDigest`                       | ✅ now |
+| **E2E**         | Playwright         | Built extension in real Chromium — hide-on-load verified; popup flows + AI cleanup to expand | ✅ now |
 
 Tests live in `tests/` and run against modules that avoid WXT runtime imports, so
 the suite needs no browser-extension harness. DOM tests use `happy-dom`

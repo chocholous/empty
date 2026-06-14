@@ -41,3 +41,18 @@ jobs:
         with:
           name: chrome-mv3
           path: .output/chrome-mv3
+
+  # E2E gate: loads the built extension into real Chromium (new headless).
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: E2E (build + playwright)
+        run: npm run test:e2e

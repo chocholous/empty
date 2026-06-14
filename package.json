@@ -17,11 +17,13 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "wxt build && playwright test",
     "gate": "npm run format:check && npm run lint && npm run compile && npm test && npm run build",
     "postinstall": "wxt prepare"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.60.0",
     "eslint": "^10.5.0",
     "globals": "^17.6.0",
     "happy-dom": "^20.10.3",

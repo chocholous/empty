@@ -7,6 +7,12 @@ node_modules/
 dist/
 *.zip
 
+# Test artifacts
+coverage/
+test-results/
+playwright-report/
+.playwright/
+
 # Env / local
 .env
 .env.*

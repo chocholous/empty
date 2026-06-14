@@ -29,4 +29,9 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    // Playwright fixtures use the `async ({}, use) => {}` empty-pattern idiom.
+    files: ['e2e/**/*.ts'],
+    rules: { 'no-empty-pattern': 'off' },
+  },
 );
