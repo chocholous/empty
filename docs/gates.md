@@ -88,10 +88,21 @@ scale before a public release.
 | Stage                              | Gates                                                              |
 | ---------------------------------- | ------------------------------------------------------------------ |
 | Local, while coding                | `npm run test:watch`; `npm run lint` / `npm run compile` as needed |
-| Pre-commit (optional hook)         | Fast subset: format + lint                                         |
+| **Pre-commit (lint-staged hook)**  | Auto-fix lint + format on staged files                             |
 | **Every push / PR (CI, enforced)** | The full `npm run gate` chain                                      |
 | **Pre-release**                    | All of CI **plus** the manual gates above                          |
 
-Wiring format+lint into a pre-commit hook (e.g. lint-staged) is a Phase 8 nicety;
-the enforced boundary is CI, so a missing local hook never lets a regression
-through.
+## Pre-commit hook
+
+A git hook runs the fast subset (ESLint `--fix` + Prettier) on **staged files
+only** before each commit, via `lint-staged`:
+
+- The hook lives in `.githooks/pre-commit` (tracked in the repo, not generated).
+- It is activated automatically: `npm install` runs the `prepare` script, which
+  sets `git config core.hooksPath .githooks`.
+- Config is the `lint-staged` block in `package.json`.
+
+The hook is a convenience that catches the cheap mistakes early; it is **not** the
+enforced boundary. CI re-runs the full gate on every push, so a bypassed or
+missing hook (`git commit --no-verify`, a fresh clone before `npm install`) can
+never let a regression reach `main`.

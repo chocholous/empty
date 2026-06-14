@@ -19,7 +19,17 @@
     "test:watch": "vitest",
     "test:e2e": "wxt build && playwright test",
     "gate": "npm run format:check && npm run lint && npm run compile && npm test && npm run build",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,html,json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -27,6 +37,7 @@
     "eslint": "^10.5.0",
     "globals": "^17.6.0",
     "happy-dom": "^20.10.3",
+    "lint-staged": "^17.0.7",
     "prettier": "^3.8.4",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.61.0",
