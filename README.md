@@ -48,3 +48,8 @@ assets/hider.css         Static, always-on cosmetic rules
 public/rules.json        declarativeNetRequest network rules (trackers)
 docs/                    Architecture + development guides
 ```
+
+## Roadmap
+
+The full development lifecycle — from this scaffold through store release and
+maintenance — is in [`docs/roadmap.md`](docs/roadmap.md).
