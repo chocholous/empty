@@ -37,6 +37,24 @@
         <button id="save" type="button">Save</button>
         <span id="status" class="status" aria-live="polite"></span>
       </footer>
+
+      <hr class="sep" />
+
+      <section class="ai">
+        <label class="field">
+          <span>Anthropic API key <small>(stored locally, not synced)</small></span>
+          <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" />
+        </label>
+        <button id="cleanup" type="button" class="secondary">
+          Clean up this page (AI)
+        </button>
+        <span id="aiStatus" class="status" aria-live="polite"></span>
+        <div id="results" class="results"></div>
+        <div class="row results-actions" id="resultsActions" hidden>
+          <button id="saveRules" type="button">Save selected</button>
+          <button id="clearPreview" type="button" class="secondary">Clear</button>
+        </div>
+      </section>
     </main>
     <script type="module" src="./main.ts"></script>
   </body>

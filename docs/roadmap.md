@@ -197,6 +197,19 @@ filter fixes, each shipped through the CI + release pipeline above.
 
 ---
 
+## Revisions since the original plan
+
+- **Reuse, don't rebuild.** Phase 2's procedural engine and Phase 4's scriptlets
+  exist as maintained libraries: `@ghostery/adblocker` (filter-list engine +
+  cosmetic filtering), `@adguard/extended-css` (`:has`/`:contains`/`:matches-css`),
+  and `@adguard/scriptlets` (anti-adblock). Curated rules come from filter-list
+  registries (EasyList, AdGuard, uBlock; directory at filterlists.com). Integrate
+  these rather than hand-writing the engine.
+- **On-demand AI cleanup (shipped in scaffold).** A user-triggered "Clean up this
+  page" button uses Claude Haiku to author selectors from a compact page digest —
+  *not* a runtime detector. See [`ai-detector.md`](ai-detector.md). Runtime
+  detection stays pure selector matching (cost/latency/privacy).
+
 ## Tooling to add along the way
 
 | When | Add | Purpose |

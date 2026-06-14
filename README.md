@@ -37,17 +37,27 @@ Developer mode → "Load unpacked". See [`docs/development.md`](docs/development
 ```
 wxt.config.ts            Manifest + build config
 entrypoints/
-  background.ts          MV3 service worker (seeds default settings)
-  content.ts             ISOLATED world: CSS inject + MutationObserver
+  background.ts          MV3 service worker (defaults + Anthropic API call)
+  content.ts             ISOLATED world: CSS inject, MutationObserver, AI cleanup
   main-world.content.ts  MAIN world: anti-adblock-detection scriptlet
-  popup/                 Toolbar popup UI (toggle + selector editor)
+  popup/                 Toolbar popup UI (toggle, selectors, AI cleanup)
 lib/
-  settings.ts            Typed settings, persisted to storage.sync
+  settings.ts            Typed settings (sync) + API key (local)
   hider.ts               Cosmetic filter engine (stylesheet + observer)
+  detect.ts              Shared types for the AI cleanup detector
+  digest.ts              Builds the compact page digest sent to the model
+  anthropic.ts           Claude Haiku call (on-demand element detection)
 assets/hider.css         Static, always-on cosmetic rules
 public/rules.json        declarativeNetRequest network rules (trackers)
-docs/                    Architecture + development guides
+docs/                    Architecture, development, AI detector, roadmap
 ```
+
+## On-demand AI cleanup
+
+The popup's **"Clean up this page (AI)"** button asks Claude Haiku to pick clutter
+to hide — a user-triggered authoring assist, not a runtime path. Bring your own
+Anthropic API key (stored locally, never synced). See
+[`docs/ai-detector.md`](docs/ai-detector.md).
 
 ## Roadmap
 

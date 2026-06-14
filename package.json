@@ -16,5 +16,8 @@
   "devDependencies": {
     "typescript": "^5.7.0",
     "wxt": "^0.19.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1"
   }
 }

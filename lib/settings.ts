@@ -36,3 +36,11 @@ export const settingsItem = storage.defineItem<HiderSettings>('sync:settings', {
   fallback: DEFAULT_SETTINGS,
   version: 1,
 });
+
+/**
+ * Anthropic API key for the on-demand AI cleanup feature. Stored in `local`
+ * (NOT `sync`) so a secret is never synced across devices.
+ */
+export const apiKeyItem = storage.defineItem<string>('local:anthropicApiKey', {
+  fallback: '',
+});
