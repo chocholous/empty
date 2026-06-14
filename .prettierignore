@@ -5,3 +5,6 @@ dist
 coverage
 *.zip
 package-lock.json
+
+# Backlog.md manages its own file format; don't let Prettier fight it.
+backlog

@@ -65,7 +65,20 @@ to hide — a user-triggered authoring assist, not a runtime path. Bring your ow
 Anthropic API key (stored locally, never synced). See
 [`docs/ai-detector.md`](docs/ai-detector.md).
 
-## Roadmap
+## Roadmap & backlog
 
 The full development lifecycle — from this scaffold through store release and
 maintenance — is in [`docs/roadmap.md`](docs/roadmap.md).
+
+The roadmap is broken into tracked tasks with **[Backlog.md](https://backlog.md)**,
+a git-native Markdown task manager. Tasks live in `backlog/tasks/` (versioned with
+the code); a rendered board snapshot is in
+[`backlog/Board.md`](backlog/Board.md). Definition of Done for every task is the
+green [quality gates](docs/gates.md).
+
+```bash
+npx backlog board        # Kanban board in the terminal
+npx backlog browser      # web UI (http://localhost:6420)
+npx backlog task list --plain
+npx backlog board export backlog/Board.md   # refresh the committed snapshot
+```
