@@ -197,18 +197,18 @@ filter fixes, each shipped through the CI + release pipeline above.
 
 ---
 
-## Revisions since the original plan
+## Key engineering decisions
 
-- **Reuse, don't rebuild.** Phase 2's procedural engine and Phase 4's scriptlets
-  exist as maintained libraries: `@ghostery/adblocker` (filter-list engine +
+- **Reuse, don't rebuild.** The procedural engine (Phase 2) and scriptlets
+  (Phase 4) are maintained libraries: `@ghostery/adblocker` (filter-list engine +
   cosmetic filtering), `@adguard/extended-css` (`:has`/`:contains`/`:matches-css`),
   and `@adguard/scriptlets` (anti-adblock). Curated rules come from filter-list
   registries (EasyList, AdGuard, uBlock; directory at filterlists.com). Integrate
   these rather than hand-writing the engine.
-- **On-demand AI cleanup (shipped in scaffold).** A user-triggered "Clean up this
-  page" button uses Claude Haiku to author selectors from a compact page digest —
-  _not_ a runtime detector. See [`ai-detector.md`](ai-detector.md). Runtime
-  detection stays pure selector matching (cost/latency/privacy).
+- **AI cleanup authors, it does not detect at runtime.** The on-demand "Clean up
+  this page" button uses Claude Haiku to author selectors from a compact page
+  digest; runtime detection stays pure selector matching (cost/latency/privacy).
+  See [`ai-detector.md`](ai-detector.md).
 
 ## Tooling to add along the way
 
@@ -235,8 +235,8 @@ release tag vX.Y.Z
   └─ build + zip (chrome, firefox) → attach to GitHub Release → (optional) submit
 ```
 
-## Suggested next step
+## Execution
 
-Phase 1: add icons and validate the hide/remove loop on a couple of real sites,
-then harden the ISOLATED↔MAIN bridge handshake. Everything after that builds on a
-confirmed-working core.
+Work is tracked task-by-task on the Backlog.md board (`backlog/`, snapshot in
+[`../backlog/Board.md`](../backlog/Board.md)). Each task's Definition of Done is
+the green quality gates (see [`gates.md`](gates.md)).

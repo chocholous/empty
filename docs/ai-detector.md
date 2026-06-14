@@ -7,8 +7,8 @@ save the picks as permanent rules.
 > **This is not a runtime path.** Cosmetic filtering at page load is pure selector
 > matching (see [`architecture.md`](architecture.md)). The model is involved only
 > when the user explicitly clicks the button — it _authors_ selectors, it does not
-> run on every page. See the rationale in the roadmap and the discussion of why
-> per-page LLM detection is the wrong design (cost, latency, privacy).
+> run on every page. Per-page LLM detection is the wrong design (cost, latency,
+> privacy); runtime detection stays pure selector matching.
 
 ## Flow
 
