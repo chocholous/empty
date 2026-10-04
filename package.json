@@ -1,0 +1,24 @@
+{
+  "name": "freestyle-pods",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Disposable Claude Code environments on Freestyle VMs: one snapshot per repo, one VM per task, secrets held at the edge.",
+  "type": "module",
+  "bin": {
+    "pods": "./bin/pods"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "pods": "bin/pods",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "freestyle": "^0.2.16"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^5.9.3"
+  }
+}

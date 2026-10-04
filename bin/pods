@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Run from anywhere; loads .env from the project root.
+root="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+env=(); [ -f "$root/.env" ] && env=(--env-file="$root/.env")
+exec node "${env[@]}" "$root/src/pods.ts" "$@"
