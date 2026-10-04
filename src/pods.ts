@@ -240,8 +240,9 @@ async function main() {
     case "pause": need(1, "<task>"); await (await pod(args[0])).vm.pause(); return log(`paused ${args[0]}`);
     case "resume": need(1, "<task>"); await (await pod(args[0])).vm.start(); return log(`resumed ${args[0]}`);
     case "down": {
+      if (!o.all && !args.length) die("usage: pods down <task...> | --all");
       const targets = o.all ? (await pods()).map((v) => v.metadata.task) : args;
-      if (!targets.length) die("usage: pods down <task...> | --all");
+      if (!targets.length) return console.log("no pods");
       await Promise.all(targets.map(async (t) => { await destroy(podSlug(t)); log(`deleted ${t}`); }));
       return;
     }
